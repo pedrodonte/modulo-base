@@ -1,0 +1,169 @@
+body {
+	padding-top: 0;
+	padding-bottom: 0;
+	color: #616161;
+}
+
+h1,h2,h3 {
+	margin-top: 0;
+}
+
+h1 {
+	font-size: 1.6em;
+	font-weight: normal;
+}
+
+h2 {
+	font-size: 1.6em;
+}
+
+h3 {
+	font-size: 1em;
+	margin-top: 20px;
+}
+
+ul {
+	
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a img {
+	border: none;
+}
+
+img.left {
+	float: left;
+	margin: 0 20px 0 0;
+}
+
+img.right {
+	float: right;
+	margin: 0 0 0 20px;
+}
+
+/* Header */
+#header {
+	padding: 4px 0px;
+	height: 75px;
+	position: relative;
+}
+
+#logo {
+	text-align: left;
+}
+
+/* Menu */
+#menu {
+	position: absolute;
+	top: 25px;
+	right: 15px;
+	padding: 0;
+	height: 59px;
+	overflow: hidden;
+}
+
+#menu ul {
+	margin: 0;
+	list-style: none;
+}
+
+#menu li {
+	display: inline;
+}
+
+#menu li a {
+	display: block;
+	float: left;
+	height: 42px;
+	margin: 0;
+	padding: 18px 40px 0 40px;
+	text-decoration: none;
+	font-size: 20px;
+}
+
+#menu li a:hover {
+	text-decoration: underline;
+}
+
+/* Page */
+.ui-widget {
+	font-size: 12px !important;
+}
+
+h1,h2,h3 {
+	line-height: 1.5em !important;
+}
+
+.navbar-inverse .navbar-inner {
+	border: 1px solid #2c4359;
+	background: #35414f
+		url("/protask/javax.faces.resource/images/ui-bg_dots-small_35_35414f_2x2.png.xhtml?ln=primefaces-hot-sneaks")
+		50% 50% repeat;
+	color: #e1e463;
+	font-weight: bold;
+}
+
+@media ( max-width : 980px) {
+	/* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+
+.tree-tools {
+	display: none;
+}
+
+#contenedors {
+	width: 90%;
+	margin: 0 auto;
+}
+
+/* .ui-treenode-label{line-height: 30px;} */
+.ui-state-hover .tree-tools {
+	display: inline-block;
+	position: absolute;
+	margin-top: -5px;
+}
+
+.sin-borde .ui-datalist-content {
+	border: none !important;
+}
+
+.registro-formulario {
+	
+}
+
+.list-group-item .btnResponderComentario {
+	display: none;
+}
+
+.list-group-item:hover .btnResponderComentario {
+	display: block;
+}
+
+.replicasComentarios {
+	margin-left: 20px;
+}
+
+.panelContenido {
+	width: 100% !important;
+	margin-top: 20px;
+}
+
+.pathNavegacion {
+	margin-top: 20px;
+	border: none !important;
+	background: none !important;
+}
+
+.pathNavegacion a{color: #428bca !important;}

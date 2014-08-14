@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/plantilla-bootstrap.xhtml">
+
+	<ui:define name="content">
+
+		<script type="text/javascript">
+			function handleActionRequest(xhr, status, args) {
+				if (args.codExitoOperacion) {
+					dialogoEditor.hide();
+				}
+			}
+		</script>
+
+		<h:form id="MatenedorForm">
+			<p:growl id="msg" autoUpdate="true" showDetail="true"
+				showSummary="true" />
+
+			<p:panelGrid columns="1" style="width:100%;" id="datos">
+
+				<p:dataTable id="tablaRegistros" value="#{userMBean.registros}"
+					var="item" styleClass="tablaRegistros"
+					rowKey="#{item.usuarioId}" selectionMode="single"
+					selection="#{userMBean.registroSeleccionado}" rows="20"
+					paginator="true">
+
+					<p:ajax event="rowSelect" update="@this" />
+
+					<f:facet name="header">
+
+						<p:commandButton value="Ver" process="@this"
+							disabled="#{userMBean.registroSeleccionado eq null}"
+							oncomplete="dialogoEditor.show()"
+							update=":MatenedorForm:formularioEdicionRegistro"
+							actionListener="#{userMBean.doVerRegistroFormulario}" />
+
+						<p:commandButton value="Editar" process="@this"
+							disabled="#{userMBean.registroSeleccionado eq null}"
+							oncomplete="dialogoEditor.show()"
+							update=":MatenedorForm:formularioEdicionRegistro"
+							actionListener="#{userMBean.doEditarRegistroFormulario}" />
+
+						<p:commandButton value="Nuevo" process="@this"
+							oncomplete="dialogoEditor.show()"
+							update=":MatenedorForm:formularioEdicionRegistro"
+							actionListener="#{userMBean.doNuevoRegistroFormulario}" />
+
+					</f:facet>
+
+
+					<p:column sortBy="#{item.identificador}">
+						<f:facet name="header">
+							<h:outputText value="identificador" />
+						</f:facet>
+						<h:outputText value="#{item.identificador}" />
+					</p:column>
+
+				</p:dataTable>
+			</p:panelGrid>
+
+
+
+			<p:dialog id="editorRegistroDlg" header="Detalle del Registro"
+				widgetVar="dialogoEditor" resizable="false" modal="true">
+
+				<p:growl autoUpdate="true" showDetail="true" showSummary="true" />
+
+				<p:panelGrid columns="1" id="formularioEdicionRegistro"
+					styleClass="registro-formulario">
+					<h:outputText value="(*) Campos Obligatorios"
+						rendered="#{userMBean.modoFormulario ne 'OFF'}" />
+					<h:outputText value="modo:#{userMBean.modoFormulario}" />
+					<p:panelGrid columns="2">
+
+						<f:facet name="header">Datos del Usuario</f:facet>
+						
+						<h:outputText value="Identificador" />
+						<p:inputText required="true" styleClass="cpos-mantcli"
+							requiredMessage="Debe ingresar un Texto"
+							rendered="#{userMBean.modoFormulario ne 'OFF'}"
+							value="#{userMBean.registroEnEdicion.identificador}" />
+						<h:outputText rendered="#{userMBean.modoFormulario eq 'OFF'}"
+							value="#{userMBean.registroEnEdicion.identificador}" />
+							
+						<h:outputText value="Constraseña" />
+						<p:password required="true" styleClass="cpos-mantcli"
+							requiredMessage="Debe ingresar un Texto"
+							rendered="#{userMBean.modoFormulario ne 'OFF'}"
+							value="#{userMBean.registroEnEdicion.clave}" />
+						<h:outputText rendered="#{userMBean.modoFormulario eq 'OFF'}"
+							value="#{userMBean.registroEnEdicion.clave}" />
+						
+					</p:panelGrid>
+
+					<f:facet name="footer">
+
+						<p:commandButton id="btncancel" value="Cancelar"
+							update="@(.tablaRegistros)" oncomplete="dialogoEditor.hide();"
+							actionListener="#{userMBean.doCancelarRegistroFormulario}"
+							process="@none"
+							rendered="#{userMBean.modoFormulario ne 'OFF'}" />
+
+						<p:commandButton id="btnsave" value="Guardar"
+							update="@(.tablaRegistros, .registro-formulario)"
+							actionListener="#{userMBean.doGuardarRegistroFormulario}"
+							oncomplete="handleActionRequest(xhr, status, args);"
+							rendered="#{userMBean.modoFormulario ne 'OFF'}" />
+
+						<p:commandButton id="btnedit" value="Habilitar Edición"
+							actionListener="#{userMBean.doHabilitarEdicion}"
+							update="@(.registro-formulario)"
+							rendered="#{userMBean.modoFormulario eq 'OFF'}" />
+					</f:facet>
+
+				</p:panelGrid>
+
+
+
+			</p:dialog>
+
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>
+
+
