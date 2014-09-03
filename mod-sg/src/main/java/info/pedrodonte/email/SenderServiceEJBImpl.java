@@ -24,10 +24,10 @@ public class SenderServiceEJBImpl implements SenderServiceEJB {
 	Logger logger = Logger.getLogger(getClass());
 
 	private static final String USERNAME = "develop.sender.mail@gmail.com";
-	private static final String PASSWORD = "clave.qaws";
+	private static final String PASSWORD = "clave.qawsed";
 	private static final String SENDER = "Envío Automático<develop.sender.mail@gmail.com>";
 
-	private static final boolean ENVIAR_EMAIL_HABILITADO = true;
+	private static final boolean ENVIAR_EMAIL_HABILITADO = false;
 	
 	Session session = null;
 
@@ -45,7 +45,7 @@ public class SenderServiceEJBImpl implements SenderServiceEJB {
 		try {
 
 			Properties props = new Properties();
-			props.put("mail.smtp.host", "173.194.68.108");//smtp.gmail.com
+			props.put("mail.smtp.host", "smtp.gmail.com");//smtp.gmail.com
 			props.put("mail.smtp.socketFactory.port", "465");
 			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 			props.put("mail.smtp.auth", "true");

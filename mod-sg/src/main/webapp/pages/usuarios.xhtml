@@ -12,7 +12,7 @@
 		<script type="text/javascript">
 			function handleActionRequest(xhr, status, args) {
 				if (args.codExitoOperacion) {
-					dialogoEditor.hide();
+					PF('dialogoEditor').hide();
 				}
 			}
 		</script>
@@ -35,25 +35,26 @@
 
 						<p:commandButton value="Ver" process="@this"
 							disabled="#{userMBean.registroSeleccionado eq null}"
-							oncomplete="dialogoEditor.show()"
+							oncomplete="PF('dialogoEditor').show();"
 							update=":MatenedorForm:formularioEdicionRegistro"
 							actionListener="#{userMBean.doVerRegistroFormulario}" />
 
 						<p:commandButton value="Editar" process="@this"
 							disabled="#{userMBean.registroSeleccionado eq null}"
-							oncomplete="dialogoEditor.show()"
+							oncomplete="PF('dialogoEditor').show();"
 							update=":MatenedorForm:formularioEdicionRegistro"
 							actionListener="#{userMBean.doEditarRegistroFormulario}" />
 
 						<p:commandButton value="Nuevo" process="@this"
-							oncomplete="dialogoEditor.show()"
+							oncomplete="PF('dialogoEditor').show();"
+							icon="ui-icon-extlink"
 							update=":MatenedorForm:formularioEdicionRegistro"
 							actionListener="#{userMBean.doNuevoRegistroFormulario}" />
 							
 						<p:commandButton value="Generar Nueva Contraseña"
 							disabled="#{userMBean.registroSeleccionado eq null}"
 							process="@this"
-							oncomplete="dialogoCambioClave.show()"
+							oncomplete="PF('dialogoCambioClave').show();"
 							update=":MatenedorForm:pnlCambioClave" />
 
 					</f:facet>
@@ -109,7 +110,7 @@
 					<f:facet name="footer">
 
 						<p:commandButton id="btncancel" value="Cancelar"
-							update="@(.tablaRegistros)" oncomplete="dialogoEditor.hide();"
+							update="@(.tablaRegistros)" oncomplete="PF('dialogoEditor').hide();"
 							actionListener="#{userMBean.doCancelarRegistroFormulario}"
 							process="@none" rendered="#{userMBean.modoFormulario ne 'OFF'}" />
 
@@ -138,7 +139,7 @@
 					<h:outputText value="Confirmar generación de contraseña para #{userMBean.registroSeleccionado.identificador}"/>
 					<p:commandButton value="Confirmar Cambio Contraseña"
 							process="@this"
-							oncomplete="dialogoCambioClave.hide()"
+							oncomplete="PF('dialogoEditor').hide()"
 							actionListener="#{userMBean.doGenerarContrasena}" />
 				</p:panelGrid>
 				
