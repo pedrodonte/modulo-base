@@ -3,10 +3,16 @@ package info.pedrodonte.sg.dto;
 import info.pedrodonte.util.Auditable;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -15,9 +21,8 @@ import java.util.Date;
  */
 @Entity
 @Table(name="sg_tb_user")
-@NamedQuery(name="SgTbUser.findAll", query="SELECT s FROM SgTbUser s")
 public class SgTbUser implements Serializable, Auditable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -25,8 +30,11 @@ public class SgTbUser implements Serializable, Auditable {
 	private long usuarioId;
 
 	private String clave;
-
 	private String identificador;
+	private String email;
+	
+	@Column(name="flag_cambiar_clave")
+	private Integer flagCambiarClave;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="reg_fec_insert")
@@ -78,5 +86,31 @@ public class SgTbUser implements Serializable, Auditable {
 	public void setRegFecUpdate(Date regFecUpdate) {
 		this.regFecUpdate = regFecUpdate;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Integer getFlagCambiarClave() {
+		return flagCambiarClave;
+	}
+
+	public void setFlagCambiarClave(Integer flagCambiarClave) {
+		this.flagCambiarClave = flagCambiarClave;
+	}
+
+	@Override
+	public String toString() {
+		return "SgTbUser [usuarioId=" + usuarioId + ", clave=" + clave
+				+ ", identificador=" + identificador + ", email=" + email
+				+ ", flagCambiarClave=" + flagCambiarClave + ", regFecInsert="
+				+ regFecInsert + ", regFecUpdate=" + regFecUpdate + "]";
+	}
+	
+	
 
 }

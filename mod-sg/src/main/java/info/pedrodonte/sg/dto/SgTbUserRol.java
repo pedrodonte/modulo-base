@@ -109,4 +109,15 @@ public class SgTbUserRol implements Serializable, Auditable {
 		this.sgTbUser = sgTbUser;
 	}
 
+	@Override
+	public String toString() {
+		return "SgTbUserRol [usuarioRolId=" + usuarioRolId + ", regFecInsert="
+				+ regFecInsert + ", regFecUpdate=" + regFecUpdate
+				+ ", validoDesde=" + validoDesde + ", validoHasta="
+				+ validoHasta + ", sgTbRol=" + sgTbRol + ", sgTbUser="
+				+ sgTbUser + "]";
+	}
+	
+	
+
 }

@@ -2,7 +2,6 @@ package info.pedrodonte.sg.dao;
 
 import info.pedrodonte.sg.dto.SgTbUserRol;
 import info.pedrodonte.util.GenericDAO;
-import info.pedrodonte.util.HelperFecha;
 
 import java.util.HashMap;
 import java.util.List;

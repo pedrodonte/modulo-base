@@ -5,9 +5,9 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.password">110011</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/conceptos-des</property>
-        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">clave.qaws</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/modulo_base</property>
+        <property name="hibernate.connection.username">modulo_base</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
     </session-factory>
 </hibernate-configuration>

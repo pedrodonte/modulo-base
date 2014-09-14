@@ -47,7 +47,7 @@ public class UserEJBImpl implements UserEJB { // EJB EJBImpl
 	public VoUser nuevoRegistro(VoUser registro)
 			throws ErrorDelSistemaException {
 
-		registro.setClave(HelperString.generarClaveAleatorea(0));
+		registro.setClave(HelperString.generarClaveAleatorea());
 
 		SgTbUser dto = helperMapper.toDTO(registro);
 		sgTbUserDAO.save(dto);

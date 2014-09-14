@@ -10,6 +10,8 @@ public class VoUser implements Cloneable{
 	private long usuarioId;
 	private String clave;
 	private String identificador;
+	private String email;
+	private boolean cambiarClave;
 	private Date regFecInsert;
 	private Date regFecUpdate;
 
@@ -50,6 +52,14 @@ public class VoUser implements Cloneable{
 	
 	public void setRegFecUpdate(Date regFecUpdate) {
 		this.regFecUpdate = regFecUpdate;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override
@@ -112,6 +122,14 @@ public class VoUser implements Cloneable{
 
 	public void setRoles(List<VoRol> roles) {
 		this.roles = roles;
+	}
+
+	public boolean isCambiarClave() {
+		return cambiarClave;
+	}
+
+	public void setCambiarClave(boolean cambiarClave) {
+		this.cambiarClave = cambiarClave;
 	}
 	
 }

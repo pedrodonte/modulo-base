@@ -6,9 +6,9 @@
 		<class>info.pedrodonte.sg.dto.SgTbUser</class>
 		<class>info.pedrodonte.sg.dto.SgTbUserRol</class>
 		<properties>
-			<property name="hibernate.connection.username" value="postgres"/>
+			<property name="hibernate.connection.username" value="modulo_base"/>
 			<property name="hibernate.connection.password" value="clave.qaws"/>
-			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/mod-base-des"/>
+			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/modulo_base"/>
 			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
 		</properties>
 	</persistence-unit>

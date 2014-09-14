@@ -93,7 +93,13 @@ public class UserMBean extends AbsMantenedorMB<VoUser> { //controller , vo
 	@Override
 	public void doEditarRegistroFormulario(ActionEvent event) {
 		super.doEditarRegistroFormulario(event);
-		
+		buscarRolesDelRegistro();
+	}
+
+	/**
+	 * 
+	 */
+	private void buscarRolesDelRegistro() {
 		try {
 			List<VoRol> rolesNoAsociados = rolEJB.obtenerNoAsociadosUsuario(getRegistroEnEdicion());
 			List<VoRol> rolesAsociados = rolEJB.obtenerAsociadosUsuario(getRegistroEnEdicion());
@@ -101,9 +107,22 @@ public class UserMBean extends AbsMantenedorMB<VoUser> { //controller , vo
 		} catch (ErrorDelSistemaException e) {
 			e.printStackTrace();
 		}
-		
 	} 
 	
+	
+	
+	@Override
+	public void doHabilitarEdicion(ActionEvent event) {
+		super.doHabilitarEdicion(event);
+		buscarRolesDelRegistro();
+	}
+
+	@Override
+	public void doVerRegistroFormulario(ActionEvent event) {
+		super.doVerRegistroFormulario(event);
+		buscarRolesDelRegistro();
+	}
+
 	public void doGenerarContrasena(ActionEvent event) {
 		try {
 			serviceEJB.generarContrasena(getRegistroSeleccionado());

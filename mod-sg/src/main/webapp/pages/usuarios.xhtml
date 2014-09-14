@@ -46,15 +46,13 @@
 							actionListener="#{userMBean.doEditarRegistroFormulario}" />
 
 						<p:commandButton value="Nuevo" process="@this"
-							oncomplete="PF('dialogoEditor').show();"
-							icon="ui-icon-extlink"
+							oncomplete="PF('dialogoEditor').show();" icon="ui-icon-extlink"
 							update=":MatenedorForm:formularioEdicionRegistro"
 							actionListener="#{userMBean.doNuevoRegistroFormulario}" />
-							
+
 						<p:commandButton value="Generar Nueva Contraseña"
 							disabled="#{userMBean.registroSeleccionado eq null}"
-							process="@this"
-							oncomplete="PF('dialogoCambioClave').show();"
+							process="@this" oncomplete="PF('dialogoCambioClave').show();"
 							update=":MatenedorForm:pnlCambioClave" />
 
 					</f:facet>
@@ -65,6 +63,20 @@
 							<h:outputText value="identificador" />
 						</f:facet>
 						<h:outputText value="#{item.identificador}" />
+					</p:column>
+					
+					<p:column sortBy="#{item.email}">
+						<f:facet name="header">
+							<h:outputText value="Email" />
+						</f:facet>
+						<h:outputText value="#{item.email}" />
+					</p:column>
+					
+					<p:column sortBy="#{item.regFecInsert}">
+						<f:facet name="header">
+							<h:outputText value="Creado" />
+						</f:facet>
+						<h:outputText value="#{item.regFecInsert}" />
 					</p:column>
 
 				</p:dataTable>
@@ -78,7 +90,7 @@
 				<p:growl autoUpdate="true" showDetail="true" showSummary="true" />
 
 				<p:panelGrid columns="1" id="formularioEdicionRegistro"
-					styleClass="registro-formulario" >
+					styleClass="registro-formulario">
 					<h:outputText value="(*) Campos Obligatorios"
 						rendered="#{userMBean.modoFormulario ne 'OFF'}" />
 					<h:outputText value="modo:#{userMBean.modoFormulario}" />
@@ -94,23 +106,44 @@
 						<h:outputText rendered="#{userMBean.modoFormulario eq 'OFF'}"
 							value="#{userMBean.registroEnEdicion.identificador}" />
 
+						<h:outputText value="Email" />
+						<p:inputText required="true" styleClass="cpos-mantcli"
+							requiredMessage="Debe ingresar un Texto"
+							rendered="#{userMBean.modoFormulario ne 'OFF'}"
+							value="#{userMBean.registroEnEdicion.email}" />
+						<h:outputText rendered="#{userMBean.modoFormulario eq 'OFF'}"
+							value="#{userMBean.registroEnEdicion.email}" />
+
+						<h:outputText value="Cambiar clave en proximo login" rendered="#{userMBean.modoFormulario ne 'OFF'}"/>
+						<p:selectBooleanButton rendered="#{userMBean.modoFormulario ne 'OFF'}"
+							value="#{userMBean.registroEnEdicion.cambiarClave}" onLabel="Sí"
+							offLabel="No" style="width:60px" />
+
 					</p:panelGrid>
 
-					<p:pickList value="#{userMBean.roles}"
-						var="item" effect="bounce" itemValue="#{item}"
-						itemLabel="#{item.identificador}" converter="#{rolConverter}"
-						filterMatchMode="contains">
+					<p:pickList value="#{userMBean.roles}" var="item" effect="bounce"
+						itemValue="#{item}" itemLabel="#{item.identificador}"
+						converter="#{rolConverter}" filterMatchMode="contains"
+						rendered="#{userMBean.modoFormulario ne 'OFF'}">
 						<f:facet name="sourceCaption">Disponibles</f:facet>
 						<f:facet name="targetCaption">Seleccionados</f:facet>
 						<p:ajax event="transfer" listener="#{userMBean.onTransfer}" />
 						<p:column>#{item.identificador}</p:column>
 					</p:pickList>
-					
+
+					<p:dataList value="#{userMBean.roles.target}" var="item"
+						emptyMessage="Sin roles asociados."
+						type="ordered" rendered="#{userMBean.modoFormulario eq 'OFF'}">
+						<f:facet name="header">Roles Asociados</f:facet>
+				       #{item.identificador}
+				    </p:dataList>
+
 
 					<f:facet name="footer">
 
 						<p:commandButton id="btncancel" value="Cancelar"
-							update="@(.tablaRegistros)" oncomplete="PF('dialogoEditor').hide();"
+							update="@(.tablaRegistros)"
+							oncomplete="PF('dialogoEditor').hide();"
 							actionListener="#{userMBean.doCancelarRegistroFormulario}"
 							process="@none" rendered="#{userMBean.modoFormulario ne 'OFF'}" />
 
@@ -131,18 +164,19 @@
 
 
 			</p:dialog>
-			
-			<p:dialog id="cambioClaveDlg" header="Confirmar Generación de Contraseña"
+
+			<p:dialog id="cambioClaveDlg"
+				header="Confirmar Generación de Contraseña"
 				widgetVar="dialogoCambioClave" resizable="false" modal="true">
-				
+
 				<p:panelGrid columns="1" id="pnlCambioClave">
-					<h:outputText value="Confirmar generación de contraseña para #{userMBean.registroSeleccionado.identificador}"/>
+					<h:outputText
+						value="Confirmar generación de contraseña para #{userMBean.registroSeleccionado.identificador}" />
 					<p:commandButton value="Confirmar Cambio Contraseña"
-							process="@this"
-							oncomplete="PF('dialogoEditor').hide()"
-							actionListener="#{userMBean.doGenerarContrasena}" />
+						process="@this" oncomplete="PF('dialogoCambioClave').hide()"
+						actionListener="#{userMBean.doGenerarContrasena}" />
 				</p:panelGrid>
-				
+
 			</p:dialog>
 
 		</h:form>

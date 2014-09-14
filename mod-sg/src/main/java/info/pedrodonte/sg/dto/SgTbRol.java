@@ -15,7 +15,6 @@ import java.util.Date;
  */
 @Entity
 @Table(name="sg_tb_rol")
-@NamedQuery(name="SgTbRol.findAll", query="SELECT s FROM SgTbRol s")
 public class SgTbRol implements Serializable, Auditable {
 	private static final long serialVersionUID = 1L;
 
