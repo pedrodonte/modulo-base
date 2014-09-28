@@ -11,29 +11,23 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
+	<title>Modulo Base - Sistema</title>
 
 </h:head>
 <h:body>
 
-
 	<h:form>
 
-
-
-				<p:menuButton value="Actividades">
-					<p:menuitem value="VoRol" action="/pages/mant_rol?faces-redirect=true" />
-
-					<p:menuitem value="VoUser" action="/pages/mant_user?faces-redirect=true" />
-
-					<p:menuitem value="VoUserRol"
-						action="pages/mant_userrol?faces-redirect=true" />
-				</p:menuButton>
-
+		<p:menuButton value="Actividades">
+			<p:menuitem value="Mantenedor de Roles"
+				action="/pages/mant_rol?faces-redirect=true" />
+			<p:menuitem value="Mantenedor de Usuarios"
+				action="/pages/usuarios?faces-redirect=true" />
+		</p:menuButton>
 
 	</h:form>
 
 	<ui:insert name="content">CONTENT</ui:insert>
-
 
 </h:body>
 </html>
