@@ -12,22 +12,53 @@
 	<meta name="description" content="" />
 	<meta name="author" content="" />
 	<title>Modulo Base - Sistema</title>
+	
+	<style type="text/css">
+            .ui-dialog {
+                z-index:9999 !important;
+                overflow:visible !important;;
+            }
+
+            
+        </style>
+	
 
 </h:head>
 <h:body>
 
-	<h:form>
 
-		<p:menuButton value="Actividades">
-			<p:menuitem value="Mantenedor de Roles"
-				action="/pages/mant_rol?faces-redirect=true" />
-			<p:menuitem value="Mantenedor de Usuarios"
-				action="/pages/usuarios?faces-redirect=true" />
-		</p:menuButton>
+	<p:layout fullPage="true">
 
-	</h:form>
+		<p:layoutUnit position="north" size="100" >
+			<h:form>
 
-	<ui:insert name="content">CONTENT</ui:insert>
+				<p:menuButton value="Actividades">
+					<p:menuitem value="Mantenedor de Roles"
+						action="/pages/mant_rol?faces-redirect=true" />
+					<p:menuitem value="Mantenedor de Usuarios"
+						action="/pages/usuarios?faces-redirect=true" />
+				</p:menuButton>
+
+			</h:form>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south" size="100" >
+			<h:outputText value="South unit content." />
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west" size="200" >
+			<h:outputText value="West unit content." />
+		</p:layoutUnit>
+
+
+		<p:layoutUnit position="center">
+			<ui:insert name="content">CONTENT</ui:insert>
+		</p:layoutUnit>
+
+	</p:layout>
+	
+	<ui:insert name="dialogo">CONTENT</ui:insert>
+
 
 </h:body>
 </html>

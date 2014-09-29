@@ -84,8 +84,8 @@
 
 
 
-			<p:dialog id="editorRegistroDlg" header="Detalle del Registro"
-				widgetVar="dialogoEditor" resizable="false" modal="true">
+			<p:dialog id="editorRegistroDlg" header="Detalle del Registro" 
+				widgetVar="dialogoEditor" resizable="false" modal="false">
 
 				<p:growl autoUpdate="true" showDetail="true" showSummary="true" />
 
@@ -167,7 +167,7 @@
 
 			<p:dialog id="cambioClaveDlg"
 				header="Confirmar Generación de Contraseña"
-				widgetVar="dialogoCambioClave" resizable="false" modal="true">
+				widgetVar="dialogoCambioClave" resizable="false" modal="false">
 
 				<p:panelGrid columns="1" id="pnlCambioClave">
 					<h:outputText
@@ -183,6 +183,8 @@
 
 
 	</ui:define>
+	
+	
 
 </ui:composition>
 
