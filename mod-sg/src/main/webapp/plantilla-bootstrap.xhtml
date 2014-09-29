@@ -16,7 +16,7 @@
 	<style type="text/css">
             .ui-dialog {
                 z-index:9999 !important;
-                overflow:visible !important;;
+                overflow:visible !important;
             }
 
             
@@ -26,20 +26,21 @@
 </h:head>
 <h:body>
 
+<h:form id="MatenedorForm">
 
 	<p:layout fullPage="true">
 
 		<p:layoutUnit position="north" size="100" >
-			<h:form>
 
 				<p:menuButton value="Actividades">
 					<p:menuitem value="Mantenedor de Roles"
 						action="/pages/mant_rol?faces-redirect=true" />
 					<p:menuitem value="Mantenedor de Usuarios"
 						action="/pages/usuarios?faces-redirect=true" />
+					<p:menuitem value="Consulta"
+						action="/pages/consulta?faces-redirect=true" />
 				</p:menuButton>
 
-			</h:form>
 		</p:layoutUnit>
 
 		<p:layoutUnit position="south" size="100" >
@@ -58,6 +59,8 @@
 	</p:layout>
 	
 	<ui:insert name="dialogo">CONTENT</ui:insert>
+	
+	</h:form>
 
 
 </h:body>

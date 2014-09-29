@@ -17,7 +17,8 @@
 			}
 		</script>
 
-		<h:form id="MatenedorForm">
+		
+		
 			<p:growl id="msg" autoUpdate="true" showDetail="true"
 				showSummary="true" />
 
@@ -70,7 +71,7 @@
 							<h:outputText value="Email" />
 						</f:facet>
 						<h:outputText value="#{item.email}" />
-					</p:column>
+					</p:column>appendToBody="true"
 					
 					<p:column sortBy="#{item.regFecInsert}">
 						<f:facet name="header">
@@ -83,9 +84,11 @@
 			</p:panelGrid>
 
 
-
-			<p:dialog id="editorRegistroDlg" header="Detalle del Registro" 
-				widgetVar="dialogoEditor" resizable="false" modal="false">
+	</ui:define>
+	
+	<ui:define name="dialogo">
+	<p:dialog id="editorRegistroDlg" header="Detalle del Registro" 
+				widgetVar="dialogoEditor" resizable="false" modal="true" appendToBody="true">
 
 				<p:growl autoUpdate="true" showDetail="true" showSummary="true" />
 
@@ -167,7 +170,7 @@
 
 			<p:dialog id="cambioClaveDlg"
 				header="Confirmar Generación de Contraseña"
-				widgetVar="dialogoCambioClave" resizable="false" modal="false">
+				widgetVar="dialogoCambioClave" resizable="false" modal="true">
 
 				<p:panelGrid columns="1" id="pnlCambioClave">
 					<h:outputText
@@ -178,10 +181,6 @@
 				</p:panelGrid>
 
 			</p:dialog>
-
-		</h:form>
-
-
 	</ui:define>
 	
 	
