@@ -1,5 +1,7 @@
 package info.pedrodonte.sg.vo;
 
+import info.pedrodonte.base.dto.BsTbPersona;
+import info.pedrodonte.base.vo.VoPersona;
 import info.pedrodonte.sg.dto.SgTbRol;
 import info.pedrodonte.sg.dto.SgTbUser;
 import info.pedrodonte.sg.dto.SgTbUserRol;
@@ -125,6 +127,47 @@ public class HelperMapper {
 			}
 		}
 		return dto;
+	}
+	
+	public BsTbPersona toDTO(VoPersona vo) {
+		BsTbPersona dto = null;
+		if (vo != null) {
+			dto = new BsTbPersona();
+			try {
+				dto.setApellidos(vo.getApellidos());
+				dto.setFechaNacimiento(vo.getFechaNacimiento());
+				dto.setIdentificador(vo.getIdentificador());
+				dto.setIdPersona(vo.getIdPersona());
+				dto.setNombres(vo.getNombres());
+				dto.setRegFecInsert(vo.getRegFecInsert());
+				dto.setRegFecUpdate(vo.getRegFecUpdate());
+				dto.setSexo(vo.getSexo());
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dto;
+	}
+	
+	public VoPersona toVO(BsTbPersona dto) {
+		VoPersona vo = null;
+		if (dto != null) {
+			vo = new VoPersona();
+			try {
+				vo.setApellidos(dto.getApellidos());
+				vo.setFechaNacimiento(dto.getFechaNacimiento());
+				vo.setIdentificador(dto.getIdentificador());
+				vo.setIdPersona(dto.getIdPersona());
+				vo.setNombres(dto.getNombres());
+				vo.setRegFecInsert(dto.getRegFecInsert());
+				vo.setRegFecUpdate(dto.getRegFecUpdate());
+				vo.setSexo(dto.getSexo());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return vo;
 	}
 
 }

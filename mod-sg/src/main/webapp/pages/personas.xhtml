@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/plantilla-bootstrap.xhtml">
+
+	<ui:define name="content">
+
+		<script type="text/javascript">
+			function handleActionRequest(xhr, status, args) {
+				if (args.codExitoOperacion) {
+					PF('dialogoEditor').hide();
+				}
+			}
+		</script>
+
+		<p:growl id="msg" autoUpdate="true" showDetail="true"
+			showSummary="true" />
+
+		<p:panelGrid columns="1" style="width:100%;" id="datos">
+
+			<p:dataTable id="tablaRegistros" value="#{personaMBean.registros}"
+				var="item" styleClass="tablaRegistros" rowKey="#{item.usuarioId}"
+				selectionMode="single"
+				selection="#{personaMBean.registroSeleccionado}" rows="20"
+				paginator="true">
+
+				<p:ajax event="rowSelect" update="@this" />
+
+				<f:facet name="header">
+
+					<p:commandButton value="Ver" process="@this"
+						disabled="#{personaMBean.registroSeleccionado eq null}"
+						oncomplete="PF('dialogoEditor').show();"
+						update=":MatenedorForm:formularioEdicionRegistro"
+						actionListener="#{personaMBean.doVerRegistroFormulario}" />
+
+					<p:commandButton value="Editar" process="@this"
+						disabled="#{personaMBean.registroSeleccionado eq null}"
+						oncomplete="PF('dialogoEditor').show();"
+						update=":MatenedorForm:formularioEdicionRegistro"
+						actionListener="#{personaMBean.doEditarRegistroFormulario}" />
+
+					<p:commandButton value="Nuevo" process="@this"
+						oncomplete="PF('dialogoEditor').show();" icon="ui-icon-extlink"
+						update=":MatenedorForm:formularioEdicionRegistro"
+						actionListener="#{personaMBean.doNuevoRegistroFormulario}" />
+
+				</f:facet>
+
+				<p:column sortBy="#{item.identificador}">
+					<f:facet name="header">
+						<h:outputText value="identificador" />
+					</f:facet>
+					<h:outputText value="#{item.identificador}" />
+				</p:column>
+
+				<p:column sortBy="#{item.regFecInsert}">
+					<f:facet name="header">
+						<h:outputText value="Creado" />
+					</f:facet>
+					<h:outputText value="#{item.regFecInsert}" />
+				</p:column>
+
+			</p:dataTable>
+		</p:panelGrid>
+
+
+	</ui:define>
+
+	<ui:define name="dialogo">
+		<p:dialog id="editorRegistroDlg" header="Detalle del Registro"
+			widgetVar="dialogoEditor" resizable="false" modal="true"
+			>
+
+			<p:growl autoUpdate="true" showDetail="true" showSummary="true" />
+
+			<p:panelGrid columns="1" id="formularioEdicionRegistro"
+				styleClass="registro-formulario">
+				<h:outputText value="(*) Campos Obligatorios"
+					rendered="#{personaMBean.modoFormulario ne 'OFF'}" />
+				<h:outputText value="modo:#{personaMBean.modoFormulario}" />
+				<p:panelGrid columns="2" style="width:100%;">
+
+					<f:facet name="header">Datos de la Persona</f:facet>
+
+					<h:outputText value="Identificador" />
+					<p:inputText required="true" styleClass="cpos-mantcli"
+						requiredMessage="Debe ingresar un Texto"
+						rendered="#{personaMBean.modoFormulario ne 'OFF'}"
+						value="#{personaMBean.registroEnEdicion.identificador}" />
+					<h:outputText rendered="#{personaMBean.modoFormulario eq 'OFF'}"
+						value="#{personaMBean.registroEnEdicion.identificador}" />
+
+					<h:outputText value="Nombres" />
+					<p:inputText required="true" styleClass="cpos-mantcli"
+						requiredMessage="Debe ingresar un Texto"
+						rendered="#{personaMBean.modoFormulario ne 'OFF'}"
+						value="#{personaMBean.registroEnEdicion.nombres}" />
+					<h:outputText rendered="#{personaMBean.modoFormulario eq 'OFF'}"
+						value="#{personaMBean.registroEnEdicion.nombres}" />
+
+					<h:outputText value="Apellidos" />
+					<p:inputText required="true" styleClass="cpos-mantcli"
+						requiredMessage="Debe ingresar un Texto"
+						rendered="#{personaMBean.modoFormulario ne 'OFF'}"
+						value="#{personaMBean.registroEnEdicion.apellidos}" />
+
+					<h:outputText rendered="#{personaMBean.modoFormulario eq 'OFF'}"
+						value="#{personaMBean.registroEnEdicion.apellidos}" />
+
+					<h:outputText value="Sexo" />
+					<p:selectOneRadio required="true" styleClass="cpos-mantcli"
+						rendered="#{personaMBean.modoFormulario ne 'OFF'}"
+						value="#{personaMBean.registroEnEdicion.sexo}">
+						<f:selectItem itemLabel="Mujer" itemValue="1" />
+						<f:selectItem itemLabel="Hombre" itemValue="2" />
+					</p:selectOneRadio>
+					<h:outputText rendered="#{personaMBean.modoFormulario eq 'OFF'}"
+						value="#{personaMBean.registroEnEdicion.apellidos}" />
+						
+					<h:outputText value="Fecha de Nacimiento" />
+					<p:calendar required="true" styleClass="cpos-mantcli"
+						requiredMessage="Debe ingresar un Texto" pattern="dd-MM-yyyy" mask="true"
+						rendered="#{personaMBean.modoFormulario ne 'OFF'}"
+						value="#{personaMBean.registroEnEdicion.fechaNacimiento}" />
+
+					<h:outputText rendered="#{personaMBean.modoFormulario eq 'OFF'}"
+						value="#{personaMBean.registroEnEdicion.fechaNacimiento}" />
+
+				</p:panelGrid>
+
+				<f:facet name="footer">
+
+					<p:commandButton id="btncancel" value="Cancelar"
+						update="@(.tablaRegistros)"
+						oncomplete="PF('dialogoEditor').hide();"
+						actionListener="#{personaMBean.doCancelarRegistroFormulario}"
+						process="@none" rendered="#{personaMBean.modoFormulario ne 'OFF'}" />
+
+					<p:commandButton id="btnsave" value="Guardar"
+						update="@(.tablaRegistros, .registro-formulario)"
+						actionListener="#{personaMBean.doGuardarRegistroFormulario}"
+						oncomplete="handleActionRequest(xhr, status, args);"
+						rendered="#{personaMBean.modoFormulario ne 'OFF'}" />
+
+					<p:commandButton id="btnedit" value="Habilitar Edición"
+						actionListener="#{personaMBean.doHabilitarEdicion}"
+						update="@(.registro-formulario)"
+						rendered="#{personaMBean.modoFormulario eq 'OFF'}" />
+				</f:facet>
+
+			</p:panelGrid>
+
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>
+
+
