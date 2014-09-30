@@ -132,6 +132,11 @@ public class VoPersona implements Cloneable{
 	public void setRegFecUpdate(Date regFecUpdate) {
 		this.regFecUpdate = regFecUpdate;
 	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 	
 	
 

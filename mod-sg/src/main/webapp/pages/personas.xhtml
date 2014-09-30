@@ -23,7 +23,7 @@
 		<p:panelGrid columns="1" style="width:100%;" id="datos">
 
 			<p:dataTable id="tablaRegistros" value="#{personaMBean.registros}"
-				var="item" styleClass="tablaRegistros" rowKey="#{item.usuarioId}"
+				var="item" styleClass="tablaRegistros" rowKey="#{item.idPersona}"
 				selectionMode="single"
 				selection="#{personaMBean.registroSeleccionado}" rows="20"
 				paginator="true">
@@ -58,11 +58,20 @@
 					<h:outputText value="#{item.identificador}" />
 				</p:column>
 
+				<p:column sortBy="#{item.nombres}">
+					<f:facet name="header">
+						<h:outputText value="Nombre" />
+					</f:facet>
+					<h:outputText value="#{item.nombres} #{item.apellidos}" />
+				</p:column>
+
 				<p:column sortBy="#{item.regFecInsert}">
 					<f:facet name="header">
 						<h:outputText value="Creado" />
 					</f:facet>
-					<h:outputText value="#{item.regFecInsert}" />
+					<h:outputText value="#{item.regFecInsert}">
+						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+					</h:outputText>
 				</p:column>
 
 			</p:dataTable>
@@ -73,8 +82,7 @@
 
 	<ui:define name="dialogo">
 		<p:dialog id="editorRegistroDlg" header="Detalle del Registro"
-			widgetVar="dialogoEditor" resizable="false" modal="true"
-			>
+			widgetVar="dialogoEditor" resizable="false" modal="true">
 
 			<p:growl autoUpdate="true" showDetail="true" showSummary="true" />
 
@@ -121,11 +129,11 @@
 					</p:selectOneRadio>
 					<h:outputText rendered="#{personaMBean.modoFormulario eq 'OFF'}"
 						value="#{personaMBean.registroEnEdicion.apellidos}" />
-						
+
 					<h:outputText value="Fecha de Nacimiento" />
 					<p:calendar required="true" styleClass="cpos-mantcli"
-						requiredMessage="Debe ingresar un Texto" pattern="dd-MM-yyyy" mask="true"
-						rendered="#{personaMBean.modoFormulario ne 'OFF'}"
+						requiredMessage="Debe ingresar un Texto" pattern="dd-MM-yyyy"
+						mask="true" rendered="#{personaMBean.modoFormulario ne 'OFF'}"
 						value="#{personaMBean.registroEnEdicion.fechaNacimiento}" />
 
 					<h:outputText rendered="#{personaMBean.modoFormulario eq 'OFF'}"

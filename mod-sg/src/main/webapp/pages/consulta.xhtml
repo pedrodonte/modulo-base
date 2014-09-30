@@ -9,14 +9,6 @@
 
 	<ui:define name="content">
 
-		<script type="text/javascript">
-			function handleActionRequest(xhr, status, args) {
-				if (args.codExitoOperacion) {
-					PF('dialogoEditor').hide();
-				}
-			}
-		</script>
-
 		<p:growl id="msg" autoUpdate="true" showDetail="true"
 			showSummary="true" />
 
