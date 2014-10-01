@@ -1,7 +1,10 @@
 package info.pedrodonte.consultas.jsf.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import fns.Certificado;
+import fns.ClienteCertificadorURL;
 import info.pedrodonte.base.ejb.PersonaEJB;
 import info.pedrodonte.base.vo.VoPersona;
 import info.pedrodonte.consultas.ejb.ConsultaEJB;
@@ -10,6 +13,7 @@ import info.pedrodonte.protask.excepciones.ErrorDelSistemaException;
 import info.pedrodonte.protask.excepciones.RegistrosNoEncontradosException;
 import info.pedrodonte.util.AbsMantenedorMB;
 import info.pedrodonte.util.CrudGenericServiceApi;
+import info.pedrodonte.util.HelperString;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -55,6 +59,9 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> { // controller ,
 			if (personaEnConsulta == null) {
 				personaEnConsulta = new VoPersona();
 				personaEnConsulta.setIdentificador(cpoIdentificador);
+				
+				personaEnConsulta = buscarEnWSFns(cpoIdentificador);
+				
 				mensajesMB.msgWarn("La persona NO esta registrada, para continuar debe llenar el formulario de Persona");
 			}
 		} catch (RegistrosNoEncontradosException | ErrorDelSistemaException e) {
@@ -62,6 +69,36 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> { // controller ,
 		}
 	}
 	
+	private VoPersona buscarEnWSFns(String identi) {
+		ClienteCertificadorURL basePersonas = new ClienteCertificadorURL();
+		
+		VoPersona persona = new VoPersona();
+		try {
+			String dgv = identi.split("-")[1];
+			int rut = Integer.parseInt(identi.split("-")[0]);
+			
+			Certificado data = basePersonas.consultar(61607400, rut, dgv);
+			
+			persona = new VoPersona();
+			persona.setApellidos( HelperString.cambioCharsetToUTF8(data.getApell1()+" "+data.getApell2()) );
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+			persona.setFechaNacimiento(formatter.parse(data.getFec_nac()));
+			persona.setNombres(HelperString.cambioCharsetToUTF8(data.getNombres()));
+			
+			if (data.getSex().equals("M")) {
+				persona.setSexo(2);
+			}else{
+				persona.setSexo(1);
+			}
+			
+		} catch (Exception e) {
+			mensajesMB.msgWarn("Falla consulta a WS, se debe llenar manualmente.");
+		}
+		
+		persona.setIdentificador(identi.toUpperCase());
+		return persona;
+	}
+
 	public void doGuardarPersona(ActionEvent event) {
 		try {
 			logger.info("doGuardarPersona:"+personaEnConsulta.getIdentificador());

@@ -20,41 +20,6 @@
 		<p:growl id="msg" autoUpdate="true" showDetail="true"
 			showSummary="true" />
 
-		<p:panelGrid columns="1" id="formularioEdicionRegistro"
-			styleClass="registro-formulario">
-			<h:outputText value="(*) Campos Obligatorios"
-				rendered="#{consultaMBean.modoFormulario ne 'OFF'}" />
-			<h:outputText value="modo:#{consultaMBean.modoFormulario}" />
-			<p:panelGrid columns="2">
-
-				<f:facet name="header">Datos de Consulta</f:facet>
-
-
-			</p:panelGrid>
-
-			<f:facet name="footer">
-
-				<p:commandButton id="btncancel" value="Cancelar"
-					update="@(.tablaRegistros)"
-					oncomplete="PF('dialogoEditor').hide();"
-					actionListener="#{consultaMBean.doCancelarRegistroFormulario}"
-					process="@none" rendered="#{consultaMBean.modoFormulario ne 'OFF'}" />
-
-				<p:commandButton id="btnsave" value="Guardar"
-					update="@(.tablaRegistros, .registro-formulario)"
-					actionListener="#{consultaMBean.doGuardarRegistroFormulario}"
-					oncomplete="handleActionRequest(xhr, status, args);"
-					rendered="#{consultaMBean.modoFormulario ne 'OFF'}" />
-
-				<p:commandButton id="btnedit" value="Habilitar Edición"
-					actionListener="#{consultaMBean.doHabilitarEdicion}"
-					update="@(.registro-formulario)"
-					rendered="#{consultaMBean.modoFormulario eq 'OFF'}" />
-			</f:facet>
-
-		</p:panelGrid>
-
-
 		<p:wizard flowListener="#{consultaMBean.onFlowProcess}">
 			<p:tab id="persona" title="Persona">
 				<p:panel header="Personal Details" styleClass="registro-formulario">
@@ -138,17 +103,17 @@
 
 					<h:outputText
 						value="#{consultaMBean.personaEnConsulta.nombres} #{consultaMBean.personaEnConsulta.apellidos}, #{consultaMBean.personaEnConsulta.edad}" />
-					
+
 					<p:panelGrid columns="1" style="width:100%; margin-top:10px;">
 
-						<p:editor id="editor" widgetVar="cpoDesarrollo" required="true" styleClass="cpos-mantcli"
+						<p:editor id="editor" widgetVar="cpoDesarrollo" required="true"
+							styleClass="cpos-mantcli"
 							requiredMessage="Debe ingresar un Texto"
 							rendered="#{consultaMBean.modoFormulario ne 'OFF'}"
 							value="#{consultaMBean.registroEnEdicion.txtDesarrollo}" />
-						<h:outputText
-							rendered="#{consultaMBean.modoFormulario eq 'OFF'}"
+						<h:outputText rendered="#{consultaMBean.modoFormulario eq 'OFF'}"
 							value="#{consultaMBean.registroEnEdicion.txtDesarrollo}" />
-							
+
 					</p:panelGrid>
 
 				</p:panel>
@@ -156,6 +121,25 @@
 
 			<p:tab id="observaciones" title="Observaciones">
 				<p:panel header="Confirmation">
+
+					<p:commandButton id="btncancel" value="Cancelar"
+						update="@(.tablaRegistros)"
+						oncomplete="PF('dialogoEditor').hide();"
+						actionListener="#{consultaMBean.doCancelarRegistroFormulario}"
+						process="@none"
+						rendered="#{consultaMBean.modoFormulario ne 'OFF'}" />
+
+					<p:commandButton id="btnsave" value="Guardar"
+						update="@(.tablaRegistros, .registro-formulario)"
+						actionListener="#{consultaMBean.doGuardarRegistroFormulario}"
+						oncomplete="handleActionRequest(xhr, status, args);"
+						rendered="#{consultaMBean.modoFormulario ne 'OFF'}" />
+
+					<p:commandButton id="btnedit" value="Habilitar Edición"
+						actionListener="#{consultaMBean.doHabilitarEdicion}"
+						update="@(.registro-formulario)"
+						rendered="#{consultaMBean.modoFormulario eq 'OFF'}" />
+
 				</p:panel>
 			</p:tab>
 		</p:wizard>
