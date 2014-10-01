@@ -88,8 +88,12 @@
 							rendered="#{consultaMBean.personaEnConsulta.idPersona > 0}"
 							value="#{consultaMBean.personaEnConsulta.fechaNacimiento}" />
 
+						<h:outputText value=" " />
+
 						<p:commandButton value="Guardar datos de Persona"
+							styleClass="ui-state-error ui-corner-all"
 							actionListener="#{consultaMBean.doGuardarPersona}"
+							icon="ui-icon-check"
 							rendered="#{consultaMBean.personaEnConsulta.idPersona == 0}"
 							update="@(.registro-formulario)" />
 
@@ -102,7 +106,7 @@
 				<p:panel header="Desarrollo de la Consulta">
 
 					<h:outputText
-						value="#{consultaMBean.personaEnConsulta.nombres} #{consultaMBean.personaEnConsulta.apellidos}, #{consultaMBean.personaEnConsulta.edad}" />
+						value="Paciente: #{consultaMBean.personaEnConsulta.nombres} #{consultaMBean.personaEnConsulta.apellidos}, #{consultaMBean.personaEnConsulta.edad} años." />
 
 					<p:panelGrid columns="1" style="width:100%; margin-top:10px;">
 

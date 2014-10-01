@@ -81,7 +81,7 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> { // controller ,
 			
 			persona = new VoPersona();
 			persona.setApellidos( HelperString.cambioCharsetToUTF8(data.getApell1()+" "+data.getApell2()) );
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			persona.setFechaNacimiento(formatter.parse(data.getFec_nac()));
 			persona.setNombres(HelperString.cambioCharsetToUTF8(data.getNombres()));
 			
@@ -126,7 +126,7 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> { // controller ,
 		}
 		
 		if (event.getOldStep().equals("consulta")) {
-			
+			doGuardarRegistroFormulario(null);
 		}
 		
 		return event.getNewStep();

@@ -1,6 +1,7 @@
 package info.pedrodonte.consultas.dto;
 
 import info.pedrodonte.base.dto.BsTbPersona;
+import info.pedrodonte.util.Auditable;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,9 +24,9 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="cs_tb_consulta")
 
-public class CsTbConsulta implements Serializable {
+public class CsTbConsulta implements Serializable, Auditable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
