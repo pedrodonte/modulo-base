@@ -2,6 +2,8 @@ package info.pedrodonte.sg.vo;
 
 import info.pedrodonte.base.dto.BsTbPersona;
 import info.pedrodonte.base.vo.VoPersona;
+import info.pedrodonte.consultas.dto.CsTbConsulta;
+import info.pedrodonte.consultas.vo.VoConsulta;
 import info.pedrodonte.sg.dto.SgTbRol;
 import info.pedrodonte.sg.dto.SgTbUser;
 import info.pedrodonte.sg.dto.SgTbUserRol;
@@ -128,7 +130,7 @@ public class HelperMapper {
 		}
 		return dto;
 	}
-	
+
 	public BsTbPersona toDTO(VoPersona vo) {
 		BsTbPersona dto = null;
 		if (vo != null) {
@@ -149,7 +151,7 @@ public class HelperMapper {
 		}
 		return dto;
 	}
-	
+
 	public VoPersona toVO(BsTbPersona dto) {
 		VoPersona vo = null;
 		if (dto != null) {
@@ -168,6 +170,43 @@ public class HelperMapper {
 			}
 		}
 		return vo;
+	}
+
+	public VoConsulta toVO(CsTbConsulta dto) {
+		VoConsulta vo = null;
+		if (dto != null) {
+			vo = new VoConsulta();
+			try {
+				vo.setConsultaId(dto.getConsultaId());
+				vo.setFechaConsulta(dto.getFechaConsulta());
+				vo.setRegFecInsert(dto.getRegFecInsert());
+				vo.setRegFecUpdate(dto.getRegFecUpdate());
+				vo.setTxtDesarrollo(dto.getTxtDesarrollo());
+				vo.setVoPersona(toVO(dto.getBsTbPersona()));
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return vo;
+	}
+
+	public CsTbConsulta toDTO(VoConsulta vo) {
+		CsTbConsulta dto = null;
+		if (vo != null) {
+			dto = new CsTbConsulta();
+			try {
+				dto.setConsultaId(vo.getConsultaId());
+				dto.setFechaConsulta(vo.getFechaConsulta());
+				dto.setRegFecInsert(vo.getRegFecInsert());
+				dto.setRegFecUpdate(vo.getRegFecUpdate());
+				dto.setTxtDesarrollo(vo.getTxtDesarrollo());
+				dto.setBsTbPersona(toDTO(vo.getVoPersona()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dto;
 	}
 
 }

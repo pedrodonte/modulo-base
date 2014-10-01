@@ -75,5 +75,12 @@ public class PersonaEJBImpl implements PersonaEJB { // EJB EJBImpl
 		return helperMapper.toVO(dto);
 	}
 
+	@Override
+	public VoPersona obtenerPorIdentificador(String identificador)
+			throws RegistrosNoEncontradosException, ErrorDelSistemaException {
+		BsTbPersona dto = personaDAO.findByIdentificador(identificador);
+		return helperMapper.toVO(dto);
+	}
+
 
 }

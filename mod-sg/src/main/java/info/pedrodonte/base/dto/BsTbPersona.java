@@ -24,7 +24,7 @@ public class BsTbPersona implements Serializable, Auditable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="persona_id")
-	private int idPersona;
+	private long idPersona;
 	private String identificador;
 	
 	@Temporal(TemporalType.DATE)
@@ -42,10 +42,10 @@ public class BsTbPersona implements Serializable, Auditable{
 	@Column(name="reg_fec_update")
 	private Date regFecUpdate;
 	
-	public int getIdPersona() {
+	public long getIdPersona() {
 		return idPersona;
 	}
-	public void setIdPersona(int idPersona) {
+	public void setIdPersona(long idPersona) {
 		this.idPersona = idPersona;
 	}
 	public String getIdentificador() {

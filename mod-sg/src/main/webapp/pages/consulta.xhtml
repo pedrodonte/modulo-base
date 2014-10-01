@@ -9,35 +9,25 @@
 
 	<ui:define name="content">
 
+		<script type="text/javascript">
+			function handleActionRequest(xhr, status, args) {
+				if (args.codExitoOperacion) {
+					PF('formularioEdicionRegistro').hide();
+				}
+			}
+		</script>
+
 		<p:growl id="msg" autoUpdate="true" showDetail="true"
 			showSummary="true" />
 
 		<p:panelGrid columns="1" id="formularioEdicionRegistro"
 			styleClass="registro-formulario">
 			<h:outputText value="(*) Campos Obligatorios"
-				rendered="#{rolMBean.modoFormulario ne 'OFF'}" />
-			<h:outputText value="modo:#{rolMBean.modoFormulario}" />
+				rendered="#{consultaMBean.modoFormulario ne 'OFF'}" />
+			<h:outputText value="modo:#{consultaMBean.modoFormulario}" />
 			<p:panelGrid columns="2">
 
 				<f:facet name="header">Datos de Consulta</f:facet>
-
-				<h:outputText value="Paciente RUN" />
-				<p:inputText required="true" styleClass="cpos-mantcli"
-					requiredMessage="Debe ingresar un Texto"
-					rendered="#{rolMBean.modoFormulario ne 'OFF'}" />
-				<h:outputText rendered="#{rolMBean.modoFormulario eq 'OFF'}" />
-
-				<h:outputText value="Análisis" />
-				<p:inputText required="true" styleClass="cpos-mantcli"
-					requiredMessage="Debe ingresar un Texto"
-					rendered="#{rolMBean.modoFormulario ne 'OFF'}" />
-				<h:outputText rendered="#{rolMBean.modoFormulario eq 'OFF'}" />
-
-				<h:outputText value="Diagnóstico" />
-				<p:inputText required="true" styleClass="cpos-mantcli"
-					requiredMessage="Debe ingresar un Texto"
-					rendered="#{rolMBean.modoFormulario ne 'OFF'}" />
-				<h:outputText rendered="#{rolMBean.modoFormulario eq 'OFF'}" />
 
 
 			</p:panelGrid>
@@ -47,22 +37,128 @@
 				<p:commandButton id="btncancel" value="Cancelar"
 					update="@(.tablaRegistros)"
 					oncomplete="PF('dialogoEditor').hide();"
-					actionListener="#{rolMBean.doCancelarRegistroFormulario}"
-					process="@none" rendered="#{rolMBean.modoFormulario ne 'OFF'}" />
+					actionListener="#{consultaMBean.doCancelarRegistroFormulario}"
+					process="@none" rendered="#{consultaMBean.modoFormulario ne 'OFF'}" />
 
 				<p:commandButton id="btnsave" value="Guardar"
 					update="@(.tablaRegistros, .registro-formulario)"
-					actionListener="#{rolMBean.doGuardarRegistroFormulario}"
+					actionListener="#{consultaMBean.doGuardarRegistroFormulario}"
 					oncomplete="handleActionRequest(xhr, status, args);"
-					rendered="#{rolMBean.modoFormulario ne 'OFF'}" />
+					rendered="#{consultaMBean.modoFormulario ne 'OFF'}" />
 
 				<p:commandButton id="btnedit" value="Habilitar Edición"
-					actionListener="#{rolMBean.doHabilitarEdicion}"
+					actionListener="#{consultaMBean.doHabilitarEdicion}"
 					update="@(.registro-formulario)"
-					rendered="#{rolMBean.modoFormulario eq 'OFF'}" />
+					rendered="#{consultaMBean.modoFormulario eq 'OFF'}" />
 			</f:facet>
 
 		</p:panelGrid>
+
+
+		<p:wizard flowListener="#{consultaMBean.onFlowProcess}">
+			<p:tab id="persona" title="Persona">
+				<p:panel header="Personal Details" styleClass="registro-formulario">
+
+					<h:outputText value="Paciente RUN " />
+					<p:inputText id="cpoIdentificador" required="true"
+						styleClass="cpos-mantcli" requiredMessage="Debe ingresar un Texto"
+						value="#{consultaMBean.cpoIdentificador}" />
+					<p:spacer width="10" />
+					<p:commandButton id="btn" value="Buscar Persona"
+						actionListener="#{consultaMBean.doBuscarPersona}"
+						process="@this,cpoIdentificador" update="@(.registro-formulario)" />
+
+					<p:panelGrid columns="2" style="width:100%; margin-top:10px;">
+
+						<f:facet name="header">Datos de la Persona</f:facet>
+
+						<h:outputText value="Identificador" />
+						<p:inputText required="true" styleClass="cpos-mantcli"
+							requiredMessage="Debe ingresar un Texto"
+							rendered="#{consultaMBean.personaEnConsulta.idPersona == 0}"
+							value="#{consultaMBean.personaEnConsulta.identificador}" />
+						<h:outputText
+							rendered="#{consultaMBean.personaEnConsulta.idPersona > 0}"
+							value="#{consultaMBean.personaEnConsulta.identificador}" />
+
+						<h:outputText value="Nombres" />
+						<p:inputText required="true" styleClass="cpos-mantcli"
+							requiredMessage="Debe ingresar un Texto"
+							rendered="#{consultaMBean.personaEnConsulta.idPersona == 0}"
+							value="#{consultaMBean.personaEnConsulta.nombres}" />
+						<h:outputText
+							rendered="#{consultaMBean.personaEnConsulta.idPersona > 0}"
+							value="#{consultaMBean.personaEnConsulta.nombres}" />
+
+						<h:outputText value="Apellidos" />
+						<p:inputText required="true" styleClass="cpos-mantcli"
+							requiredMessage="Debe ingresar un Texto"
+							rendered="#{consultaMBean.personaEnConsulta.idPersona == 0}"
+							value="#{consultaMBean.personaEnConsulta.apellidos}" />
+
+						<h:outputText
+							rendered="#{consultaMBean.personaEnConsulta.idPersona > 0}"
+							value="#{consultaMBean.personaEnConsulta.apellidos}" />
+
+						<h:outputText value="Sexo" />
+						<p:selectOneRadio required="true" styleClass="cpos-mantcli"
+							rendered="#{consultaMBean.personaEnConsulta.idPersona == 0}"
+							value="#{consultaMBean.personaEnConsulta.sexo}">
+							<f:selectItem itemLabel="Mujer" itemValue="1" />
+							<f:selectItem itemLabel="Hombre" itemValue="2" />
+						</p:selectOneRadio>
+						<h:outputText value="Hombre"
+							rendered="#{consultaMBean.personaEnConsulta.sexo == 2 and consultaMBean.personaEnConsulta.idPersona > 0}" />
+						<h:outputText value="Mujer"
+							rendered="#{consultaMBean.personaEnConsulta.sexo == 1 and consultaMBean.personaEnConsulta.idPersona > 0}" />
+
+						<h:outputText value="Fecha de Nacimiento" />
+						<p:calendar required="true" styleClass="cpos-mantcli"
+							requiredMessage="Debe ingresar un Texto" pattern="dd-MM-yyyy"
+							mask="true"
+							rendered="#{consultaMBean.personaEnConsulta.idPersona == 0}"
+							value="#{consultaMBean.personaEnConsulta.fechaNacimiento}" />
+
+						<h:outputText
+							rendered="#{consultaMBean.personaEnConsulta.idPersona > 0}"
+							value="#{consultaMBean.personaEnConsulta.fechaNacimiento}" />
+
+						<p:commandButton value="Guardar datos de Persona"
+							actionListener="#{consultaMBean.doGuardarPersona}"
+							rendered="#{consultaMBean.personaEnConsulta.idPersona == 0}"
+							update="@(.registro-formulario)" />
+
+					</p:panelGrid>
+
+				</p:panel>
+			</p:tab>
+
+			<p:tab id="consulta" title="Consulta">
+				<p:panel header="Desarrollo de la Consulta">
+
+					<h:outputText
+						value="#{consultaMBean.personaEnConsulta.nombres} #{consultaMBean.personaEnConsulta.apellidos}, #{consultaMBean.personaEnConsulta.edad}" />
+					
+					<p:panelGrid columns="1" style="width:100%; margin-top:10px;">
+
+						<p:editor id="editor" widgetVar="cpoDesarrollo" required="true" styleClass="cpos-mantcli"
+							requiredMessage="Debe ingresar un Texto"
+							rendered="#{consultaMBean.modoFormulario ne 'OFF'}"
+							value="#{consultaMBean.registroEnEdicion.txtDesarrollo}" />
+						<h:outputText
+							rendered="#{consultaMBean.modoFormulario eq 'OFF'}"
+							value="#{consultaMBean.registroEnEdicion.txtDesarrollo}" />
+							
+					</p:panelGrid>
+
+				</p:panel>
+			</p:tab>
+
+			<p:tab id="observaciones" title="Observaciones">
+				<p:panel header="Confirmation">
+				</p:panel>
+			</p:tab>
+		</p:wizard>
 
 
 	</ui:define>

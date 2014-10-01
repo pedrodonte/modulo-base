@@ -1,10 +1,12 @@
 package info.pedrodonte.base.vo;
 
+import info.pedrodonte.util.HelperFecha;
+
 import java.util.Date;
 
 public class VoPersona implements Cloneable{
 	
-	private int idPersona;
+	private long idPersona;
 	private String identificador;
 	private Date fechaNacimiento;
 	private String nombres;
@@ -12,11 +14,12 @@ public class VoPersona implements Cloneable{
 	private int sexo;
 	private Date regFecInsert;
 	private Date regFecUpdate;
+	private int edad;
 	
-	public int getIdPersona() {
+	public long getIdPersona() {
 		return idPersona;
 	}
-	public void setIdPersona(int idPersona) {
+	public void setIdPersona(long idPersona) {
 		this.idPersona = idPersona;
 	}
 	public String getIdentificador() {
@@ -56,6 +59,25 @@ public class VoPersona implements Cloneable{
 				+ ", nombres=" + nombres + ", apellidos=" + apellidos
 				+ ", sexo=" + sexo + "]";
 	}
+	public Date getRegFecInsert() {
+		return regFecInsert;
+	}
+	public void setRegFecInsert(Date regFecInsert) {
+		this.regFecInsert = regFecInsert;
+	}
+	public Date getRegFecUpdate() {
+		return regFecUpdate;
+	}
+	public void setRegFecUpdate(Date regFecUpdate) {
+		this.regFecUpdate = regFecUpdate;
+	}
+	
+	
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -64,7 +86,7 @@ public class VoPersona implements Cloneable{
 				+ ((apellidos == null) ? 0 : apellidos.hashCode());
 		result = prime * result
 				+ ((fechaNacimiento == null) ? 0 : fechaNacimiento.hashCode());
-		result = prime * result + idPersona;
+		result = prime * result + (int) (idPersona ^ (idPersona >>> 32));
 		result = prime * result
 				+ ((identificador == null) ? 0 : identificador.hashCode());
 		result = prime * result + ((nombres == null) ? 0 : nombres.hashCode());
@@ -120,22 +142,12 @@ public class VoPersona implements Cloneable{
 			return false;
 		return true;
 	}
-	public Date getRegFecInsert() {
-		return regFecInsert;
+	public int getEdad() {
+		edad = HelperFecha.calcularEdad(this.fechaNacimiento);
+		return edad;
 	}
-	public void setRegFecInsert(Date regFecInsert) {
-		this.regFecInsert = regFecInsert;
-	}
-	public Date getRegFecUpdate() {
-		return regFecUpdate;
-	}
-	public void setRegFecUpdate(Date regFecUpdate) {
-		this.regFecUpdate = regFecUpdate;
-	}
-
-	@Override
-	public Object clone() throws CloneNotSupportedException {
-		return super.clone();
+	public void setEdad(int edad) {
+		this.edad = edad;
 	}
 	
 	

@@ -6,6 +6,7 @@
 		<class>info.pedrodonte.sg.dto.SgTbUser</class>
 		<class>info.pedrodonte.sg.dto.SgTbUserRol</class>
 		<class>info.pedrodonte.base.dto.BsTbPersona</class>
+		<class>info.pedrodonte.consultas.dto.CsTbConsulta</class>
 		<properties>
 			<property name="hibernate.connection.username" value="modulo_base"/>
 			<property name="hibernate.connection.password" value="clave.qaws"/>
