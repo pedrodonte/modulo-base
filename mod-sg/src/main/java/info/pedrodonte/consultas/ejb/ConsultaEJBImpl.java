@@ -31,7 +31,7 @@ public class ConsultaEJBImpl implements ConsultaEJB { // EJB EJBImpl
 
 		CsTbConsulta dto = helperMapper.toDTO(registro);
 		consultaDAO.save(dto);
-		registro.setConsultaId(dto.getConsultaId());
+		registro = helperMapper.toVO(dto);
 		
 		return registro;
 	}

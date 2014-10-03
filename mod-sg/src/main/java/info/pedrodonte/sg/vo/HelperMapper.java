@@ -182,7 +182,7 @@ public class HelperMapper {
 				vo.setRegFecInsert(dto.getRegFecInsert());
 				vo.setRegFecUpdate(dto.getRegFecUpdate());
 				vo.setTxtDesarrollo(dto.getTxtDesarrollo());
-				vo.setVoPersona(toVO(dto.getBsTbPersona()));
+				vo.setVoPersona(toVO(dto.getPaciente()));
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -201,7 +201,7 @@ public class HelperMapper {
 				dto.setRegFecInsert(vo.getRegFecInsert());
 				dto.setRegFecUpdate(vo.getRegFecUpdate());
 				dto.setTxtDesarrollo(vo.getTxtDesarrollo());
-				dto.setBsTbPersona(toDTO(vo.getVoPersona()));
+				dto.setPaciente((toDTO(vo.getVoPersona())));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

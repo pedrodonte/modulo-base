@@ -98,7 +98,5 @@ public class BsTbPersona implements Serializable, Auditable{
 		this.sexo = sexo;
 	}
 	
-	
-	
 
 }

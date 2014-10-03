@@ -12,7 +12,7 @@
 		<script type="text/javascript">
 			function handleActionRequest(xhr, status, args) {
 				if (args.codExitoOperacion) {
-					PF('formularioEdicionRegistro').hide();
+					//PF('formularioEdicionRegistro').hide();
 				}
 			}
 		</script>
@@ -103,20 +103,27 @@
 			</p:tab>
 
 			<p:tab id="consulta" title="Consulta">
-				<p:panel header="Desarrollo de la Consulta">
+				<p:panel header="Desarrollo de la Consulta"
+					styleClass="registro-formulario">
 
 					<h:outputText
 						value="Paciente: #{consultaMBean.personaEnConsulta.nombres} #{consultaMBean.personaEnConsulta.apellidos}, #{consultaMBean.personaEnConsulta.edad} años." />
 
 					<p:panelGrid columns="1" style="width:100%; margin-top:10px;">
 
-						<p:editor id="editor" widgetVar="cpoDesarrollo" required="true"
+						<p:editor widgetVar="cpoDesarrollo" required="true"
 							styleClass="cpos-mantcli"
 							requiredMessage="Debe ingresar un Texto"
 							rendered="#{consultaMBean.modoFormulario ne 'OFF'}"
 							value="#{consultaMBean.registroEnEdicion.txtDesarrollo}" />
 						<h:outputText rendered="#{consultaMBean.modoFormulario eq 'OFF'}"
+							escape="false"
 							value="#{consultaMBean.registroEnEdicion.txtDesarrollo}" />
+
+						<p:commandButton id="btnedit" value="Habilitar Edición"
+							actionListener="#{consultaMBean.doHabilitarEdicion}"
+							update="@(.registro-formulario)"
+							rendered="#{consultaMBean.modoFormulario eq 'OFF'}" />
 
 					</p:panelGrid>
 
@@ -126,23 +133,8 @@
 			<p:tab id="observaciones" title="Observaciones">
 				<p:panel header="Confirmation">
 
-					<p:commandButton id="btncancel" value="Cancelar"
-						update="@(.tablaRegistros)"
-						oncomplete="PF('dialogoEditor').hide();"
-						actionListener="#{consultaMBean.doCancelarRegistroFormulario}"
-						process="@none"
-						rendered="#{consultaMBean.modoFormulario ne 'OFF'}" />
-
-					<p:commandButton id="btnsave" value="Guardar"
-						update="@(.tablaRegistros, .registro-formulario)"
-						actionListener="#{consultaMBean.doGuardarRegistroFormulario}"
-						oncomplete="handleActionRequest(xhr, status, args);"
-						rendered="#{consultaMBean.modoFormulario ne 'OFF'}" />
-
-					<p:commandButton id="btnedit" value="Habilitar Edición"
-						actionListener="#{consultaMBean.doHabilitarEdicion}"
-						update="@(.registro-formulario)"
-						rendered="#{consultaMBean.modoFormulario eq 'OFF'}" />
+					<h:outputText escape="false"
+						value="#{consultaMBean.registroEnEdicion.txtDesarrollo}" />
 
 				</p:panel>
 			</p:tab>

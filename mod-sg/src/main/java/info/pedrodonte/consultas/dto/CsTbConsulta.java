@@ -8,6 +8,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,20 +18,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- * Entity implementation class for Entity: CsTbConsulta
- *
- */
 @Entity
 @Table(name="cs_tb_consulta")
-
 public class CsTbConsulta implements Serializable, Auditable {
 	
-	private static final long serialVersionUID = 4L;
+	private static final long serialVersionUID = 1654L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="persona_id")
+	@Column(name="consulta_id")
 	private long consultaId;
 	
 	@Column(name="txt_desarrollo")
@@ -48,16 +44,16 @@ public class CsTbConsulta implements Serializable, Auditable {
 	@Column(name="reg_fec_update")
 	private Date regFecUpdate;
 	
-	@ManyToOne
-	@JoinColumn(name="persona_id",insertable = false, updatable = false)
-	private BsTbPersona bsTbPersona;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "persona_paciente_id")
+	private BsTbPersona paciente;
 	
 	@Override
 	public String toString() {
 		return "CsTbConsulta [consultaId=" + consultaId + ", txtDesarrollo="
 				+ txtDesarrollo + ", fechaConsulta=" + fechaConsulta
 				+ ", regFecInsert=" + regFecInsert + ", regFecUpdate="
-				+ regFecUpdate + ", bsTbPersona=" + bsTbPersona + "]";
+				+ regFecUpdate + ", bsTbPersona=" + paciente + "]";
 	}
 
 	public long getConsultaId() {
@@ -100,12 +96,12 @@ public class CsTbConsulta implements Serializable, Auditable {
 		this.regFecUpdate = regFecUpdate;
 	}
 
-	public BsTbPersona getBsTbPersona() {
-		return bsTbPersona;
+	public BsTbPersona getPaciente() {
+		return paciente;
 	}
 
-	public void setBsTbPersona(BsTbPersona bsTbPersona) {
-		this.bsTbPersona = bsTbPersona;
+	public void setPaciente(BsTbPersona paciente) {
+		this.paciente = paciente;
 	}
 
 }

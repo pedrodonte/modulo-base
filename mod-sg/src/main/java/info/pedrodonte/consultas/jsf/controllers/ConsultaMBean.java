@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 
 @Named
@@ -63,6 +64,8 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> { // controller ,
 				personaEnConsulta = buscarEnWSFns(cpoIdentificador);
 				
 				mensajesMB.msgWarn("La persona NO esta registrada, para continuar debe llenar el formulario de Persona");
+				//mensajesMB.devolverParametro(nombreParametro, valorParamtro);
+				RequestContext.getCurrentInstance().update("@(.registro-formulario)");
 			}
 		} catch (RegistrosNoEncontradosException | ErrorDelSistemaException e) {
 			e.printStackTrace();
