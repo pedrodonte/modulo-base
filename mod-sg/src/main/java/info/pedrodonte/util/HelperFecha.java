@@ -46,5 +46,18 @@ public class HelperFecha {
 		// Regresa la edad en base a la fecha de nacimiento
 		return año;
 	}
+	
+	public static Integer calcularDiferenciaMinutos(Date fechaAnterior, Date fechaPosterior) {
+		Calendar fechaUno = Calendar.getInstance();
+		fechaUno.setTime(fechaAnterior);
+		
+		Calendar fechaDos = Calendar.getInstance();
+		fechaDos.setTime(fechaPosterior);
+		
+		int minutos = fechaDos.get(Calendar.MINUTE)
+				- fechaUno.get(Calendar.MINUTE);
+		
+		return minutos;
+	}
 
 }

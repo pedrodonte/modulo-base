@@ -1,6 +1,7 @@
 package info.pedrodonte.consultas.vo;
 
 import info.pedrodonte.base.vo.VoPersona;
+import info.pedrodonte.util.HelperFecha;
 
 import java.util.Date;
 
@@ -12,6 +13,8 @@ public class VoConsulta implements Cloneable {
 	private Date regFecInsert;
 	private Date regFecUpdate;
 	private VoPersona voPersona;
+	
+	private int duracion;
 	
 	public long getConsultaId() {
 		return consultaId;
@@ -107,6 +110,20 @@ public class VoConsulta implements Cloneable {
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
+	}
+	@Override
+	public String toString() {
+		return "VoConsulta [consultaId=" + consultaId + ", txtDesarrollo="
+				+ txtDesarrollo + ", fechaConsulta=" + fechaConsulta
+				+ ", regFecInsert=" + regFecInsert + ", regFecUpdate="
+				+ regFecUpdate + ", voPersona=" + voPersona + "]";
+	}
+	public int getDuracion() {
+		this.duracion = HelperFecha.calcularDiferenciaMinutos(this.fechaConsulta, this.regFecInsert);
+		return duracion;
+	}
+	public void setDuracion(int duracion) {
+		this.duracion = duracion;
 	}
 	
 	

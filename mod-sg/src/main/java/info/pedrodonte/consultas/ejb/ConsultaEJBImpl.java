@@ -75,5 +75,18 @@ public class ConsultaEJBImpl implements ConsultaEJB { // EJB EJBImpl
 		return helperMapper.toVO(dto);
 	}
 
+	@Override
+	public List<VoConsulta> obtenerRegistrosPorPersona(long idPersona)
+			throws ErrorDelSistemaException, RegistrosNoEncontradosException {
+		List<VoConsulta> registros = new ArrayList<>();
+
+		for (CsTbConsulta dto : consultaDAO.findByIdPersona(idPersona)) {
+			VoConsulta vo = helperMapper.toVO(dto);
+			registros.add(vo);
+		}
+
+		return registros;
+	}
+
 
 }

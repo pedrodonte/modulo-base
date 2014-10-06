@@ -21,11 +21,17 @@
 
 			<p:layoutUnit position="north" size="100">
 
-				<p:toolbar>
-					<p:toolbarGroup align="left">
-						<p:outputLabel value="Welcome!!" />
-					</p:toolbarGroup>
-				</p:toolbar>
+				<p:layout style="min-width:400px;min-height:200px;">
+					<p:layoutUnit position="west" resizable="true" size="100"
+						minSize="40" maxSize="200">
+						<h:outputText value="Módulo Base" />
+					</p:layoutUnit>
+
+					<p:layoutUnit position="center">
+						<p:commandButton value="Cerrar Sesión" id="withIcon" 
+							icon="ui-icon-disk" />
+					</p:layoutUnit>
+				</p:layout>
 
 
 			</p:layoutUnit>
@@ -34,17 +40,25 @@
 				<h:outputText value="South unit content." />
 			</p:layoutUnit>
 
-			<p:layoutUnit position="west" size="200">
-				<p:menuButton value="Actividades">
-					<p:menuitem value="Mantenedor de Roles"
-						action="/pages/mant_rol?faces-redirect=true" />
-					<p:menuitem value="Mantenedor de Usuarios"
-						action="/pages/usuarios?faces-redirect=true" />
-					<p:menuitem value="Consulta"
-						action="/pages/consulta?faces-redirect=true" />
-					<p:menuitem value="Personas"
-						action="/pages/personas?faces-redirect=true" />
-				</p:menuButton>
+			<p:layoutUnit id="leftLU" position="west" size="200">
+				<p:menu>
+					<p:submenu label="Administrador">
+						<p:menuitem value="Roles" process="@this"
+							action="/pages/mant_rol?faces-redirect=true" />
+						<p:menuitem value="Usuarios" process="@this"
+							action="/pages/usuarios?faces-redirect=true" />
+
+					</p:submenu>
+					<p:submenu label="Gestión">
+						<p:menuitem value="Nueva Consulta" icon="ui-icon-star" process="@this"
+							action="/pages/consulta?faces-redirect=true" />
+						<p:menuitem value="Ver Consultas" icon="ui-icon-star" process="@this"
+							action="/pages/ver_consultas?faces-redirect=true" />
+						<p:menuitem value="Personas" process="@this"
+							action="/pages/personas?faces-redirect=true" />
+					</p:submenu>
+				</p:menu>
+
 			</p:layoutUnit>
 
 

@@ -12,7 +12,8 @@
 		<script type="text/javascript">
 			function handleActionRequest(xhr, status, args) {
 				if (args.codExitoOperacion) {
-					//PF('formularioEdicionRegistro').hide();
+
+					PF('wizardConsulta_back').hide();
 				}
 			}
 		</script>
@@ -20,9 +21,10 @@
 		<p:growl id="msg" autoUpdate="true" showDetail="true"
 			showSummary="true" />
 
-		<p:wizard flowListener="#{consultaMBean.onFlowProcess}" backLabel="Anterior" nextLabel="Siguiente">
+		<p:wizard flowListener="#{consultaMBean.onFlowProcess}"
+			backLabel="Anterior" nextLabel="Siguiente" id="wizardConsulta">
 			<p:tab id="persona" title="Persona">
-				<p:panel header="Personal Details" styleClass="registro-formulario">
+				<p:panel header="Datos Personales" styleClass="registro-formulario">
 
 					<h:outputText value="Paciente RUN " />
 					<p:inputText id="cpoIdentificador" required="true"
@@ -30,6 +32,7 @@
 						value="#{consultaMBean.cpoIdentificador}" />
 					<p:spacer width="10" />
 					<p:commandButton id="btn" value="Buscar Persona"
+						oncomplete="$( '#MatenedorForm\\:btnGuardarDatosPersona' ).effect( 'shake' );"
 						actionListener="#{consultaMBean.doBuscarPersona}"
 						process="@this,cpoIdentificador" update="@(.registro-formulario)" />
 
@@ -91,6 +94,7 @@
 						<h:outputText value=" " />
 
 						<p:commandButton value="Guardar datos de Persona"
+							id="btnGuardarDatosPersona"
 							styleClass="ui-state-error ui-corner-all"
 							actionListener="#{consultaMBean.doGuardarPersona}"
 							icon="ui-icon-check"
@@ -133,8 +137,32 @@
 			<p:tab id="observaciones" title="Observaciones">
 				<p:panel header="Confirmation">
 
-					<h:outputText escape="false"
-						value="#{consultaMBean.registroEnEdicion.txtDesarrollo}" />
+					<h:outputText
+						value="Paciente: #{consultaMBean.personaEnConsulta.nombres} #{consultaMBean.personaEnConsulta.apellidos}, #{consultaMBean.personaEnConsulta.edad} años." />
+
+
+
+					<p:panelGrid columns="2" style="width:100%; margin-top:10px;">
+
+						<h:outputText value="Desarrollo" />
+						<h:outputText escape="false"
+							value="#{consultaMBean.registroEnEdicion.txtDesarrollo}" />
+
+						<h:outputText value="Duración" />
+						<h:outputText
+							value="#{consultaMBean.registroEnEdicion.duracion} minutos" />
+
+						<h:outputText value="Fecha" />
+						<h:outputText
+							value="#{consultaMBean.registroEnEdicion.fechaConsulta}">
+							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+						</h:outputText>
+
+					</p:panelGrid>
+
+					<p:commandButton value="Finalizar"
+						actionListener="#{consultaMBean.doFinalizarConsulta}"
+						process="@this" action="/pages/consulta?faces-redirect=true" />
 
 				</p:panel>
 			</p:tab>
