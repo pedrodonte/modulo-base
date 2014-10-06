@@ -20,7 +20,7 @@
 		<p:growl id="msg" autoUpdate="true" showDetail="true"
 			showSummary="true" />
 
-		<p:wizard flowListener="#{consultaMBean.onFlowProcess}">
+		<p:wizard flowListener="#{consultaMBean.onFlowProcess}" backLabel="Anterior" nextLabel="Siguiente">
 			<p:tab id="persona" title="Persona">
 				<p:panel header="Personal Details" styleClass="registro-formulario">
 

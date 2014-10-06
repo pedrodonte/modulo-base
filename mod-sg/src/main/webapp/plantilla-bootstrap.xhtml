@@ -15,12 +15,26 @@
 </h:head>
 <h:body>
 
-<h:form id="MatenedorForm">
+	<h:form id="MatenedorForm">
 
-	<p:layout fullPage="true">
+		<p:layout fullPage="true">
 
-		<p:layoutUnit position="north" size="100" >
+			<p:layoutUnit position="north" size="100">
 
+				<p:toolbar>
+					<p:toolbarGroup align="left">
+						<p:outputLabel value="Welcome!!" />
+					</p:toolbarGroup>
+				</p:toolbar>
+
+
+			</p:layoutUnit>
+
+			<p:layoutUnit position="south" size="100">
+				<h:outputText value="South unit content." />
+			</p:layoutUnit>
+
+			<p:layoutUnit position="west" size="200">
 				<p:menuButton value="Actividades">
 					<p:menuitem value="Mantenedor de Roles"
 						action="/pages/mant_rol?faces-redirect=true" />
@@ -31,26 +45,17 @@
 					<p:menuitem value="Personas"
 						action="/pages/personas?faces-redirect=true" />
 				</p:menuButton>
-
-		</p:layoutUnit>
-
-		<p:layoutUnit position="south" size="100" >
-			<h:outputText value="South unit content." />
-		</p:layoutUnit>
-
-		<p:layoutUnit position="west" size="200" >
-			<h:outputText value="West unit content." />
-		</p:layoutUnit>
+			</p:layoutUnit>
 
 
-		<p:layoutUnit position="center">
-			<ui:insert name="content">CONTENT</ui:insert>
-		</p:layoutUnit>
+			<p:layoutUnit position="center">
+				<ui:insert name="content">CONTENT</ui:insert>
+			</p:layoutUnit>
 
-	</p:layout>
-	
-	<ui:insert name="dialogo">CONTENT</ui:insert>
-	
+		</p:layout>
+
+		<ui:insert name="dialogo">CONTENT</ui:insert>
+
 	</h:form>
 
 

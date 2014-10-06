@@ -117,6 +117,7 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> { // controller ,
 		logger.info("Old Step: "+event.getOldStep());
 		logger.info("New Step: "+event.getNewStep());
 		
+		//Evento que ocurre despues de llenar el formulario de persona
 		if (event.getOldStep().equals("persona")) {
 			if (personaEnConsulta.getIdPersona() == 0) {
 				mensajesMB.msgWarn("La persona NO esta registrada, para continuar debe llenar el formulario de Persona");
@@ -124,12 +125,24 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> { // controller ,
 			}else{
 				doNuevoRegistroFormulario(null);
 				getRegistroEnEdicion().setFechaConsulta(new Date());
+				getRegistroEnEdicion().setTxtDesarrollo("");
 				getRegistroEnEdicion().setVoPersona(personaEnConsulta);
 			}
 		}
 		
+		//Evento que ocurre despues de llenar el desarrollo de la consulta
 		if (event.getOldStep().equals("consulta")) {
-			doGuardarRegistroFormulario(null);
+			if (getRegistroEnEdicion().getTxtDesarrollo().trim().isEmpty()) {
+				mensajesMB.msgError("El texto del desarrollo esta vacío");
+				return event.getOldStep();
+			}else{
+				doGuardarRegistroFormulario(null);
+			}
+		}
+		
+		//NO permitir cambiar la consulta realizada el objeto persona.
+		if (event.getOldStep().equals("consulta") & event.getNewStep().equals("persona")) {
+			return event.getOldStep();
 		}
 		
 		return event.getNewStep();
