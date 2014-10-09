@@ -21,9 +21,29 @@
 			<p:spacer width="10" />
 			<p:commandButton id="btn" value="Buscar Consultas"
 				actionListener="#{consultaMBean.doBuscarConsultas}"
-				process="@this,cpoIdentificador" update="@(.registro-formulario)" />
+				process="@this,cpoIdentificador" update="@(.tablaRegistros, .registro-formulario)" />
 
 		</p:panel>
+		
+		<p:panelGrid columns="1" style="width:100%;" id="datos">
+
+				<p:dataTable id="tablaRegistros" value="#{consultaMBean.registros}"
+					var="item" styleClass="tablaRegistros" rowKey="#{item.consultaId}"
+					selectionMode="single" selection="#{consultaMBean.registroSeleccionado}"
+					rows="20" paginator="true">
+
+					<p:ajax event="rowSelect" update="@this" />
+					
+					<p:column sortBy="#{item.fechaConsulta}">
+						<f:facet name="header">
+							<h:outputText value="fechaConsulta" />
+						</f:facet>
+						<h:outputText value="#{item.fechaConsulta}" />
+					</p:column>
+
+
+				</p:dataTable>
+			</p:panelGrid>
 
 	</ui:define>
 

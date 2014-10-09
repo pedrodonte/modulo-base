@@ -21,18 +21,17 @@
 
 			<p:layoutUnit position="north" size="100">
 
-				<p:layout style="min-width:400px;min-height:200px;">
-					<p:layoutUnit position="west" resizable="true" size="100"
-						minSize="40" maxSize="200">
-						<h:outputText value="Módulo Base" />
-					</p:layoutUnit>
-
-					<p:layoutUnit position="center">
-						<p:commandButton value="Cerrar Sesión" id="withIcon" 
-							icon="ui-icon-disk" />
-					</p:layoutUnit>
-				</p:layout>
-
+				<div class="ui-grid">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-8">
+							<h:outputText value="Módulo Base" />
+						</div>
+						<div class="ui-grid-col-4">
+							<p:commandLink value="Cerrar Sesión" style="float: right;"
+								icon="ui-icon-disk" />
+						</div>
+					</div>
+				</div>
 
 			</p:layoutUnit>
 
@@ -50,10 +49,10 @@
 
 					</p:submenu>
 					<p:submenu label="Gestión">
-						<p:menuitem value="Nueva Consulta" icon="ui-icon-star" process="@this"
-							action="/pages/consulta?faces-redirect=true" />
-						<p:menuitem value="Ver Consultas" icon="ui-icon-star" process="@this"
-							action="/pages/ver_consultas?faces-redirect=true" />
+						<p:menuitem value="Nueva Consulta" icon="ui-icon-star"
+							process="@this" action="/pages/consulta?faces-redirect=true" />
+						<p:menuitem value="Ver Consultas" icon="ui-icon-star"
+							process="@this" action="/pages/ver_consultas?faces-redirect=true" />
 						<p:menuitem value="Personas" process="@this"
 							action="/pages/personas?faces-redirect=true" />
 					</p:submenu>
