@@ -189,10 +189,20 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> { // controller ,
 	
 	public void doBuscarConsultas(ActionEvent event) {
 		try {
-			mensajesMB.msgInfo("Buscando Consultas...");
 			personaEnConsulta = personaEJB.obtenerPorIdentificador(cpoIdentificador);
 			List<VoConsulta> consultas = serviceEJB.obtenerRegistrosPorPersona(personaEnConsulta.getIdPersona());
-			mensajesMB.msgInfo("Cantidad de consultas : "+consultas.size());
+			
+			
+			if (getRegistrosCantidad() > 0) {
+				mensajesMB.msgInfo("Cantidad de consultas : "+consultas.size());
+				setRegistros(consultas);
+				cpoIdentificador = "";
+			}else{
+				mensajesMB.msgInfo("Sin registros para el RUN: "+cpoIdentificador);
+			}
+			
+			personaEnConsulta = new VoPersona();
+			
 		} catch (RegistrosNoEncontradosException | ErrorDelSistemaException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
