@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Autenticación de Usuarios</title>
+</h:head>
+<h:body>
+
+	<h:form id="LoginForm">
+
+		<p:messages id="msg" autoUpdate="true" showDetail="true"
+			showSummary="true" />
+
+
+		<p:panelGrid columns="2" cellpadding="5" style="margin-bottom:10px">
+
+			<f:facet name="header">
+				<h3>Formulario de Autenticación</h3>
+			</f:facet>
+
+			<h:outputLabel value="Identificador de usuario : " />
+			<p:inputText id="usuario" value="" required="true" label="Identificador Usuario" />
+
+			<h:outputLabel value="Contraseña : " />
+			<p:password id="pass" value="" required="true" label="Password" />
+
+			<f:facet name="footer">
+				<p:commandButton id="btnLogin" value="Login" />
+			</f:facet>
+
+		</p:panelGrid>
+		
+		<p:watermark for="usuario" value="Identificador del Usuario"
+				id="usuarioWM" />
+
+	</h:form>
+
+</h:body>
+</html>
