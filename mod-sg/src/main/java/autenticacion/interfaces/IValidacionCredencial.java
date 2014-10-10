@@ -1,4 +1,7 @@
-package seguridad;
+package autenticacion.interfaces;
+
+import autenticacion.excepciones.ValidacionNegativaException;
+import autenticacion.vo.CredencialSeguridad;
 
 public interface IValidacionCredencial {
 	

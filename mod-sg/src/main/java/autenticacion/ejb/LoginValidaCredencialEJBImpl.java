@@ -1,22 +1,28 @@
-package seguridad.impl;
+package autenticacion.ejb;
 
 import info.pedrodonte.protask.excepciones.ErrorDelSistemaException;
+import info.pedrodonte.protask.excepciones.RegistrosNoEncontradosException;
+import info.pedrodonte.sg.ejb.UserEJB;
+import info.pedrodonte.sg.vo.VoUser;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 
-import seguridad.CredencialSeguridad;
-import seguridad.IValidacionCredencial;
-import seguridad.ValidacionNegativaException;
-import seguridad.api.LoginValidaCredencialEJB;
+import autenticacion.excepciones.ValidacionNegativaException;
+import autenticacion.interfaces.IValidacionCredencial;
+import autenticacion.vo.CredencialSeguridad;
 
 @Stateless
 public class LoginValidaCredencialEJBImpl implements LoginValidaCredencialEJB {
 	
 	Logger logger = Logger.getLogger(getClass());
 	
-	private boolean usuarioEncontrado = false;
+	private VoUser usuario = new VoUser();
+	
+	@Inject
+	UserEJB userEJB;
 	
 	IValidacionCredencial validaExistencia = new IValidacionCredencial() {
 
@@ -24,10 +30,14 @@ public class LoginValidaCredencialEJBImpl implements LoginValidaCredencialEJB {
 		public void executaValidacion(CredencialSeguridad credencialSeguridad)
 				throws ValidacionNegativaException {
 			
-			if (usuarioEncontrado) {
+			try {
+				usuario=userEJB.obtenerRegistroPorIdentificador(credencialSeguridad.getUsername());
+			} catch (RegistrosNoEncontradosException e) {
 				throw new ValidacionNegativaException("registro no encontrado con el email ingresado.");
+			} catch (Exception e) {
+				throw new ValidacionNegativaException("Error Inesperado");
 			}
-
+			
 		}
 	};
 
@@ -37,7 +47,7 @@ public class LoginValidaCredencialEJBImpl implements LoginValidaCredencialEJB {
 		public void executaValidacion(CredencialSeguridad credencialSeguridad)
 				throws ValidacionNegativaException {
 			
-			if (usuarioEncontrado) {
+			if (!usuario.getClave().equals(credencialSeguridad.getPassword())) {
 				throw new ValidacionNegativaException("registro no encontrado con el email ingresado.");
 			}
 			

@@ -194,4 +194,11 @@ public class UserEJBImpl implements UserEJB { // EJB EJBImpl
 		
 	}
 
+	@Override
+	public VoUser obtenerRegistroPorIdentificador(String identificador)
+			throws RegistrosNoEncontradosException {
+		SgTbUser dto = sgTbUserDAO.findByIdentificador(identificador);
+		return helperMapper.toVO(dto);
+	}
+
 }

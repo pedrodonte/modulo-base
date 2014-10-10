@@ -1,4 +1,4 @@
-package seguridad;
+package autenticacion.vo;
 
 import java.io.Serializable;
 

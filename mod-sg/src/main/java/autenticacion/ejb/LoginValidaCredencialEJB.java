@@ -1,13 +1,9 @@
-package seguridad.api;
+package autenticacion.ejb;
 
 import info.pedrodonte.protask.excepciones.ErrorDelSistemaException;
+import autenticacion.excepciones.ValidacionNegativaException;
+import autenticacion.vo.CredencialSeguridad;
 
-import javax.ejb.Local;
-
-import seguridad.CredencialSeguridad;
-import seguridad.ValidacionNegativaException;
-
-@Local
 public interface LoginValidaCredencialEJB {
 	
 	public boolean validaCredencial(CredencialSeguridad credencialSeguridad) throws ValidacionNegativaException, ErrorDelSistemaException;

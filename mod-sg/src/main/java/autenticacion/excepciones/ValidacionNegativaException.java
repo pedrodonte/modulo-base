@@ -1,4 +1,4 @@
-package seguridad;
+package autenticacion.excepciones;
 
 public class ValidacionNegativaException extends Exception {
 

@@ -13,6 +13,7 @@
 </h:head>
 <h:body>
 
+
 	<h:form id="LoginForm">
 
 		<p:messages id="msg" autoUpdate="true" showDetail="true"
@@ -26,13 +27,13 @@
 			</f:facet>
 
 			<h:outputLabel value="Identificador de usuario : " />
-			<p:inputText id="usuario" value="" required="true" label="Identificador Usuario" />
+			<p:inputText id="usuario" value="#{sessionMBean.credencial.username}" required="true" label="Identificador Usuario" />
 
 			<h:outputLabel value="Contraseña : " />
-			<p:password id="pass" value="" required="true" label="Password" />
+			<p:password id="pass" value="#{sessionMBean.credencial.password}" required="true" label="Password" />
 
 			<f:facet name="footer">
-				<p:commandButton id="btnLogin" value="Login" />
+				<p:commandButton id="btnLogin" value="Login" actionListener="#{sessionMBean.doLogin}" />
 			</f:facet>
 
 		</p:panelGrid>
