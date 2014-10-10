@@ -27,8 +27,8 @@ public class HelperString {
 		return ALFABETO.charAt(rnd.nextInt(ALFABETO.length()));
 	}
 
-	public static void main(String[] args) {
-		System.out.println(generarClaveAleatorea());
+	public static String encrypt(String palabra) throws Exception {
+		return EncriptadorSHA.getSha256(palabra);
 	}
 
 	public static String cambioCharsetToUTF8(String cadena) {
@@ -39,6 +39,17 @@ public class HelperString {
 		// constructor de string
 		resultado = new String(cadena.getBytes(iso88591charset), utf8charset);
 		return resultado;
+	}
+	
+	
+	public static void main(String[] args) {
+		System.out.println(generarClaveAleatorea());
+		try {
+			System.out.println(encrypt("perodonte"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

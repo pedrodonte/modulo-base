@@ -1,0 +1,12 @@
+<security-domain name="ModuloBaseRealm" cache-type="default">
+					<authentication>
+						<login-module code="Database" flag="required">
+							<module-option name="dsJndiName"
+								value="java:jboss/datasources/modBaseDS" />
+							<module-option name="principalsQuery"
+								value="select jaas_password from segu_vta_jaas where jaas_user=?" />
+							<module-option name="rolesQuery"
+								value="select jaas_rol,'Roles' from segu_vta_jaas where jaas_user=?" />
+						</login-module>
+					</authentication>
+				</security-domain>

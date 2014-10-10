@@ -46,8 +46,15 @@ public class UserEJBImpl implements UserEJB { // EJB EJBImpl
 	@Override
 	public VoUser nuevoRegistro(VoUser registro)
 			throws ErrorDelSistemaException {
+		
+		String passwordEncriptada = HelperString.generarClaveAleatorea();
+		try {
+			passwordEncriptada = HelperString.encrypt(passwordEncriptada);
+		} catch (Exception e) {
+			throw new ErrorDelSistemaException("Error al generar la contraseña");
+		}
 
-		registro.setClave(HelperString.generarClaveAleatorea());
+		registro.setClave(passwordEncriptada);
 
 		SgTbUser dto = helperMapper.toDTO(registro);
 		sgTbUserDAO.save(dto);
@@ -159,14 +166,25 @@ public class UserEJBImpl implements UserEJB { // EJB EJBImpl
 	public void generarContrasena(VoUser usuario)
 			throws RegistrosNoEncontradosException {
 		
+		String claveSinEcriptar = "";
 		try {
-			usuario.setClave(HelperString.generarClaveAleatorea());
+			
+			String passwordEncriptada = HelperString.generarClaveAleatorea();
+			claveSinEcriptar = new String(passwordEncriptada);
+			try {
+				passwordEncriptada = HelperString.encrypt(passwordEncriptada);
+			} catch (Exception e) {
+				throw new RegistrosNoEncontradosException("Error al generar la contraseña");
+			}
+
+			
+			usuario.setClave(passwordEncriptada);
 			
 			SgTbUser dto = helperMapper.toDTO(usuario);
 			sgTbUserDAO.update(dto);
 			
 			String asunto = usuario.getIdentificador()+" Generación de Contraseña";
-			String cuerpo = usuario.getIdentificador()+" se generó la clave: <b>"+usuario.getClave()+"</b>";
+			String cuerpo = usuario.getIdentificador()+" se generó la clave: <b>"+claveSinEcriptar+"</b>";
 			String destinatarios = "Pedrodonte <pedrodonte@gmail.com>";
 			EmailDTO email = new EmailDTO(asunto, cuerpo, destinatarios);
 			emailService.enviarEmail(email);

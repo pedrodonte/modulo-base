@@ -17,7 +17,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -45,10 +44,7 @@ public class SessionMBean implements Serializable { // controller ,
 
 	@PostConstruct
 	public void init() {
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		HttpSession session = (HttpSession) facesContext.getExternalContext()
-				.getSession(false);
-		logger.info(session.getId());
+		
 	}
 
 	public void doLogin(ActionEvent event) {
@@ -57,13 +53,18 @@ public class SessionMBean implements Serializable { // controller ,
 			mensajesMB.msgInfo(":)");
 			setUsuarioLogeado(userEjb
 					.obtenerRegistroPorIdentificador(credencial.getUsername()));
+			
+			iniciarLoginJaas();
+			
 		} catch (ValidacionNegativaException e) {
 			logger.error(e.getLocalizedMessage());
 			mensajesMB.msgInfo(e.getMessage());
 		} catch (ErrorDelSistemaException e) {
 			mensajesMB.msgInfo("Error Del Sistema Exception");
 		} catch (RegistrosNoEncontradosException e) {
-			e.printStackTrace();
+			mensajesMB.msgInfo("RegistrosNoEncontradosException");
+		} catch (ServletException e) {
+			mensajesMB.msgInfo("ServletException");
 		}
 
 	}
@@ -118,5 +119,12 @@ public class SessionMBean implements Serializable { // controller ,
 	public void setUsuarioLogeado(VoUser usuarioLogeado) {
 		this.usuarioLogeado = usuarioLogeado;
 	}
+
+	@Override
+	public String toString() {
+		return "SessionMBean [usuarioLogeado="
+				+ usuarioLogeado + "]";
+	}
+	
 
 }
