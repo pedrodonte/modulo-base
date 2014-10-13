@@ -71,7 +71,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Funcionalidad para Prestador</web-resource-name>
-			<url-pattern>/pages/consulta.xhtml</url-pattern>
+			<url-pattern>/pages/crear_consulta.xhtml</url-pattern>
 			<url-pattern>/pages/personas.xhtml</url-pattern>
 			<url-pattern>/pages/ver_consultas.xhtml</url-pattern>
 		</web-resource-collection>

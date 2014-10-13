@@ -137,6 +137,12 @@
 			<artifactId>hibernate-core</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.picketbox</groupId>
+			<artifactId>picketbox</artifactId>
+			<version>4.0.16.Final</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>

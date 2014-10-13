@@ -21,5 +21,5 @@ public class SgTbUserDAO extends GenericDAO<SgTbUser, Long> {
 		parameters.put("identificador", identificador);
 		return super.findOneResult(query, parameters);
 	}
-
+	
 }

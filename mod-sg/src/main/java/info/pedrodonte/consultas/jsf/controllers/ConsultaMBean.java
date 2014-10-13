@@ -27,8 +27,7 @@ import org.primefaces.event.FlowEvent;
 
 @Named
 @SessionScoped
-public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> { // controller ,
-																	// vo
+public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> { 
 
 	private static final long serialVersionUID = 123456789L;
 

@@ -1,5 +1,8 @@
 package autenticacion.vo;
 
+import info.pedrodonte.protask.excepciones.ErrorDelSistemaException;
+import info.pedrodonte.util.HelperString;
+
 import java.io.Serializable;
 
 public class CredencialSeguridad implements Serializable {
@@ -29,6 +32,14 @@ public class CredencialSeguridad implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getPasswordEncripted() throws ErrorDelSistemaException{
+		try {
+			return HelperString.encrypt(password);
+		} catch (Exception e) {
+			throw new ErrorDelSistemaException("Problemas con la encriptación de la palabra");
+		}
 	}
 
 	@Override

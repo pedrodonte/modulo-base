@@ -200,12 +200,14 @@ public class UserEJBImpl implements UserEJB { // EJB EJBImpl
 	public void cambiarContrasena(VoUser usuario, String contrasena,
 			String confirmacion) throws RegistrosNoEncontradosException {
 		
-		
 		try {
 			
 			if (contrasena.equals(confirmacion)) {
 				usuario.setClave(HelperString.encrypt(contrasena));
-				actualizarRegistro(usuario);
+				
+				SgTbUser dto = helperMapper.toDTO(usuario);
+				sgTbUserDAO.update(dto);
+				
 			}
 		} catch (ErrorDelSistemaException e) {
 			e.printStackTrace();

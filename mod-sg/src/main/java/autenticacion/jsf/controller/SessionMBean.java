@@ -6,14 +6,11 @@ import info.pedrodonte.sg.ejb.UserEJB;
 import info.pedrodonte.sg.vo.VoUser;
 import info.pedrodonte.util.JsfUtil;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.NavigationHandler;
-import javax.faces.application.ViewExpiredException;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
@@ -47,7 +44,7 @@ public class SessionMBean implements Serializable { // controller ,
 
 	@PostConstruct
 	public void init() {
-		
+
 	}
 
 	public void doLogin(ActionEvent event) {
@@ -56,29 +53,39 @@ public class SessionMBean implements Serializable { // controller ,
 			mensajesMB.msgInfo(":)");
 			setUsuarioLogeado(userEjb
 					.obtenerRegistroPorIdentificador(credencial.getUsername()));
-			
+
 			iniciarLoginJaas();
 			redireccionarAutorizado();
-			
+
 		} catch (ValidacionNegativaException e) {
 			logger.error(e.getLocalizedMessage());
 			mensajesMB.msgInfo(e.getMessage());
 		} catch (ErrorDelSistemaException e) {
-			mensajesMB.msgInfo("Error Del Sistema Exception");
+			mensajesMB.msgInfo(e.getLocalizedMessage());
 		} catch (RegistrosNoEncontradosException e) {
-			mensajesMB.msgInfo("RegistrosNoEncontradosException");
+			mensajesMB.msgInfo(e.getLocalizedMessage());
 		} catch (ServletException e) {
-			mensajesMB.msgInfo("ServletException");
+			mensajesMB.msgInfo(e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 
 	}
 
-	private void iniciarLoginJaas() throws ServletException {
+	/**
+	 * Este metodo interactua directamente con el servidor de aplicaciones en
+	 * donde intenta crear una instancia de Principal con los datos de la
+	 * credencial, considerar que la clave debe tener la misma encriptación que
+	 * tiene la base de datos de usuarios.
+	 * 
+	 * @throws ServletException
+	 * @throws ErrorDelSistemaException
+	 */
+	private void iniciarLoginJaas() throws ServletException,
+			ErrorDelSistemaException {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest();
 		httpServletRequest.login(credencial.getUsername(),
-				credencial.getPassword());
+				credencial.getPasswordEncripted());
 	}
 
 	private void redireccionarAutorizado() {
@@ -89,7 +96,7 @@ public class SessionMBean implements Serializable { // controller ,
 		nh.handleNavigation(facesContext, null,
 				"/pages/ver_consultas?faces-redirect=true");
 	}
-	
+
 	private void redireccionarFormularioLogin() {
 		logger.info("redireccionando a dashboard...");
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -137,9 +144,7 @@ public class SessionMBean implements Serializable { // controller ,
 
 	@Override
 	public String toString() {
-		return "SessionMBean [usuarioLogeado="
-				+ usuarioLogeado + "]";
+		return "SessionMBean [usuarioLogeado=" + usuarioLogeado + "]";
 	}
-	
 
 }

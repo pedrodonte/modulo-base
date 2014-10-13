@@ -54,12 +54,11 @@ public class CambioClaveMBean implements Serializable {
 	}
 
 	private void redireccionar() {
-		logger.info("redireccionando a dashboard...");
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		NavigationHandler nh = facesContext.getApplication()
 				.getNavigationHandler();
 		nh.handleNavigation(facesContext, null,
-				"/public/ver_consultas?faces-redirect=true");
+				"/pages/ver_consultas?faces-redirect=true");
 	}
 	
 	public String getCpoActual() {
@@ -86,6 +85,4 @@ public class CambioClaveMBean implements Serializable {
 		this.cpoConfirmacion = cpoConfirmacion;
 	}
 	
-	
-
 }

@@ -1,0 +1,16 @@
+<datasource jta="false" jndi-name="java:jboss/datasources/modBaseDS" pool-name="modBaseDS" enabled="true" use-ccm="false">
+                    <connection-url>jdbc:postgresql://localhost:5432/modulo_base</connection-url>
+                    <driver-class>org.postgresql.Driver</driver-class>
+                    <driver>postgresql-9.3-1102.jdbc41.jar</driver>
+                    <security>
+                        <user-name>modulo_base</user-name>
+                        <password>XXXXXXXXXX</password>
+                    </security>
+                    <validation>
+                        <validate-on-match>false</validate-on-match>
+                        <background-validation>false</background-validation>
+                    </validation>
+                    <statement>
+                        <share-prepared-statements>false</share-prepared-statements>
+                    </statement>
+                </datasource>

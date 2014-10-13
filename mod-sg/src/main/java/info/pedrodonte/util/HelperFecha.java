@@ -1,8 +1,16 @@
 package info.pedrodonte.util;
 
+import info.pedrodonte.protask.excepciones.ErrorDelSistemaException;
+
 import java.sql.Timestamp;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 public class HelperFecha {
 
@@ -46,18 +54,60 @@ public class HelperFecha {
 		// Regresa la edad en base a la fecha de nacimiento
 		return año;
 	}
-	
-	public static Integer calcularDiferenciaMinutos(Date fechaAnterior, Date fechaPosterior) {
+
+	public static Integer calcularDiferenciaMinutos(Date fechaAnterior,
+			Date fechaPosterior) {
 		Calendar fechaUno = Calendar.getInstance();
 		fechaUno.setTime(fechaAnterior);
-		
+
 		Calendar fechaDos = Calendar.getInstance();
 		fechaDos.setTime(fechaPosterior);
-		
+
 		int minutos = fechaDos.get(Calendar.MINUTE)
 				- fechaUno.get(Calendar.MINUTE);
-		
+
 		return minutos;
 	}
 
+	/**
+	 * Parsear fecha String a util.Date, en formato input yyyy-MM-dd
+	 * 
+	 * @param strFecha
+	 * @return
+	 * @throws ErrorDelSistemaException
+	 */
+	public static Date toDate(String strFecha) throws ErrorDelSistemaException {
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
+		Date fecha = null;
+		try {
+			fecha = formatoDelTexto.parse(strFecha);
+		} catch (ParseException e) {
+			throw new ErrorDelSistemaException("ParseException " + strFecha
+					+ " a util.Date");
+		}
+		return fecha;
+	}
+
+	public static String toString(Date fecha) {
+
+		Format formatter = new SimpleDateFormat("dd-MM-yyyy");
+		String s = formatter.format(fecha);
+		return s;
+	}
+	
+	public static List<Date> obtenerFechasDiariasIntervalo(Date fechaInicial, Date fechaFinal)
+	{
+	    List<Date> dates = new ArrayList<Date>();
+	    Calendar calendar = new GregorianCalendar();
+	    calendar.setTime(fechaInicial);
+
+	    while (calendar.getTime().before(fechaFinal))
+	    {
+	        Date resultado = calendar.getTime();
+	        dates.add(resultado);
+	        calendar.add(Calendar.DATE, 1);
+	    }
+	    return dates;
+	}
+	
 }

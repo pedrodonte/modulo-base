@@ -56,9 +56,9 @@
 				<p:menu>
 					<p:submenu label="Administrador"
 						rendered="#{request.isUserInRole('ADMINISTRADOR')}">
-						<p:menuitem value="Roles" process="@this"
+						<p:menuitem value="Roles" process="@this" icon="ui-icon-bullet"
 							action="/pages/mant_rol?faces-redirect=true" />
-						<p:menuitem value="Usuarios" process="@this"
+						<p:menuitem value="Usuarios" process="@this" icon="ui-icon-key"
 							action="/pages/usuarios?faces-redirect=true" />
 
 					</p:submenu>

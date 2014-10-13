@@ -137,7 +137,9 @@
 						value="#{personaMBean.registroEnEdicion.fechaNacimiento}" />
 
 					<h:outputText rendered="#{personaMBean.modoFormulario eq 'OFF'}"
-						value="#{personaMBean.registroEnEdicion.fechaNacimiento}" />
+						value="#{personaMBean.registroEnEdicion.fechaNacimiento}">
+						<f:convertDateTime pattern="dd-MM-yyyy" />
+					</h:outputText>
 
 				</p:panelGrid>
 
