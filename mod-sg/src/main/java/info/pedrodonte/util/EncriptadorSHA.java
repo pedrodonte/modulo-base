@@ -18,7 +18,7 @@ public class EncriptadorSHA {
     public static String getSha256(String passwordToHash) throws NoSuchAlgorithmException
     {
         String generatedPassword = null;
-        String salt = getSalt();
+        String salt = "SEMILLA";
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(salt.getBytes());

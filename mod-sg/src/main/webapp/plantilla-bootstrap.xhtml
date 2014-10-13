@@ -27,8 +27,21 @@
 							<h:outputText value="Módulo Base" />
 						</div>
 						<div class="ui-grid-col-4">
-							<p:commandLink value="Cerrar Sesión" style="float: right;"
-								icon="ui-icon-disk" />
+
+							<p:splitButton value=" #{request.userPrincipal}"
+								icon="ui-icon-person" process="@this">
+
+								<p:menuitem value="Cambio de Contraseña"
+									action="/pages/cambiar_contrasena?faces-redirect=true"
+									process="@this" />
+
+								<p:separator />
+
+								<p:menuitem value="Cerrar Sesión"
+									actionListener="#{sessionMBean.doLogout}" process="@this"
+									icon="ui-icon-close" />
+							</p:splitButton>
+
 						</div>
 					</div>
 				</div>
@@ -41,19 +54,22 @@
 
 			<p:layoutUnit id="leftLU" position="west" size="200">
 				<p:menu>
-					<p:submenu label="Administrador">
+					<p:submenu label="Administrador"
+						rendered="#{request.isUserInRole('ADMINISTRADOR')}">
 						<p:menuitem value="Roles" process="@this"
 							action="/pages/mant_rol?faces-redirect=true" />
 						<p:menuitem value="Usuarios" process="@this"
 							action="/pages/usuarios?faces-redirect=true" />
 
 					</p:submenu>
-					<p:submenu label="Gestión">
-						<p:menuitem value="Nueva Consulta" icon="ui-icon-star"
-							process="@this" action="/pages/consulta?faces-redirect=true" />
-						<p:menuitem value="Ver Consultas" icon="ui-icon-star"
+					<p:submenu label="Gestión"
+						rendered="#{request.isUserInRole('PRESTADOR')}">
+						<p:menuitem value="Nueva Consulta" icon="ui-icon-document"
+							process="@this"
+							action="/pages/crear_consulta?faces-redirect=true" />
+						<p:menuitem value="Ver Consultas" icon="ui-icon-note"
 							process="@this" action="/pages/ver_consultas?faces-redirect=true" />
-						<p:menuitem value="Personas" process="@this"
+						<p:menuitem value="Personas" process="@this" icon="ui-icon-person"
 							action="/pages/personas?faces-redirect=true" />
 					</p:submenu>
 				</p:menu>

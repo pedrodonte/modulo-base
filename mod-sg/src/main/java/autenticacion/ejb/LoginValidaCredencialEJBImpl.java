@@ -4,6 +4,7 @@ import info.pedrodonte.protask.excepciones.ErrorDelSistemaException;
 import info.pedrodonte.protask.excepciones.RegistrosNoEncontradosException;
 import info.pedrodonte.sg.ejb.UserEJB;
 import info.pedrodonte.sg.vo.VoUser;
+import info.pedrodonte.util.HelperString;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -47,8 +48,20 @@ public class LoginValidaCredencialEJBImpl implements LoginValidaCredencialEJB {
 		public void executaValidacion(CredencialSeguridad credencialSeguridad)
 				throws ValidacionNegativaException {
 			
-			if (!usuario.getClave().equals(credencialSeguridad.getPassword())) {
-				throw new ValidacionNegativaException("registro no encontrado con el email ingresado.");
+			try {
+				if (!usuario.getClave().equals(HelperString.encrypt(credencialSeguridad.getPassword()))) {
+					throw new ValidacionNegativaException("registro no encontrado con el email ingresado.");
+				}
+			}catch(ValidacionNegativaException e){
+				logger.info(credencialSeguridad.getPassword());
+				try {
+					logger.info(HelperString.encrypt(credencialSeguridad.getPassword()));
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				throw e;
+			} catch (Exception e) {
+				throw new ValidacionNegativaException("Error en la encriptación");
 			}
 			
 		}

@@ -19,7 +19,7 @@
 				styleClass="cpos-mantcli" requiredMessage="Debe ingresar un Texto"
 				value="#{consultaMBean.cpoIdentificador}" />
 			<p:spacer width="10" />
-			<p:commandButton id="btn" value="Buscar Consultas"
+			<p:commandButton id="btn" value="Buscar Consultas" icon="ui-icon-search"
 				actionListener="#{consultaMBean.doBuscarConsultas}"
 				process="@this,cpoIdentificador" update="@(.tablaRegistros, .registro-formulario)" />
 
@@ -38,7 +38,16 @@
 						<f:facet name="header">
 							<h:outputText value="fechaConsulta" />
 						</f:facet>
-						<h:outputText value="#{item.fechaConsulta}" />
+						<h:outputText value="#{item.fechaConsulta}" >
+							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column sortBy="#{item.duracion}">
+						<f:facet name="header">
+							<h:outputText value="Tiempo en Minutos" />
+						</f:facet>
+						<h:outputText value="#{item.duracion}"/>
 					</p:column>
 
 

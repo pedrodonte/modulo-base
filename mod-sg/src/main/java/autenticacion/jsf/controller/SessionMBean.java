@@ -6,11 +6,14 @@ import info.pedrodonte.sg.ejb.UserEJB;
 import info.pedrodonte.sg.vo.VoUser;
 import info.pedrodonte.util.JsfUtil;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.NavigationHandler;
+import javax.faces.application.ViewExpiredException;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
@@ -55,6 +58,7 @@ public class SessionMBean implements Serializable { // controller ,
 					.obtenerRegistroPorIdentificador(credencial.getUsername()));
 			
 			iniciarLoginJaas();
+			redireccionarAutorizado();
 			
 		} catch (ValidacionNegativaException e) {
 			logger.error(e.getLocalizedMessage());
@@ -65,6 +69,7 @@ public class SessionMBean implements Serializable { // controller ,
 			mensajesMB.msgInfo("RegistrosNoEncontradosException");
 		} catch (ServletException e) {
 			mensajesMB.msgInfo("ServletException");
+			e.printStackTrace();
 		}
 
 	}
@@ -84,6 +89,15 @@ public class SessionMBean implements Serializable { // controller ,
 		nh.handleNavigation(facesContext, null,
 				"/pages/ver_consultas?faces-redirect=true");
 	}
+	
+	private void redireccionarFormularioLogin() {
+		logger.info("redireccionando a dashboard...");
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		NavigationHandler nh = facesContext.getApplication()
+				.getNavigationHandler();
+		nh.handleNavigation(facesContext, null,
+				"/public/login?faces-redirect=true");
+	}
 
 	public void doLogout(ActionEvent actionEvent) {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext
@@ -92,6 +106,7 @@ public class SessionMBean implements Serializable { // controller ,
 			logger.info("cierra session.");
 			httpServletRequest.getSession().invalidate();
 			httpServletRequest.logout();
+			redireccionarFormularioLogin();
 		} catch (ServletException e) {
 			e.printStackTrace();
 		}

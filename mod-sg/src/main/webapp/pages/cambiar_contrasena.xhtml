@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/plantilla-bootstrap.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="msg" autoUpdate="true" showDetail="true"
+			showSummary="true" />
+
+		<p:panelGrid columns="2" style="width:100%;"
+			styleClass="registro-formulario">
+
+			<f:facet name="header">Formulario de Cambio de Contraseña</f:facet>
+
+			<h:outputText value="Contraseña Actual " />
+			<p:inputText id="cpoActual" required="true" styleClass="cpos-mantcli"
+				requiredMessage="Debe ingresar un Texto"
+				value="#{cambioClaveMBean.cpoActual}" />
+
+			<h:outputText value="Nueva Contraseña " />
+			<p:inputText id="cpoNueva" required="true" styleClass="cpos-mantcli"
+				requiredMessage="Debe ingresar un Texto"
+				value="#{cambioClaveMBean.cpoContrasena}" />
+
+			<h:outputText value="Repetir Nueva Contraseña " />
+			<p:inputText id="cpoRepetir" required="true"
+				styleClass="cpos-mantcli" requiredMessage="Debe ingresar un Texto"
+				value="#{cambioClaveMBean.cpoConfirmacion}" />
+
+			<f:facet name="footer">
+				<p:commandButton id="btn" value="Confirmar Cambio de Contraseña"
+					icon="ui-icon-search"
+					actionListener="#{cambioClaveMBean.doCambioClave}" />
+			</f:facet>
+
+
+
+		</p:panelGrid>
+
+	</ui:define>
+
+</ui:composition>
+
+

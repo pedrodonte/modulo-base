@@ -202,11 +202,14 @@ public class UserEJBImpl implements UserEJB { // EJB EJBImpl
 		
 		
 		try {
+			
 			if (contrasena.equals(confirmacion)) {
-				usuario.setClave(contrasena);
+				usuario.setClave(HelperString.encrypt(contrasena));
 				actualizarRegistro(usuario);
 			}
 		} catch (ErrorDelSistemaException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

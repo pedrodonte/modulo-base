@@ -31,7 +31,7 @@
 						styleClass="cpos-mantcli" requiredMessage="Debe ingresar un Texto"
 						value="#{consultaMBean.cpoIdentificador}" />
 					<p:spacer width="10" />
-					<p:commandButton id="btn" value="Buscar Persona"
+					<p:commandButton id="btn" value="Buscar Persona" icon="ui-icon-search"
 						oncomplete="$( '#MatenedorForm\\:btnGuardarDatosPersona' ).effect( 'shake' );"
 						actionListener="#{consultaMBean.doBuscarPersona}"
 						process="@this,cpoIdentificador" update="@(.registro-formulario)" />
@@ -162,7 +162,7 @@
 
 					<p:commandButton value="Finalizar"
 						actionListener="#{consultaMBean.doFinalizarConsulta}"
-						process="@this" action="/pages/consulta?faces-redirect=true" />
+						process="@this" action="/pages/ver_consultas?faces-redirect=true" />
 
 				</p:panel>
 			</p:tab>

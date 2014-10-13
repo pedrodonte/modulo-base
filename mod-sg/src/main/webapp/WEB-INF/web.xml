@@ -2,7 +2,7 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	version="3.0"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-	
+
 	<welcome-file-list>
 		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
@@ -50,6 +50,87 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+
+	<session-config>
+		<session-timeout>5</session-timeout>
+	</session-config>
+
+	<error-page>
+		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+		<location>/statics/error-403.xhtml</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>403</error-code>
+		<location>/statics/error-403.xhtml</location>
+	</error-page>
+
+	<!-- -->
+
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Funcionalidad para Prestador</web-resource-name>
+			<url-pattern>/pages/consulta.xhtml</url-pattern>
+			<url-pattern>/pages/personas.xhtml</url-pattern>
+			<url-pattern>/pages/ver_consultas.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>ADMINISTRADOR</role-name>
+			<role-name>PRESTADOR</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Funcionalidad para Administrador</web-resource-name>
+			<url-pattern>/pages/usuarios.xhtml</url-pattern>
+			<url-pattern>/pages/mant_rol.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>ADMINISTRADOR</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>No Funcionales en Comun</web-resource-name>
+			<url-pattern>/pages/cambiar_contrasena.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>ADMINISTRADOR</role-name>
+			<role-name>PRESTADOR</role-name>
+			<role-name>CONSULTA</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>ModuloBaseRealm</realm-name>
+		<form-login-config>
+			<form-login-page>/public/login.xhtml</form-login-page>
+			<form-error-page>/statics/error-403.xhtml</form-error-page>
+		</form-login-config>
+	</login-config>
+
+	<security-role>
+		<description>ADMINISTRADOR</description>
+		<role-name>ADMINISTRADOR</role-name>
+	</security-role>
+	<security-role>
+		<description>CONSULTA</description>
+		<role-name>CONSULTA</role-name>
+	</security-role>
+	<security-role>
+		<description>INVITADO</description>
+		<role-name>INVITADO</role-name>
+	</security-role>
+	<security-role>
+		<description>PRESTADOR</description>
+		<role-name>PRESTADOR</role-name>
+	</security-role>
+
+	<!-- -->
 
 
 </web-app>
