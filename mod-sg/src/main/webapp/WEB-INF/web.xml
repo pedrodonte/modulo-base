@@ -80,6 +80,16 @@
 			<role-name>PRESTADOR</role-name>
 		</auth-constraint>
 	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Funcionalidad Reportería</web-resource-name>
+			<url-pattern>/reporte/consultas_diarias.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>REPORTES</role-name>
+		</auth-constraint>
+	</security-constraint>
 
 	<security-constraint>
 		<web-resource-collection>
@@ -128,6 +138,11 @@
 	<security-role>
 		<description>PRESTADOR</description>
 		<role-name>PRESTADOR</role-name>
+	</security-role>
+	
+	<security-role>
+		<description>REPORTES</description>
+		<role-name>REPORTES</role-name>
 	</security-role>
 
 	<!-- -->

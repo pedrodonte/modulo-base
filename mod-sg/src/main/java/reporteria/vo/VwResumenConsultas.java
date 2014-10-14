@@ -14,6 +14,14 @@ public class VwResumenConsultas {
 	
 	private long cantidad;
 	
+	
+	
+	public VwResumenConsultas(Date fechaConsulta, long cantidad) {
+		super();
+		this.fechaConsulta = fechaConsulta;
+		this.cantidad = cantidad;
+	}
+
 	public VwResumenConsultas(Date fechaConsulta, String sexo, long cantidad) {
 		super();
 		this.fechaConsulta = fechaConsulta;

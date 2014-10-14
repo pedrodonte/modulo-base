@@ -8,14 +8,23 @@
 	template="/plantilla-bootstrap.xhtml">
 
 	<ui:define name="content">
-	
+
 		<p:calendar value="#{chartView.cpoDesde}" pattern="dd-MM-yyyy" />
 		<p:calendar value="#{chartView.cpoHasta}" pattern="dd-MM-yyyy" />
-	
+		<p:commandButton value="Generar"
+			actionListener="#{chartView.doConsultasSexoDiario}" update="@all" />
+
 		<p:chart type="line" model="#{chartView.mdlConsultasSexoDiario}"
 			style="height:300px" />
-			
-		<p:commandButton value="Generar" actionListener="#{chartView.doConsultasSexoDiario}" update="@all" />
+
+		<p:dataTable var="item" value="#{chartView.resultados}">
+			<p:column headerText="Fecha">
+				<h:outputText value="#{item.fechaConsulta}" />
+			</p:column>
+			<p:column headerText="Cantidad de Consultas">
+				<h:outputText value="#{item.cantidad}" />
+			</p:column>
+		</p:dataTable>
 
 	</ui:define>
 

@@ -12,6 +12,14 @@
 		<p:growl id="msg" autoUpdate="true" showDetail="true"
 			showSummary="true" />
 
+		<div class="ContentSideSections">
+			<div class="Content100 overHidden TextShadow">
+				<span
+					class="fontSize30 TextShadow orange mediumFont marginBottom20 dispBlock">Consultas de un Paciente</span> 
+					<span class="defaultText dispTable"> Ingrese el RUN del paciente para ver sus consultas </span>
+			</div>
+		</div>
+
 		<p:panel header="Datos Personales" styleClass="registro-formulario">
 
 			<h:outputText value="Paciente RUN " />
@@ -86,18 +94,18 @@
 					</f:facet>
 
 					<h:outputText value="Desarrollo" />
-						<h:outputText escape="false"
-							value="#{consultaMBean.registroEnEdicion.txtDesarrollo}" />
+					<h:outputText escape="false"
+						value="#{consultaMBean.registroEnEdicion.txtDesarrollo}" />
 
-						<h:outputText value="Duración" />
-						<h:outputText
-							value="#{consultaMBean.registroEnEdicion.duracion} minutos" />
+					<h:outputText value="Duración" />
+					<h:outputText
+						value="#{consultaMBean.registroEnEdicion.duracion} minutos" />
 
-						<h:outputText value="Fecha" />
-						<h:outputText
-							value="#{consultaMBean.registroEnEdicion.fechaConsulta}">
-							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
-						</h:outputText>
+					<h:outputText value="Fecha" />
+					<h:outputText
+						value="#{consultaMBean.registroEnEdicion.fechaConsulta}">
+						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+					</h:outputText>
 
 				</p:panelGrid>
 

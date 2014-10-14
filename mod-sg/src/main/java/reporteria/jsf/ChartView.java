@@ -49,47 +49,21 @@ public class ChartView implements Serializable {
 
 	public void doConsultasSexoDiario(ActionEvent event) {
 		try {
-			resultados = reporteriaEJB.consultasPeriodoSexo(cpoDesde, cpoHasta);
+			resultados = reporteriaEJB.consultasPeriodo(cpoDesde, cpoHasta);
 
 			mdlConsultasSexoDiario = new LineChartModel();
 			
-			LineChartSeries hombres = new LineChartSeries();
-			LineChartSeries mujeres = new LineChartSeries();
-			hombres.setFill(true);
-			hombres.setLabel("Hombres");
-			mujeres.setFill(true);
-			mujeres.setLabel("Mujeres");
+			LineChartSeries todos = new LineChartSeries();
+			todos.setFill(true);
+			todos.setLabel("Consultas");
 			
-			String fechaActual="";
-			long valorHombre=0, valorMujer=0;
-
 			for (VwResumenConsultas dato : resultados) {
-				
-				if (fechaActual.equals(HelperFecha.toString(dato.getFechaConsulta()))) {
-					mujeres.set(fechaActual,valorMujer);
-					hombres.set(fechaActual,valorHombre);
-					valorHombre=0;
-					valorMujer=0;
-				}else{
-					fechaActual = HelperFecha.toString(dato.getFechaConsulta());
-				}
-				
-				
-				
-				
-				
-				if (dato.getSexo().equals("Femenino")) {
-					mujeres.set(HelperFecha.toString(dato.getFechaConsulta()),
+					todos.set(HelperFecha.toString(dato.getFechaConsulta()),
 							dato.getCantidad());
-				} else if (dato.getSexo().equals("Masculino")) {
-					hombres.set(HelperFecha.toString(dato.getFechaConsulta()),
-							dato.getCantidad());
-				}
 				System.out.println(HelperFecha.toString(dato.getFechaConsulta()));
 			}
 
-			mdlConsultasSexoDiario.addSeries(hombres);
-			mdlConsultasSexoDiario.addSeries(mujeres);
+			mdlConsultasSexoDiario.addSeries(todos);
 
 			mdlConsultasSexoDiario.setTitle("Resumen Consultas diarias");
 			mdlConsultasSexoDiario.setLegendPosition("ne");
@@ -128,5 +102,15 @@ public class ChartView implements Serializable {
 	public void setCpoHasta(Date cpoHasta) {
 		this.cpoHasta = cpoHasta;
 	}
+
+	public List<VwResumenConsultas> getResultados() {
+		return resultados;
+	}
+
+	public void setResultados(List<VwResumenConsultas> resultados) {
+		this.resultados = resultados;
+	}
+	
+	
 
 }
