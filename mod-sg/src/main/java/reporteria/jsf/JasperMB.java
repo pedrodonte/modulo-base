@@ -1,7 +1,5 @@
 package reporteria.jsf;
 
-import info.pedrodonte.util.JDBCConexion;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -14,13 +12,17 @@ import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
 
 @Named
 @SessionScoped
@@ -30,6 +32,8 @@ public class JasperMB implements Serializable {
 
 	private Date cpoDesde = new Date();
 	private Date cpoHasta = new Date();
+	
+	@Inject DataSource dataSource;
 
 	public void doGenerarReporte(ActionEvent event){
 		Map<String, Object> parametros = new HashMap<String, Object>();
@@ -38,19 +42,23 @@ public class JasperMB implements Serializable {
 		
 		File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reporte/jasper/consultas_diarias.jasper"));
 		
-		JDBCConexion conexiones = new JDBCConexion();
 		
-		
-		try(Connection cxn = conexiones.getConexionJDBC()) {
+		try(Connection cxn = dataSource.getConnection()) {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, cxn);
 			
 			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-			response.addHeader("Content-Disposition", "attachment; filename=reporte.pdf");
+			response.addHeader("Content-disposition", "attachment; filename=jsfReporte.pdf");
 			
-			ServletOutputStream stream = response.getOutputStream();
+			ServletOutputStream outStream = response.getOutputStream();
 			
-			stream.flush();
-			stream.close();
+			JRPdfExporter exporter = new JRPdfExporter();
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, outStream);
+			exporter.exportReport();
+			
+			outStream.flush();
+			outStream.close();
+			FacesContext.getCurrentInstance().responseComplete();
 			
 		} catch (JRException e) {
 			e.printStackTrace();
