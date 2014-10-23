@@ -13,7 +13,8 @@
 		
 		<p:calendar value="#{jasperMB.cpoHasta}" pattern="dd-MM-yyyy" />
 		
-		<p:commandButton value="Generar Reporte" actionListener="#{jasperMB.doGenerarReporte}" update="@all" ajax="false" />
+		<p:commandButton value="Bajar PDF" actionListener="#{jasperMB.doGenerarReporte}" update="@all" ajax="false" />
+		<p:commandButton value="Exportar PDF" action="#{jasperMB.actionGenerarReporte()}"  />
 
 		
 

@@ -28,7 +28,7 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="98" splitType="Stretch">
+		<band height="58" splitType="Stretch">
 			<staticText>
 				<reportElement style="Title" x="145" y="0" width="263" height="33" uuid="bbf1c853-142d-4697-9f65-371f607d50e3"/>
 				<textElement verticalAlignment="Middle"/>
@@ -60,11 +60,11 @@ WHERE
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Column header" x="0" y="19" width="277" height="15" uuid="e777dde7-4340-4d95-ad4c-4646b3721393"/>
+				<reportElement style="Column header" x="53" y="19" width="224" height="15" uuid="e777dde7-4340-4d95-ad4c-4646b3721393"/>
 				<text><![CDATA[dia]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="277" y="19" width="277" height="15" uuid="0a28bb65-a7d3-41fd-b605-2ea06cf1fea5"/>
+				<reportElement style="Column header" x="277" y="19" width="212" height="15" uuid="0a28bb65-a7d3-41fd-b605-2ea06cf1fea5"/>
 				<text><![CDATA[cantidad]]></text>
 			</staticText>
 		</band>
@@ -78,17 +78,17 @@ WHERE
 				</graphicElement>
 			</line>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement style="Detail" x="0" y="0" width="277" height="15" uuid="de2d219f-40a7-4cd8-9788-4a8ac756398f"/>
+				<reportElement style="Detail" x="53" y="0" width="224" height="15" uuid="de2d219f-40a7-4cd8-9788-4a8ac756398f"/>
 				<textFieldExpression><![CDATA[$F{dia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="277" y="0" width="277" height="15" uuid="562240ca-9a35-4f20-bbc3-1e6f340bb410"/>
+				<reportElement style="Detail" x="277" y="0" width="212" height="15" uuid="562240ca-9a35-4f20-bbc3-1e6f340bb410"/>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="227" splitType="Stretch">
+		<band height="74" splitType="Stretch">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="6b2b47c8-cd3f-448f-990f-f30d3836b476"/>
 				<graphicElement>
@@ -97,14 +97,14 @@ WHERE
 			</line>
 			<stackedBarChart>
 				<chart>
-					<reportElement x="42" y="22" width="436" height="175" uuid="505f52c4-6d22-4917-a415-4d6c5031c74c"/>
+					<reportElement x="53" y="4" width="436" height="70" uuid="505f52c4-6d22-4917-a415-4d6c5031c74c"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<categoryDataset>
 					<categorySeries>
-						<seriesExpression><![CDATA["Dummy Series"]]></seriesExpression>
+						<seriesExpression><![CDATA["Consultas por día"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{dia}.toString()]]></categoryExpression>
 						<valueExpression><![CDATA[$F{cantidad}]]></valueExpression>
 					</categorySeries>
@@ -125,11 +125,11 @@ WHERE
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="84822836-298a-4b95-ac19-a4adf18849c4"/>
+				<reportElement style="Column header" x="431" y="0" width="80" height="20" uuid="84822836-298a-4b95-ac19-a4adf18849c4"/>
 				<textElement textAlignment="Right">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="7403b5c4-0597-4609-8574-c5ad6a2450eb"/>
@@ -138,7 +138,7 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy h.mm a">
+			<textField pattern="dd/MM/yyyy h:mm a">
 				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="5c629a45-1025-4a36-b529-38efc61f36fa"/>
 				<textElement>
 					<font size="10" isBold="false"/>
