@@ -10,36 +10,54 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Autenticación de Usuarios</title>
+	<link rel="stylesheet" href="lcss.css" media="screen" type="text/css" />
 </h:head>
 <h:body>
 
 
 	<h:form id="LoginForm">
 
-		<p:messages id="msg" autoUpdate="true" showDetail="true"
-			showSummary="true" />
-
-
-		<p:panelGrid columns="2" cellpadding="5" style="margin-bottom:10px">
-
-			<f:facet name="header">
-				<h3>Formulario de Autenticación</h3>
-			</f:facet>
-
-			<h:outputLabel value="Identificador de usuario : " />
-			<p:inputText id="usuario" value="#{sessionMBean.credencial.username}" required="true" label="Identificador Usuario" />
-
-			<h:outputLabel value="Contraseña : " />
-			<p:password id="pass" value="#{sessionMBean.credencial.password}" required="true" label="Password" />
-
-			<f:facet name="footer">
-				<p:commandButton id="btnLogin" value="Login" actionListener="#{sessionMBean.doLogin}" />
-			</f:facet>
-
-		</p:panelGrid>
-		
 		<p:watermark for="usuario" value="Identificador del Usuario"
-				id="usuarioWM" />
+			id="usuarioWM" />
+			
+		<p:watermark for="pass" value="Contraseña"
+			id="passWM" />
+
+
+
+		<div class="ui-grid ui-grid-responsive login-card">
+
+			<h1>Ingreso Sistema</h1>
+
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-12">
+					<p:messages id="msg" autoUpdate="true" showDetail="true"
+						showSummary="false" />
+				</div>
+			</div>
+
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-12">
+					<p:inputText id="usuario"
+						value="#{sessionMBean.credencial.username}" required="true"
+						label="Identificador Usuario" />
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-12">
+					<p:password id="pass" value="#{sessionMBean.credencial.password}"
+						required="true" label="Password" />
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-12">
+					<h:commandButton id="btnLogin" value="Login"
+						styleClass="login login-submit"
+						actionListener="#{sessionMBean.doLogin}" />
+				</div>
+			</div>
+		</div>
+
 
 	</h:form>
 

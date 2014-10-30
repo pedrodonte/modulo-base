@@ -104,6 +104,16 @@
 	
 	<security-constraint>
 		<web-resource-collection>
+			<web-resource-name>Funcionalidad para Super-Administrador</web-resource-name>
+			<url-pattern>/pages/root_parametros.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>ROOT</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
 			<web-resource-name>No Funcionales en Comun</web-resource-name>
 			<url-pattern>/pages/cambiar_contrasena.xhtml</url-pattern>
 		</web-resource-collection>
@@ -143,6 +153,11 @@
 	<security-role>
 		<description>REPORTES</description>
 		<role-name>REPORTES</role-name>
+	</security-role>
+	
+	<security-role>
+		<description>ROOT</description>
+		<role-name>ROOT</role-name>
 	</security-role>
 
 	<!-- -->

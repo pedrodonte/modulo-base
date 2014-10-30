@@ -101,7 +101,7 @@ a {
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-8">
 
-							<a id="LOGOTEXTSIDE" href="/pages/crear_consulta.xhtml"> <span
+							<a id="LOGOTEXTSIDE" href="pages/crear_consulta.xhtml"> <span
 								class="dispBlock logoDarkText fontSize30">CONSULTA</span> <span
 								class="dispBlock logoBlueText fontSize30 mediumFont">PACIENTE</span>
 							</a>
@@ -130,8 +130,13 @@ a {
 
 			</p:layoutUnit>
 
-			<p:layoutUnit id="leftLU" position="west" size="200">
+			<p:layoutUnit id="leftLU" position="west" size="250">
 				<p:menu>
+					<p:submenu label="Super-Administrador"
+						rendered="#{request.isUserInRole('ROOT')}">
+						<p:menuitem value="Parámetros Sistema" process="@this" icon="ui-icon-bullet"
+							action="/pages/root_parametros?faces-redirect=true" />
+					</p:submenu>
 					<p:submenu label="Administrador"
 						rendered="#{request.isUserInRole('ADMINISTRADOR')}">
 						<p:menuitem value="Roles" process="@this" icon="ui-icon-bullet"

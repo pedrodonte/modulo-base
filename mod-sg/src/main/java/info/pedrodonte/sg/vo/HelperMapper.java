@@ -1,6 +1,8 @@
 package info.pedrodonte.sg.vo;
 
 import info.pedrodonte.base.dto.BsTbPersona;
+import info.pedrodonte.base.dto.TbParametro;
+import info.pedrodonte.base.vo.VoParametro;
 import info.pedrodonte.base.vo.VoPersona;
 import info.pedrodonte.consultas.dto.CsTbConsulta;
 import info.pedrodonte.consultas.vo.VoConsulta;
@@ -207,6 +209,36 @@ public class HelperMapper {
 			}
 		}
 		return dto;
+	}
+
+	public TbParametro toDTO(VoParametro vo) {
+		TbParametro dto = null;
+		if (vo != null) {
+			dto = new TbParametro();
+			try {
+				dto.setNombre(vo.getNombre());
+				dto.setParametroID(vo.getParametroID());
+				dto.setValor(vo.getValor());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dto;
+	}
+	
+	public VoParametro toVO(TbParametro dto) {
+		VoParametro vo = null;
+		if (dto != null) {
+			vo = new VoParametro();
+			try {
+				vo.setNombre(dto.getNombre());
+				vo.setParametroID(dto.getParametroID());
+				vo.setValor(dto.getValor());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return vo;
 	}
 
 }

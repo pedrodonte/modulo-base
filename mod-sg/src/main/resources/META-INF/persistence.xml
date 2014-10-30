@@ -9,6 +9,7 @@
 		<class>info.pedrodonte.consultas.dto.CsTbConsulta</class>
 		<class>reporteria.dto.VwRcResumenConsulta</class>
 		<class>reporteria.dto.VwCdConsultasDiaria</class>
+		<class>info.pedrodonte.base.dto.TbParametro</class>
 		<properties>
 			<property name="hibernate.connection.username" value="modulo_base"/>
 			<property name="hibernate.connection.password" value="clave.qaws"/>
