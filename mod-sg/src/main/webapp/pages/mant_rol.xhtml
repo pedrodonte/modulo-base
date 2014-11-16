@@ -58,12 +58,6 @@
 
 				</f:facet>
 
-				<p:column sortBy="#{item.descripcion}">
-					<f:facet name="header">
-						<h:outputText value="descripcion" />
-					</f:facet>
-					<h:outputText value="#{item.descripcion}" />
-				</p:column>
 				<p:column sortBy="#{item.identificador}">
 					<f:facet name="header">
 						<h:outputText value="identificador" />
@@ -75,6 +69,13 @@
 						<h:outputText value="nombre" />
 					</f:facet>
 					<h:outputText value="#{item.nombre}" />
+				</p:column>
+				
+				<p:column sortBy="#{item.descripcion}">
+					<f:facet name="header">
+						<h:outputText value="descripcion" />
+					</f:facet>
+					<h:outputText value="#{item.descripcion}" />
 				</p:column>
 
 			</p:dataTable>
@@ -106,14 +107,6 @@
 					<h:outputText rendered="#{rolMBean.modoFormulario eq 'OFF'}"
 						value="#{rolMBean.registroEnEdicion.nombre}" />
 
-					<h:outputText value="descripcion" />
-					<p:inputText required="true" styleClass="cpos-mantcli"
-						requiredMessage="Debe ingresar un Texto"
-						rendered="#{rolMBean.modoFormulario ne 'OFF'}"
-						value="#{rolMBean.registroEnEdicion.descripcion}" />
-					<h:outputText rendered="#{rolMBean.modoFormulario eq 'OFF'}"
-						value="#{rolMBean.registroEnEdicion.descripcion}" />
-
 					<h:outputText value="identificador" />
 					<p:inputText required="true" styleClass="cpos-mantcli"
 						requiredMessage="Debe ingresar un Texto"
@@ -121,6 +114,14 @@
 						value="#{rolMBean.registroEnEdicion.identificador}" />
 					<h:outputText rendered="#{rolMBean.modoFormulario eq 'OFF'}"
 						value="#{rolMBean.registroEnEdicion.identificador}" />
+						
+					<h:outputText value="descripcion" />
+					<p:inputTextarea rows="6" cols="33"  required="true" styleClass="cpos-mantcli"
+						requiredMessage="Debe ingresar un Texto"
+						rendered="#{rolMBean.modoFormulario ne 'OFF'}"
+						value="#{rolMBean.registroEnEdicion.descripcion}" />
+					<h:outputText rendered="#{rolMBean.modoFormulario eq 'OFF'}"
+						value="#{rolMBean.registroEnEdicion.descripcion}" />
 
 
 				</p:panelGrid>

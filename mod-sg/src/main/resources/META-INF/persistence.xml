@@ -2,14 +2,14 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="mod-sg">
 		<jta-data-source>java:jboss/datasources/modBaseDS</jta-data-source>
-		<class>info.pedrodonte.sg.dto.SgTbRol</class>
-		<class>info.pedrodonte.sg.dto.SgTbUser</class>
-		<class>info.pedrodonte.sg.dto.SgTbUserRol</class>
-		<class>info.pedrodonte.base.dto.BsTbPersona</class>
-		<class>info.pedrodonte.consultas.dto.CsTbConsulta</class>
-		<class>reporteria.dto.VwRcResumenConsulta</class>
-		<class>reporteria.dto.VwCdConsultasDiaria</class>
-		<class>info.pedrodonte.base.dto.TbParametro</class>
+		<class>modulo.usuarios.dto.DTORol</class>
+		<class>modulo.usuarios.dto.DTOUsuario</class>
+		<class>modulo.usuarios.dto.DTORolDeUsuario</class>
+		<class>modulo.base.dto.BsTbPersona</class>
+		<class>modulo.consulta_medica.dto.CsTbConsulta</class>
+		<class>modulo.reporteria.dto.VwRcResumenConsulta</class>
+		<class>modulo.reporteria.dto.VwCdConsultasDiaria</class>
+		<class>modulo.base.dto.TbParametro</class>
 		<properties>
 			<property name="hibernate.connection.username" value="modulo_base"/>
 			<property name="hibernate.connection.password" value="clave.qaws"/>

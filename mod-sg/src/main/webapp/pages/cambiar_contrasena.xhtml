@@ -11,24 +11,31 @@
 
 		<p:growl id="msg" autoUpdate="true" showDetail="true"
 			showSummary="true" />
+			
+			
+		<div class="ContentSideSections">
+			<div class="Content100 overHidden TextShadow">
+				<span
+					class="fontSize30 TextShadow orange mediumFont marginBottom20 dispBlock">Formulario de Cambio de Contraseña</span> 
+					<span class="defaultText dispTable"></span>
+			</div>
+		</div>
 
 		<p:panelGrid columns="2" style="width:100%;"
 			styleClass="registro-formulario">
 
-			<f:facet name="header">Formulario de Cambio de Contraseña</f:facet>
-
 			<h:outputText value="Contraseña Actual " />
-			<p:inputText id="cpoActual" required="true" styleClass="cpos-mantcli"
+			<p:password id="cpoActual" required="true" styleClass="cpos-mantcli"
 				requiredMessage="Debe ingresar un Texto"
 				value="#{cambioClaveMBean.cpoActual}" />
 
 			<h:outputText value="Nueva Contraseña " />
-			<p:inputText id="cpoNueva" required="true" styleClass="cpos-mantcli"
+			<p:password id="cpoNueva" required="true" styleClass="cpos-mantcli"
 				requiredMessage="Debe ingresar un Texto"
 				value="#{cambioClaveMBean.cpoContrasena}" />
 
 			<h:outputText value="Repetir Nueva Contraseña " />
-			<p:inputText id="cpoRepetir" required="true"
+			<p:password id="cpoRepetir" required="true"
 				styleClass="cpos-mantcli" requiredMessage="Debe ingresar un Texto"
 				value="#{cambioClaveMBean.cpoConfirmacion}" />
 
