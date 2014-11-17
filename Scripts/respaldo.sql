@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.5
 -- Dumped by pg_dump version 9.3.5
--- Started on 2014-10-30 00:39:42 CLST
+-- Started on 2014-11-17 16:02:31
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -14,7 +14,7 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- TOC entry 186 (class 3079 OID 12616)
+-- TOC entry 188 (class 3079 OID 11750)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -22,8 +22,8 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2898 (class 0 OID 0)
--- Dependencies: 186
+-- TOC entry 2046 (class 0 OID 0)
+-- Dependencies: 188
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -33,7 +33,7 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET search_path = public, pg_catalog;
 
 --
--- TOC entry 170 (class 1259 OID 16487)
+-- TOC entry 170 (class 1259 OID 163847)
 -- Name: bs_sq_persona; Type: SEQUENCE; Schema: public; Owner: modulo_base
 --
 
@@ -52,7 +52,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 171 (class 1259 OID 16489)
+-- TOC entry 171 (class 1259 OID 163849)
 -- Name: bs_tb_persona; Type: TABLE; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -71,7 +71,7 @@ CREATE TABLE bs_tb_persona (
 ALTER TABLE public.bs_tb_persona OWNER TO modulo_base;
 
 --
--- TOC entry 172 (class 1259 OID 16493)
+-- TOC entry 172 (class 1259 OID 163853)
 -- Name: bs_tb_sexo; Type: TABLE; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -84,7 +84,7 @@ CREATE TABLE bs_tb_sexo (
 ALTER TABLE public.bs_tb_sexo OWNER TO modulo_base;
 
 --
--- TOC entry 173 (class 1259 OID 16496)
+-- TOC entry 173 (class 1259 OID 163856)
 -- Name: cs_sq_consulta; Type: SEQUENCE; Schema: public; Owner: modulo_base
 --
 
@@ -99,7 +99,22 @@ CREATE SEQUENCE cs_sq_consulta
 ALTER TABLE public.cs_sq_consulta OWNER TO modulo_base;
 
 --
--- TOC entry 174 (class 1259 OID 16498)
+-- TOC entry 186 (class 1259 OID 180230)
+-- Name: cs_sq_prestador_medico; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE cs_sq_prestador_medico
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cs_sq_prestador_medico OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 163858)
 -- Name: cs_tb_consulta; Type: TABLE; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -116,7 +131,25 @@ CREATE TABLE cs_tb_consulta (
 ALTER TABLE public.cs_tb_consulta OWNER TO modulo_base;
 
 --
--- TOC entry 175 (class 1259 OID 16505)
+-- TOC entry 187 (class 1259 OID 180232)
+-- Name: cs_tb_prestador_medico; Type: TABLE; Schema: public; Owner: modulo_base; Tablespace: 
+--
+
+CREATE TABLE cs_tb_prestador_medico (
+    prestador_medico_id numeric(9,0) DEFAULT nextval('cs_sq_prestador_medico'::regclass) NOT NULL,
+    usuario_id numeric(9,0) NOT NULL,
+    persona_id numeric(9,0) NOT NULL,
+    reg_fec_insert timestamp without time zone NOT NULL,
+    reg_fec_update timestamp without time zone,
+    profesion character varying(500) NOT NULL,
+    especialidad character varying(500) NOT NULL
+);
+
+
+ALTER TABLE public.cs_tb_prestador_medico OWNER TO modulo_base;
+
+--
+-- TOC entry 175 (class 1259 OID 163865)
 -- Name: sg_sq_rol; Type: SEQUENCE; Schema: public; Owner: modulo_base
 --
 
@@ -131,7 +164,7 @@ CREATE SEQUENCE sg_sq_rol
 ALTER TABLE public.sg_sq_rol OWNER TO modulo_base;
 
 --
--- TOC entry 176 (class 1259 OID 16507)
+-- TOC entry 176 (class 1259 OID 163867)
 -- Name: sg_sq_user; Type: SEQUENCE; Schema: public; Owner: modulo_base
 --
 
@@ -146,7 +179,7 @@ CREATE SEQUENCE sg_sq_user
 ALTER TABLE public.sg_sq_user OWNER TO modulo_base;
 
 --
--- TOC entry 177 (class 1259 OID 16509)
+-- TOC entry 177 (class 1259 OID 163869)
 -- Name: sg_sq_user_rol; Type: SEQUENCE; Schema: public; Owner: modulo_base
 --
 
@@ -161,7 +194,7 @@ CREATE SEQUENCE sg_sq_user_rol
 ALTER TABLE public.sg_sq_user_rol OWNER TO modulo_base;
 
 --
--- TOC entry 178 (class 1259 OID 16511)
+-- TOC entry 178 (class 1259 OID 163871)
 -- Name: sg_tb_rol; Type: TABLE; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -178,7 +211,7 @@ CREATE TABLE sg_tb_rol (
 ALTER TABLE public.sg_tb_rol OWNER TO modulo_base;
 
 --
--- TOC entry 179 (class 1259 OID 16515)
+-- TOC entry 179 (class 1259 OID 163875)
 -- Name: sg_tb_user; Type: TABLE; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -196,7 +229,7 @@ CREATE TABLE sg_tb_user (
 ALTER TABLE public.sg_tb_user OWNER TO modulo_base;
 
 --
--- TOC entry 2899 (class 0 OID 0)
+-- TOC entry 2047 (class 0 OID 0)
 -- Dependencies: 179
 -- Name: TABLE sg_tb_user; Type: COMMENT; Schema: public; Owner: modulo_base
 --
@@ -205,7 +238,7 @@ COMMENT ON TABLE sg_tb_user IS 'registro de los usuarios del sistema.';
 
 
 --
--- TOC entry 2900 (class 0 OID 0)
+-- TOC entry 2048 (class 0 OID 0)
 -- Dependencies: 179
 -- Name: COLUMN sg_tb_user.email; Type: COMMENT; Schema: public; Owner: modulo_base
 --
@@ -214,7 +247,7 @@ COMMENT ON COLUMN sg_tb_user.email IS 'correo electronico del usuario.';
 
 
 --
--- TOC entry 2901 (class 0 OID 0)
+-- TOC entry 2049 (class 0 OID 0)
 -- Dependencies: 179
 -- Name: COLUMN sg_tb_user.flag_cambiar_clave; Type: COMMENT; Schema: public; Owner: modulo_base
 --
@@ -223,7 +256,7 @@ COMMENT ON COLUMN sg_tb_user.flag_cambiar_clave IS '0 es no hacer nada, 1 cambia
 
 
 --
--- TOC entry 180 (class 1259 OID 16520)
+-- TOC entry 180 (class 1259 OID 163880)
 -- Name: sg_tb_user_rol; Type: TABLE; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -241,7 +274,7 @@ CREATE TABLE sg_tb_user_rol (
 ALTER TABLE public.sg_tb_user_rol OWNER TO modulo_base;
 
 --
--- TOC entry 181 (class 1259 OID 16524)
+-- TOC entry 181 (class 1259 OID 163884)
 -- Name: segu_vta_jaas; Type: VIEW; Schema: public; Owner: modulo_base
 --
 
@@ -258,7 +291,7 @@ CREATE VIEW segu_vta_jaas AS
 ALTER TABLE public.segu_vta_jaas OWNER TO modulo_base;
 
 --
--- TOC entry 182 (class 1259 OID 16528)
+-- TOC entry 182 (class 1259 OID 163889)
 -- Name: tb_fc_fechas_continuas; Type: TABLE; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -270,7 +303,7 @@ CREATE TABLE tb_fc_fechas_continuas (
 ALTER TABLE public.tb_fc_fechas_continuas OWNER TO modulo_base;
 
 --
--- TOC entry 185 (class 1259 OID 16573)
+-- TOC entry 183 (class 1259 OID 163892)
 -- Name: tb_ps_parametros_sistema; Type: TABLE; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -284,7 +317,7 @@ CREATE TABLE tb_ps_parametros_sistema (
 ALTER TABLE public.tb_ps_parametros_sistema OWNER TO modulo_base;
 
 --
--- TOC entry 183 (class 1259 OID 16531)
+-- TOC entry 184 (class 1259 OID 163895)
 -- Name: vw_rc_resumen_consultas; Type: VIEW; Schema: public; Owner: modulo_base
 --
 
@@ -307,7 +340,7 @@ CREATE VIEW vw_rc_resumen_consultas AS
 ALTER TABLE public.vw_rc_resumen_consultas OWNER TO modulo_base;
 
 --
--- TOC entry 184 (class 1259 OID 16536)
+-- TOC entry 185 (class 1259 OID 163900)
 -- Name: vw_cd_consultas_diarias; Type: VIEW; Schema: public; Owner: modulo_base
 --
 
@@ -330,16 +363,16 @@ CREATE VIEW vw_cd_consultas_diarias AS
 ALTER TABLE public.vw_cd_consultas_diarias OWNER TO modulo_base;
 
 --
--- TOC entry 2902 (class 0 OID 0)
+-- TOC entry 2050 (class 0 OID 0)
 -- Dependencies: 170
 -- Name: bs_sq_persona; Type: SEQUENCE SET; Schema: public; Owner: modulo_base
 --
 
-SELECT pg_catalog.setval('bs_sq_persona', 20, true);
+SELECT pg_catalog.setval('bs_sq_persona', 21, true);
 
 
 --
--- TOC entry 2879 (class 0 OID 16489)
+-- TOC entry 2025 (class 0 OID 163849)
 -- Dependencies: 171
 -- Data for Name: bs_tb_persona; Type: TABLE DATA; Schema: public; Owner: modulo_base
 --
@@ -351,10 +384,11 @@ INSERT INTO bs_tb_persona VALUES (17, '17391922-0', 'MIGUEL ALEJANDRO', 'ENRÍQU
 INSERT INTO bs_tb_persona VALUES (18, '8388146-1', 'PEDRO CALIXTO', 'CARRASCO QUIROZ', 2, '1957-10-14', '2014-10-13 12:01:33.805', NULL);
 INSERT INTO bs_tb_persona VALUES (19, '8768000-2', 'ROSA REBECA', 'CUR?N MILL?N', 1, '1961-04-10', '2014-10-13 12:01:47.208', NULL);
 INSERT INTO bs_tb_persona VALUES (20, '24219144-7', 'VICENTE RODRIGO ', 'CARRASCO LEMUS', 2, '2013-03-17', '2014-10-13 12:02:14.566', NULL);
+INSERT INTO bs_tb_persona VALUES (21, '15336817-1', 'GUSTAVO ANDR�S', 'MART�NEZ CASANOVA', 2, '1982-05-16', '2014-11-17 12:49:44.897', NULL);
 
 
 --
--- TOC entry 2880 (class 0 OID 16493)
+-- TOC entry 2026 (class 0 OID 163853)
 -- Dependencies: 172
 -- Data for Name: bs_tb_sexo; Type: TABLE DATA; Schema: public; Owner: modulo_base
 --
@@ -365,16 +399,25 @@ INSERT INTO bs_tb_sexo VALUES (3, 'Otro');
 
 
 --
--- TOC entry 2903 (class 0 OID 0)
+-- TOC entry 2051 (class 0 OID 0)
 -- Dependencies: 173
 -- Name: cs_sq_consulta; Type: SEQUENCE SET; Schema: public; Owner: modulo_base
 --
 
-SELECT pg_catalog.setval('cs_sq_consulta', 77, true);
+SELECT pg_catalog.setval('cs_sq_consulta', 79, true);
 
 
 --
--- TOC entry 2882 (class 0 OID 16498)
+-- TOC entry 2052 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: cs_sq_prestador_medico; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('cs_sq_prestador_medico', 1, false);
+
+
+--
+-- TOC entry 2028 (class 0 OID 163858)
 -- Dependencies: 174
 -- Data for Name: cs_tb_consulta; Type: TABLE DATA; Schema: public; Owner: modulo_base
 --
@@ -414,10 +457,20 @@ INSERT INTO cs_tb_consulta VALUES (74, 'Proin suscipit luctus orci placerat frin
 INSERT INTO cs_tb_consulta VALUES (75, 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.', '2014-10-20 17:20:15', 14, '2014-10-20 17:25:00', NULL);
 INSERT INTO cs_tb_consulta VALUES (76, 'Maecenas eu placerat ante. Fusce ut neque justo, et aliquet enim. In at, vitae facilisis erat.', '2014-10-21 17:20:15', 15, '2014-10-21 17:25:00', NULL);
 INSERT INTO cs_tb_consulta VALUES (77, 'Maecenas eu placerat ante. Fusce ut neque justo, et aliquet enim.ue erfsdf s sdfsdferat.', '2014-10-22 17:20:15', 17, '2014-10-22 17:25:00', NULL);
+INSERT INTO cs_tb_consulta VALUES (78, 'dadsf', '2014-11-14 11:36:47.884', 15, '2014-11-14 11:37:31.807', NULL);
+INSERT INTO cs_tb_consulta VALUES (79, 'ytytut', '2014-11-16 00:00:00', 21, '2014-11-17 12:50:17.307', NULL);
 
 
 --
--- TOC entry 2904 (class 0 OID 0)
+-- TOC entry 2038 (class 0 OID 180232)
+-- Dependencies: 187
+-- Data for Name: cs_tb_prestador_medico; Type: TABLE DATA; Schema: public; Owner: modulo_base
+--
+
+
+
+--
+-- TOC entry 2053 (class 0 OID 0)
 -- Dependencies: 175
 -- Name: sg_sq_rol; Type: SEQUENCE SET; Schema: public; Owner: modulo_base
 --
@@ -426,7 +479,7 @@ SELECT pg_catalog.setval('sg_sq_rol', 6, true);
 
 
 --
--- TOC entry 2905 (class 0 OID 0)
+-- TOC entry 2054 (class 0 OID 0)
 -- Dependencies: 176
 -- Name: sg_sq_user; Type: SEQUENCE SET; Schema: public; Owner: modulo_base
 --
@@ -435,7 +488,7 @@ SELECT pg_catalog.setval('sg_sq_user', 10, true);
 
 
 --
--- TOC entry 2906 (class 0 OID 0)
+-- TOC entry 2055 (class 0 OID 0)
 -- Dependencies: 177
 -- Name: sg_sq_user_rol; Type: SEQUENCE SET; Schema: public; Owner: modulo_base
 --
@@ -444,7 +497,7 @@ SELECT pg_catalog.setval('sg_sq_user_rol', 15, true);
 
 
 --
--- TOC entry 2886 (class 0 OID 16511)
+-- TOC entry 2032 (class 0 OID 163871)
 -- Dependencies: 178
 -- Data for Name: sg_tb_rol; Type: TABLE DATA; Schema: public; Owner: modulo_base
 --
@@ -458,7 +511,7 @@ INSERT INTO sg_tb_rol VALUES (6, 'ROOT (Super Usuario)', 'Usuario que administra
 
 
 --
--- TOC entry 2887 (class 0 OID 16515)
+-- TOC entry 2033 (class 0 OID 163875)
 -- Dependencies: 179
 -- Data for Name: sg_tb_user; Type: TABLE DATA; Schema: public; Owner: modulo_base
 --
@@ -476,7 +529,7 @@ INSERT INTO sg_tb_user VALUES (1, 'pedrodonte', '46A05B619197BC9C16EC59662C81AD7
 
 
 --
--- TOC entry 2888 (class 0 OID 16520)
+-- TOC entry 2034 (class 0 OID 163880)
 -- Dependencies: 180
 -- Data for Name: sg_tb_user_rol; Type: TABLE DATA; Schema: public; Owner: modulo_base
 --
@@ -499,7 +552,7 @@ INSERT INTO sg_tb_user_rol VALUES (15, 1, 6, '2014-10-30 00:36:01.116', '9999-01
 
 
 --
--- TOC entry 2889 (class 0 OID 16528)
+-- TOC entry 2035 (class 0 OID 163889)
 -- Dependencies: 182
 -- Data for Name: tb_fc_fechas_continuas; Type: TABLE DATA; Schema: public; Owner: modulo_base
 --
@@ -19135,23 +19188,23 @@ INSERT INTO tb_fc_fechas_continuas VALUES ('2050-12-31');
 
 
 --
--- TOC entry 2890 (class 0 OID 16573)
--- Dependencies: 185
+-- TOC entry 2036 (class 0 OID 163892)
+-- Dependencies: 183
 -- Data for Name: tb_ps_parametros_sistema; Type: TABLE DATA; Schema: public; Owner: modulo_base
 --
 
 INSERT INTO tb_ps_parametros_sistema VALUES ('SISTEMA_NOMBRE', 'Consulta Paciente', 1);
 INSERT INTO tb_ps_parametros_sistema VALUES ('SISTEMA_VERSION', '1.0.201410', 2);
 INSERT INTO tb_ps_parametros_sistema VALUES ('FORMATO_FECHA_FULL', 'yyyy-mm-dd', 3);
-INSERT INTO tb_ps_parametros_sistema VALUES ('CORREO_CASILLA', NULL, 4);
-INSERT INTO tb_ps_parametros_sistema VALUES ('CORREO_USUARIO', NULL, 5);
-INSERT INTO tb_ps_parametros_sistema VALUES ('CORREO_CONTRASENA', NULL, 6);
 INSERT INTO tb_ps_parametros_sistema VALUES ('CANTIDAD_REGISTROS_TABLA', '20', 7);
 INSERT INTO tb_ps_parametros_sistema VALUES ('CONSULTA_URL_CERTPREV', NULL, 8);
+INSERT INTO tb_ps_parametros_sistema VALUES ('CORREO_CASILLA', 'develop.sender.mail@gmail.com', 4);
+INSERT INTO tb_ps_parametros_sistema VALUES ('CORREO_CONTRASENA', 'clave.qawsed', 6);
+INSERT INTO tb_ps_parametros_sistema VALUES ('CORREO_USUARIO', 'Sistema Módulo Base', 5);
 
 
 --
--- TOC entry 2749 (class 2606 OID 16542)
+-- TOC entry 1891 (class 2606 OID 163905)
 -- Name: bs_tb_sexo_pkey; Type: CONSTRAINT; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -19160,7 +19213,7 @@ ALTER TABLE ONLY bs_tb_sexo
 
 
 --
--- TOC entry 2751 (class 2606 OID 16544)
+-- TOC entry 1893 (class 2606 OID 163907)
 -- Name: consulta_id_pk; Type: CONSTRAINT; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -19169,7 +19222,7 @@ ALTER TABLE ONLY cs_tb_consulta
 
 
 --
--- TOC entry 2745 (class 2606 OID 16546)
+-- TOC entry 1887 (class 2606 OID 163909)
 -- Name: persona_id_pk; Type: CONSTRAINT; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -19178,7 +19231,7 @@ ALTER TABLE ONLY bs_tb_persona
 
 
 --
--- TOC entry 2747 (class 2606 OID 16548)
+-- TOC entry 1889 (class 2606 OID 163911)
 -- Name: persona_unique_identificador; Type: CONSTRAINT; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -19187,7 +19240,16 @@ ALTER TABLE ONLY bs_tb_persona
 
 
 --
--- TOC entry 2753 (class 2606 OID 16550)
+-- TOC entry 1908 (class 2606 OID 180237)
+-- Name: prestador_medico_id_pk; Type: CONSTRAINT; Schema: public; Owner: modulo_base; Tablespace: 
+--
+
+ALTER TABLE ONLY cs_tb_prestador_medico
+    ADD CONSTRAINT prestador_medico_id_pk PRIMARY KEY (prestador_medico_id);
+
+
+--
+-- TOC entry 1895 (class 2606 OID 163913)
 -- Name: sg_tb_rol_pk; Type: CONSTRAINT; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -19196,7 +19258,7 @@ ALTER TABLE ONLY sg_tb_rol
 
 
 --
--- TOC entry 2755 (class 2606 OID 16552)
+-- TOC entry 1897 (class 2606 OID 163915)
 -- Name: sg_tb_user_pk; Type: CONSTRAINT; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -19205,7 +19267,7 @@ ALTER TABLE ONLY sg_tb_user
 
 
 --
--- TOC entry 2757 (class 2606 OID 16554)
+-- TOC entry 1899 (class 2606 OID 163917)
 -- Name: sg_tb_user_rol_pk; Type: CONSTRAINT; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -19214,7 +19276,7 @@ ALTER TABLE ONLY sg_tb_user_rol
 
 
 --
--- TOC entry 2760 (class 2606 OID 16556)
+-- TOC entry 1902 (class 2606 OID 163919)
 -- Name: tb_fc_fechas_continuas_pkey; Type: CONSTRAINT; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -19223,7 +19285,7 @@ ALTER TABLE ONLY tb_fc_fechas_continuas
 
 
 --
--- TOC entry 2762 (class 2606 OID 16583)
+-- TOC entry 1904 (class 2606 OID 163921)
 -- Name: tb_ps_parametros_sistema_nombre_key; Type: CONSTRAINT; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -19232,7 +19294,7 @@ ALTER TABLE ONLY tb_ps_parametros_sistema
 
 
 --
--- TOC entry 2764 (class 2606 OID 16581)
+-- TOC entry 1906 (class 2606 OID 163923)
 -- Name: tb_ps_parametros_sistema_pkey; Type: CONSTRAINT; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -19241,7 +19303,7 @@ ALTER TABLE ONLY tb_ps_parametros_sistema
 
 
 --
--- TOC entry 2758 (class 1259 OID 16557)
+-- TOC entry 1900 (class 1259 OID 163924)
 -- Name: indx_fechas_continuas; Type: INDEX; Schema: public; Owner: modulo_base; Tablespace: 
 --
 
@@ -19249,7 +19311,7 @@ CREATE UNIQUE INDEX indx_fechas_continuas ON tb_fc_fechas_continuas USING btree 
 
 
 --
--- TOC entry 2765 (class 2606 OID 16558)
+-- TOC entry 1909 (class 2606 OID 163925)
 -- Name: persona_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: modulo_base
 --
 
@@ -19258,7 +19320,25 @@ ALTER TABLE ONLY cs_tb_consulta
 
 
 --
--- TOC entry 2766 (class 2606 OID 16563)
+-- TOC entry 1912 (class 2606 OID 180238)
+-- Name: prestador_persona_fk; Type: FK CONSTRAINT; Schema: public; Owner: modulo_base
+--
+
+ALTER TABLE ONLY cs_tb_prestador_medico
+    ADD CONSTRAINT prestador_persona_fk FOREIGN KEY (persona_id) REFERENCES bs_tb_persona(persona_id);
+
+
+--
+-- TOC entry 1913 (class 2606 OID 180243)
+-- Name: prestador_usuario_fk; Type: FK CONSTRAINT; Schema: public; Owner: modulo_base
+--
+
+ALTER TABLE ONLY cs_tb_prestador_medico
+    ADD CONSTRAINT prestador_usuario_fk FOREIGN KEY (usuario_id) REFERENCES sg_tb_user(usuario_id);
+
+
+--
+-- TOC entry 1910 (class 2606 OID 163930)
 -- Name: rol_usuario_rol_fk; Type: FK CONSTRAINT; Schema: public; Owner: modulo_base
 --
 
@@ -19267,7 +19347,7 @@ ALTER TABLE ONLY sg_tb_user_rol
 
 
 --
--- TOC entry 2767 (class 2606 OID 16568)
+-- TOC entry 1911 (class 2606 OID 163935)
 -- Name: usuario_usuario_rol_fk; Type: FK CONSTRAINT; Schema: public; Owner: modulo_base
 --
 
@@ -19276,7 +19356,7 @@ ALTER TABLE ONLY sg_tb_user_rol
 
 
 --
--- TOC entry 2897 (class 0 OID 0)
+-- TOC entry 2045 (class 0 OID 0)
 -- Dependencies: 6
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -19287,7 +19367,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2014-10-30 00:39:42 CLST
+-- Completed on 2014-11-17 16:02:32
 
 --
 -- PostgreSQL database dump complete

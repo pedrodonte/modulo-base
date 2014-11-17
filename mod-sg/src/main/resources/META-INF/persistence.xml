@@ -5,11 +5,12 @@
 		<class>modulo.usuarios.dto.DTORol</class>
 		<class>modulo.usuarios.dto.DTOUsuario</class>
 		<class>modulo.usuarios.dto.DTORolDeUsuario</class>
-		<class>modulo.base.dto.BsTbPersona</class>
-		<class>modulo.consulta_medica.dto.CsTbConsulta</class>
+		<class>modulo.base.dto.DTOPersona</class>
+		<class>modulo.consulta_medica.dto.DTOConsulta</class>
 		<class>modulo.reporteria.dto.VwRcResumenConsulta</class>
 		<class>modulo.reporteria.dto.VwCdConsultasDiaria</class>
 		<class>modulo.base.dto.TbParametro</class>
+		<class>modulo.consulta_medica.dto.DTOPrestadorMedico</class>
 		<properties>
 			<property name="hibernate.connection.username" value="modulo_base"/>
 			<property name="hibernate.connection.password" value="clave.qaws"/>

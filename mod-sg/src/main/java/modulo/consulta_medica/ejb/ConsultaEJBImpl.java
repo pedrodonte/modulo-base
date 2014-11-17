@@ -9,8 +9,8 @@ import javax.inject.Inject;
 
 import modulo.base.excepciones.ErrorDelSistemaException;
 import modulo.base.excepciones.RegistrosNoEncontradosException;
-import modulo.consulta_medica.dao.CsTbConsultaDAO;
-import modulo.consulta_medica.dto.CsTbConsulta;
+import modulo.consulta_medica.dao.DTOConsultaDAO;
+import modulo.consulta_medica.dto.DTOConsulta;
 import modulo.consulta_medica.vo.VoConsulta;
 import modulo.usuarios.vo.HelperMapper;
 
@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
 public class ConsultaEJBImpl implements ConsultaEJB { // EJB EJBImpl
 
 	@Inject
-	CsTbConsultaDAO consultaDAO;
+	DTOConsultaDAO consultaDAO;
 
 	HelperMapper helperMapper = new HelperMapper();
 	Logger logger = Logger.getLogger(getClass());
@@ -29,7 +29,7 @@ public class ConsultaEJBImpl implements ConsultaEJB { // EJB EJBImpl
 	public VoConsulta nuevoRegistro(VoConsulta registro)
 			throws ErrorDelSistemaException {
 
-		CsTbConsulta dto = helperMapper.toDTO(registro);
+		DTOConsulta dto = helperMapper.toDTO(registro);
 		consultaDAO.save(dto);
 		registro = helperMapper.toVO(dto);
 		
@@ -40,7 +40,7 @@ public class ConsultaEJBImpl implements ConsultaEJB { // EJB EJBImpl
 	public VoConsulta actualizarRegistro(VoConsulta registro)
 			throws ErrorDelSistemaException {
 
-		CsTbConsulta dto = helperMapper.toDTO(registro);
+		DTOConsulta dto = helperMapper.toDTO(registro);
 		consultaDAO.update(dto);
 
 		return registro;
@@ -60,7 +60,7 @@ public class ConsultaEJBImpl implements ConsultaEJB { // EJB EJBImpl
 
 		List<VoConsulta> registros = new ArrayList<>();
 
-		for (CsTbConsulta dto : consultaDAO.findAll()) {
+		for (DTOConsulta dto : consultaDAO.findAll()) {
 			VoConsulta vo = helperMapper.toVO(dto);
 			registros.add(vo);
 		}
@@ -71,7 +71,7 @@ public class ConsultaEJBImpl implements ConsultaEJB { // EJB EJBImpl
 	@Override
 	public VoConsulta obtenerRegistroPorID(long id)
 			throws ErrorDelSistemaException, RegistrosNoEncontradosException {
-		CsTbConsulta dto = consultaDAO.find(id);
+		DTOConsulta dto = consultaDAO.find(id);
 		return helperMapper.toVO(dto);
 	}
 
@@ -80,7 +80,7 @@ public class ConsultaEJBImpl implements ConsultaEJB { // EJB EJBImpl
 			throws ErrorDelSistemaException, RegistrosNoEncontradosException {
 		List<VoConsulta> registros = new ArrayList<>();
 
-		for (CsTbConsulta dto : consultaDAO.findByIdPersona(idPersona)) {
+		for (DTOConsulta dto : consultaDAO.findByIdPersona(idPersona)) {
 			VoConsulta vo = helperMapper.toVO(dto);
 			registros.add(vo);
 		}

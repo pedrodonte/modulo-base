@@ -16,11 +16,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import util.Auditable;
-import modulo.base.dto.BsTbPersona;
+import modulo.base.dto.DTOPersona;
 
 @Entity
 @Table(name="cs_tb_consulta")
-public class CsTbConsulta implements Serializable, Auditable {
+public class DTOConsulta implements Serializable, Auditable {
 	
 	private static final long serialVersionUID = 1654L;
 
@@ -46,7 +46,7 @@ public class CsTbConsulta implements Serializable, Auditable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "persona_paciente_id")
-	private BsTbPersona paciente;
+	private DTOPersona paciente;
 	
 	@Override
 	public String toString() {
@@ -96,11 +96,11 @@ public class CsTbConsulta implements Serializable, Auditable {
 		this.regFecUpdate = regFecUpdate;
 	}
 
-	public BsTbPersona getPaciente() {
+	public DTOPersona getPaciente() {
 		return paciente;
 	}
 
-	public void setPaciente(BsTbPersona paciente) {
+	public void setPaciente(DTOPersona paciente) {
 		this.paciente = paciente;
 	}
 

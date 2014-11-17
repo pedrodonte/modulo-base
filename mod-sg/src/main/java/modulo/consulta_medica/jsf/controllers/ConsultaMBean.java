@@ -36,7 +36,7 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> {
 	private Logger logger = Logger.getLogger(getClass());
 
 	@Inject
-	private ConsultaEJB serviceEJB; // EJB
+	private ConsultaEJB serviceEJB;
 
 	@Inject
 	private PersonaEJB personaEJB;

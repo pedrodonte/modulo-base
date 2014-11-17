@@ -1,11 +1,13 @@
 package modulo.usuarios.vo;
 
-import modulo.base.dto.BsTbPersona;
+import modulo.base.dto.DTOPersona;
 import modulo.base.dto.TbParametro;
 import modulo.base.vo.VoParametro;
 import modulo.base.vo.VoPersona;
-import modulo.consulta_medica.dto.CsTbConsulta;
+import modulo.consulta_medica.dto.DTOConsulta;
+import modulo.consulta_medica.dto.DTOPrestadorMedico;
 import modulo.consulta_medica.vo.VoConsulta;
+import modulo.consulta_medica.vo.VoPrestadorMedico;
 import modulo.usuarios.dto.DTORol;
 import modulo.usuarios.dto.DTOUsuario;
 import modulo.usuarios.dto.DTORolDeUsuario;
@@ -133,10 +135,10 @@ public class HelperMapper {
 		return dto;
 	}
 
-	public BsTbPersona toDTO(VoPersona vo) {
-		BsTbPersona dto = null;
+	public DTOPersona toDTO(VoPersona vo) {
+		DTOPersona dto = null;
 		if (vo != null) {
-			dto = new BsTbPersona();
+			dto = new DTOPersona();
 			try {
 				dto.setApellidos(vo.getApellidos());
 				dto.setFechaNacimiento(vo.getFechaNacimiento());
@@ -154,7 +156,7 @@ public class HelperMapper {
 		return dto;
 	}
 
-	public VoPersona toVO(BsTbPersona dto) {
+	public VoPersona toVO(DTOPersona dto) {
 		VoPersona vo = null;
 		if (dto != null) {
 			vo = new VoPersona();
@@ -174,7 +176,7 @@ public class HelperMapper {
 		return vo;
 	}
 
-	public VoConsulta toVO(CsTbConsulta dto) {
+	public VoConsulta toVO(DTOConsulta dto) {
 		VoConsulta vo = null;
 		if (dto != null) {
 			vo = new VoConsulta();
@@ -193,10 +195,10 @@ public class HelperMapper {
 		return vo;
 	}
 
-	public CsTbConsulta toDTO(VoConsulta vo) {
-		CsTbConsulta dto = null;
+	public DTOConsulta toDTO(VoConsulta vo) {
+		DTOConsulta dto = null;
 		if (vo != null) {
-			dto = new CsTbConsulta();
+			dto = new DTOConsulta();
 			try {
 				dto.setConsultaId(vo.getConsultaId());
 				dto.setFechaConsulta(vo.getFechaConsulta());
@@ -239,6 +241,16 @@ public class HelperMapper {
 			}
 		}
 		return vo;
+	}
+
+	public DTOPrestadorMedico toDTO(VoPrestadorMedico registro) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public VoPrestadorMedico toVO(DTOPrestadorMedico dto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

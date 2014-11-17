@@ -8,16 +8,16 @@ import java.util.Map;
 import javax.ejb.Stateless;
 
 import util.GenericDAO;
-import modulo.consulta_medica.dto.CsTbConsulta;
+import modulo.consulta_medica.dto.DTOConsulta;
 
 @Stateless
-public class CsTbConsultaDAO extends GenericDAO<CsTbConsulta, Long>{ 
+public class DTOConsultaDAO extends GenericDAO<DTOConsulta, Long>{ 
 	
-	public CsTbConsultaDAO() { 
-		super(CsTbConsulta.class); 
+	public DTOConsultaDAO() { 
+		super(DTOConsulta.class); 
 	}
 
-	public List<CsTbConsulta> findByIdPersona(long idPersona) {
+	public List<DTOConsulta> findByIdPersona(long idPersona) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		String query = "Select m From CsTbConsulta m Where m.paciente.idPersona = :idPersona";
 		parameters.put("idPersona", idPersona);

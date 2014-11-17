@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/plantilla-bootstrap.xhtml">
+
+	<ui:define name="content">
+
+		<script type="text/javascript">
+			function handleActionRequest(xhr, status, args) {
+				if (args.codExitoOperacion) {
+					PF('dialogoEditor').hide();
+				}
+			}
+		</script>
+
+		<p:growl id="msg" autoUpdate="true" showDetail="true"
+			showSummary="true" />
+			
+		<div class="ContentSideSections">
+			<div class="Content100 overHidden TextShadow">
+				<span
+					class="fontSize30 TextShadow orange mediumFont marginBottom20 dispBlock">Administrador de Prestadores</span> 
+					<span class="defaultText dispTable">subtitulo...</span>
+			</div>
+		</div>
+
+		<p:panelGrid columns="1" style="width:100%;" id="datos">
+
+			<p:dataTable id="tablaRegistros" value="#{prestadorMedicoMBean.registros}"
+				var="item" styleClass="tablaRegistros" rowKey="#{item.prestadorMedicoId}"
+				selectionMode="single" selection="#{prestadorMedicoMBean.registroSeleccionado}"
+				rows="20" paginator="true">
+
+				<p:ajax event="rowSelect" update="@this" />
+
+				<f:facet name="header">
+
+					<p:commandButton value="Ver" process="@this"
+						disabled="#{prestadorMedicoMBean.registroSeleccionado eq null}"
+						oncomplete="PF('dialogoEditor').show()"
+						update=":MatenedorForm:formularioEdicionRegistro"
+						actionListener="#{prestadorMedicoMBean.doVerRegistroFormulario}" />
+
+					<p:commandButton value="Editar" process="@this"
+						disabled="#{prestadorMedicoMBean.registroSeleccionado eq null}"
+						oncomplete="PF('dialogoEditor').show()"
+						update=":MatenedorForm:formularioEdicionRegistro"
+						actionListener="#{prestadorMedicoMBean.doEditarRegistroFormulario}" />
+
+					<p:commandButton value="Nuevo" process="@this"
+						oncomplete="PF('dialogoEditor').show()"
+						update=":MatenedorForm:formularioEdicionRegistro"
+						actionListener="#{prestadorMedicoMBean.doNuevoRegistroFormulario}" />
+
+				</f:facet>
+
+				<p:column sortBy="#{item.profesion}">
+					<f:facet name="header">
+						<h:outputText value="Profesión" />
+					</f:facet>
+					<h:outputText value="#{item.profesion}" />
+				</p:column>
+				
+				<p:column sortBy="#{item.especialidad}">
+					<f:facet name="header">
+						<h:outputText value="Especialidad" />
+					</f:facet>
+					<h:outputText value="#{item.especialidad}" />
+				</p:column>
+
+			</p:dataTable>
+		</p:panelGrid>
+
+	</ui:define>
+
+	<ui:define name="dialogo">
+		<p:dialog id="editorRegistroDlg" header="Detalle del Registro"
+			widgetVar="dialogoEditor" resizable="false" modal="true">
+
+			<p:growl autoUpdate="true" showDetail="true" showSummary="true" />
+
+			<p:panelGrid columns="1" id="formularioEdicionRegistro"
+				styleClass="registro-formulario">
+				<h:outputText value="(*) Campos Obligatorios"
+					rendered="#{prestadorMedicoMBean.modoFormulario ne 'OFF'}" />
+				<h:outputText value="modo:#{prestadorMedicoMBean.modoFormulario}" />
+				<p:panelGrid columns="3">
+
+					<f:facet name="header">Datos del Prestador</f:facet>
+					
+					<h:outputText value="RUT Persona" />
+					<p:inputText required="true" styleClass="cpos-mantcli"
+						requiredMessage="Debe ingresar un Texto"
+						rendered="#{prestadorMedicoMBean.modoFormulario ne 'OFF'}"
+						value="#{prestadorMedicoMBean.registroEnEdicion.rutPersona}" />
+					<h:outputText rendered="#{prestadorMedicoMBean.modoFormulario eq 'OFF'}"
+						value="#{prestadorMedicoMBean.registroEnEdicion.rutPersona}" />
+					<p:commandButton  icon="ui-icon-star" title="Buscar Persona">
+
+					<h:outputText value="Profesión" />
+					<p:inputText required="true" styleClass="cpos-mantcli"
+						requiredMessage="Debe ingresar un Texto"
+						rendered="#{prestadorMedicoMBean.modoFormulario ne 'OFF'}"
+						value="#{prestadorMedicoMBean.registroEnEdicion.profesion}" />
+					<h:outputText rendered="#{prestadorMedicoMBean.modoFormulario eq 'OFF'}"
+						value="#{prestadorMedicoMBean.registroEnEdicion.profesion}" />
+					<h:outputText value=" " />
+						
+					<h:outputText value="Especialidad" />
+					<p:inputText required="true" styleClass="cpos-mantcli"
+						requiredMessage="Debe ingresar un Texto"
+						rendered="#{prestadorMedicoMBean.modoFormulario ne 'OFF'}"
+						value="#{prestadorMedicoMBean.registroEnEdicion.especialidad}" />
+					<h:outputText rendered="#{prestadorMedicoMBean.modoFormulario eq 'OFF'}"
+						value="#{prestadorMedicoMBean.registroEnEdicion.especialidad}" />
+					<h:outputText value=" " />
+
+				</p:panelGrid>
+
+				<f:facet name="footer">
+
+					<p:commandButton id="btncancel" value="Cancelar"
+						update="@(.tablaRegistros)"
+						oncomplete="PF('dialogoEditor').hide();"
+						actionListener="#{prestadorMedicoMBean.doCancelarRegistroFormulario}"
+						process="@none" rendered="#{prestadorMedicoMBean.modoFormulario ne 'OFF'}" />
+
+					<p:commandButton id="btnsave" value="Guardar"
+						update="@(.tablaRegistros, .registro-formulario)"
+						actionListener="#{prestadorMedicoMBean.doGuardarRegistroFormulario}"
+						oncomplete="handleActionRequest(xhr, status, args);"
+						rendered="#{prestadorMedicoMBean.modoFormulario ne 'OFF'}" />
+
+					<p:commandButton id="btnedit" value="Habilitar Edición"
+						actionListener="#{prestadorMedicoMBean.doHabilitarEdicion}"
+						update="@(.registro-formulario)"
+						rendered="#{prestadorMedicoMBean.modoFormulario eq 'OFF'}" />
+				</f:facet>
+
+			</p:panelGrid>
+
+
+
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>
+
+

@@ -8,7 +8,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import modulo.base.dao.BsTbPersonaDAO;
-import modulo.base.dto.BsTbPersona;
+import modulo.base.dto.DTOPersona;
 import modulo.base.excepciones.ErrorDelSistemaException;
 import modulo.base.excepciones.RegistrosNoEncontradosException;
 import modulo.base.vo.VoPersona;
@@ -29,7 +29,7 @@ public class PersonaEJBImpl implements PersonaEJB { // EJB EJBImpl
 	public VoPersona nuevoRegistro(VoPersona registro)
 			throws ErrorDelSistemaException {
 
-		BsTbPersona dto = helperMapper.toDTO(registro);
+		DTOPersona dto = helperMapper.toDTO(registro);
 		personaDAO.save(dto);
 		registro.setIdPersona(dto.getIdPersona());
 		
@@ -40,7 +40,7 @@ public class PersonaEJBImpl implements PersonaEJB { // EJB EJBImpl
 	public VoPersona actualizarRegistro(VoPersona registro)
 			throws ErrorDelSistemaException {
 
-		BsTbPersona dto = helperMapper.toDTO(registro);
+		DTOPersona dto = helperMapper.toDTO(registro);
 		personaDAO.update(dto);
 
 		return registro;
@@ -60,7 +60,7 @@ public class PersonaEJBImpl implements PersonaEJB { // EJB EJBImpl
 
 		List<VoPersona> registros = new ArrayList<>();
 
-		for (BsTbPersona dto : personaDAO.findAll()) {
+		for (DTOPersona dto : personaDAO.findAll()) {
 			VoPersona vo = helperMapper.toVO(dto);
 			registros.add(vo);
 		}
@@ -71,14 +71,14 @@ public class PersonaEJBImpl implements PersonaEJB { // EJB EJBImpl
 	@Override
 	public VoPersona obtenerRegistroPorID(long id)
 			throws ErrorDelSistemaException, RegistrosNoEncontradosException {
-		BsTbPersona dto = personaDAO.find(id);
+		DTOPersona dto = personaDAO.find(id);
 		return helperMapper.toVO(dto);
 	}
 
 	@Override
 	public VoPersona obtenerPorIdentificador(String identificador)
 			throws RegistrosNoEncontradosException, ErrorDelSistemaException {
-		BsTbPersona dto = personaDAO.findByIdentificador(identificador);
+		DTOPersona dto = personaDAO.findByIdentificador(identificador);
 		return helperMapper.toVO(dto);
 	}
 

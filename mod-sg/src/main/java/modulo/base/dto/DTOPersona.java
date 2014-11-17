@@ -17,7 +17,7 @@ import util.Auditable;
 
 @Entity
 @Table(name="bs_tb_persona")
-public class BsTbPersona implements Serializable, Auditable{
+public class DTOPersona implements Serializable, Auditable{
 	
 	private static final long serialVersionUID = 1L;
 	
