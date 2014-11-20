@@ -11,8 +11,10 @@ import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import modulo.base.ejb.PersonaEJB;
 import modulo.base.excepciones.ErrorDelSistemaException;
 import modulo.base.excepciones.RegistrosNoEncontradosException;
+import modulo.base.vo.VoPersona;
 import modulo.usuarios.ejb.RolEJB;
 import modulo.usuarios.ejb.UserEJB;
 import modulo.usuarios.vo.VoRol;
@@ -37,6 +39,18 @@ public class UserMBean extends AbsMantenedorMB<VoUser> { //controller , vo
 	
 	@Inject
 	private RolEJB rolEJB;
+	
+	@Inject PersonaEJB personaEJB;
+
+	private VoPersona personaEncontrada;
+
+	public VoPersona getPersonaEncontrada() {
+		return personaEncontrada;
+	}
+
+	public void setPersonaEncontrada(VoPersona personaEncontrada) {
+		this.personaEncontrada = personaEncontrada;
+	}
 
 	public UserMBean() {
 		super(VoUser.class);
@@ -84,9 +98,9 @@ public class UserMBean extends AbsMantenedorMB<VoUser> { //controller , vo
 			List<VoRol> rolesAsociados = new ArrayList<>();
 			roles = new DualListModel<>(rolesNoAsociados, rolesAsociados);
 		} catch (ErrorDelSistemaException e) {
-			e.printStackTrace();
+			super.mostrarMensaje(e.getMessage());
 		} catch (RegistrosNoEncontradosException e) {
-			e.printStackTrace();
+			super.mostrarMensaje(e.getMessage());
 		}
 		
 	}
@@ -106,7 +120,7 @@ public class UserMBean extends AbsMantenedorMB<VoUser> { //controller , vo
 			List<VoRol> rolesAsociados = rolEJB.obtenerAsociadosUsuario(getRegistroEnEdicion());
 			roles = new DualListModel<>(rolesNoAsociados, rolesAsociados);
 		} catch (ErrorDelSistemaException e) {
-			e.printStackTrace();
+			super.mostrarMensaje(e.getMessage());
 		}
 	} 
 	
@@ -128,7 +142,24 @@ public class UserMBean extends AbsMantenedorMB<VoUser> { //controller , vo
 		try {
 			serviceEJB.generarContrasena(getRegistroSeleccionado());
 		} catch (RegistrosNoEncontradosException e) {
-			e.printStackTrace();
+			super.mostrarMensaje(e.getMessage());
+		}
+	}
+	
+	
+	public void doBuscarPersona(ActionEvent event){
+		try {
+			setPersonaEncontrada(personaEJB.obtenerPorIdentificador(getRegistroEnEdicion().getRutPersona()));
+			
+			if (personaEncontrada != null) {
+				getRegistroEnEdicion().setPersonaAsociada(personaEncontrada);
+				getRegistroEnEdicion().setIdentificador(personaEncontrada.getIdentificador());
+			}
+			
+		} catch (RegistrosNoEncontradosException e) {
+			super.mostrarMensaje(e.getMessage());
+		} catch (ErrorDelSistemaException e) {
+			super.mostrarMensaje(e.getMessage());
 		}
 	}
 

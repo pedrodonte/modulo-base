@@ -12,6 +12,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 
+import modulo.base.excepciones.PersistenciaDAOException;
+
 import org.apache.log4j.Logger;
  
 public abstract class GenericDAO<T, ID extends Serializable> {
@@ -29,7 +31,7 @@ public abstract class GenericDAO<T, ID extends Serializable> {
     }
  
 
-	public T save(T entity) {
+	public T save(T entity) throws PersistenciaDAOException  {
 		logger.info("Insertando Entity : "+entity);
         try {
         	
@@ -40,27 +42,26 @@ public abstract class GenericDAO<T, ID extends Serializable> {
 			em.persist(entity);
 		} catch (Exception e) {
 			logger.info(e.getMessage());
-			throw new RuntimeException("Error Insert",e);
+			throw new PersistenciaDAOException("Error Insert",e);
 		}
         System.out.println(entity);
         return entity;
     }
  
 
-	public boolean delete(T entity) {
+	public boolean delete(T entity) throws PersistenciaDAOException  {
     	try {
     		logger.info("Borrando Entity : "+entity);
     		T entityToBeRemoved = em.merge(entity);
             em.remove(entityToBeRemoved);
             return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new PersistenciaDAOException("Error Delete",e);
 		}
-    	return false;
     }
  
 
-	public T update(T entity) {
+	public T update(T entity) throws PersistenciaDAOException  {
     	logger.info("Actualizando Entity : "+entity);
         try {
         	
@@ -70,32 +71,40 @@ public abstract class GenericDAO<T, ID extends Serializable> {
         	
 			return em.merge(entity);
 		} catch (Exception e) {
-			throw new RuntimeException("Error Update",e);
+			throw new PersistenciaDAOException("Error Actualizando Entidad",e);
 		}
     }
  
 
-	public T find(ID entityID) {
-    	logger.info("Buscando "+entityClass.getSimpleName()+" por ID:"+entityID);
-        return em.find(entityClass, entityID);
+	public T find(ID entityID) throws PersistenciaDAOException  {
+    	try {
+			logger.info("Buscando "+entityClass.getSimpleName()+" por ID:"+entityID);
+			return em.find(entityClass, entityID);
+		} catch (Exception e) {
+			throw new PersistenciaDAOException("Error Buscando Entidad",e);
+		}
     }
  
     // Using the unchecked because JPA does not have a
     // em.getCriteriaBuilder().createQuery()<T> method
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-    public List<T> findAll() {
-    	logger.info("Buscando todos los registros de "+entityClass.getSimpleName());
-        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-        cq.select(cq.from(entityClass));
-        return em.createQuery(cq).getResultList();
+    public List<T> findAll() throws PersistenciaDAOException  {
+    	try {
+			logger.info("Buscando todos los registros de "+entityClass.getSimpleName());
+			CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+			cq.select(cq.from(entityClass));
+			return em.createQuery(cq).getResultList();
+		} catch (Exception e) {
+			throw new PersistenciaDAOException("Error Buscando Listado de Entidad",e);
+		}
     }
  
     // Using the unchecked because JPA does not have a
     // ery.getSingleResult()<T> method
 
     @SuppressWarnings("unchecked")
-    public T findOneResult(String namedQuery, Map<String, Object> parameters) {
+    public T findOneResult(String namedQuery, Map<String, Object> parameters) throws PersistenciaDAOException  {
         T result = null;
         logger.info("Buscando un registro de "+entityClass.getSimpleName());
         logger.info("Query de busqueda "+namedQuery);
@@ -109,22 +118,24 @@ public abstract class GenericDAO<T, ID extends Serializable> {
             }
  
             result = (T) query.getSingleResult();
+            
+            return result;
  
         }catch (NoResultException e) {
             logger.info("No hay registros para la query "+namedQuery);
-            result = null;
+            return null;
         }catch (Exception e) {
-            logger.info("Error buscando un resultado", e);
+        	throw new PersistenciaDAOException("Error Buscando de Entidad",e);
         }
  
-        return result;
+        
     }
     
     // Using the unchecked because JPA does not have a
     // ery.getSingleResult()<T> method
 
     @SuppressWarnings("unchecked")
-    public List<T> findManyResult(String namedQuery, Map<String, Object> parameters) {
+    public List<T> findManyResult(String namedQuery, Map<String, Object> parameters) throws PersistenciaDAOException {
         List<T> results = new ArrayList<>();
         logger.info("Buscando un registro de "+entityClass.getSimpleName());
         logger.info("Query de busqueda "+namedQuery);
@@ -138,14 +149,14 @@ public abstract class GenericDAO<T, ID extends Serializable> {
             }
  
             results = (List<T>) query.getResultList();
- 
+            return results;
         }catch (NoResultException e) {
             logger.info("No hay registros para la query "+namedQuery);
+            return null;
         }catch (Exception e) {
-            logger.info("Error buscando un resultado", e);
+        	throw new PersistenciaDAOException("Error Buscando de Entidad",e);
         }
- 
-        return results;
+        
     }
  
     private void populateQueryParameters(Query query, Map<String, Object> parameters) {

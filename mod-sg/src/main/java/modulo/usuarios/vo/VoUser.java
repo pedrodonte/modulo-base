@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import modulo.base.vo.VoPersona;
+
 public class VoUser implements Cloneable{ 
 
 	private long usuarioId;
@@ -14,6 +16,10 @@ public class VoUser implements Cloneable{
 	private boolean cambiarClave;
 	private Date regFecInsert;
 	private Date regFecUpdate;
+	private VoPersona personaAsociada = new VoPersona();
+	
+	//campos temporales
+	private String rutPersona;
 
 	//Campo añadido para hacer una gestión integrada de las 2 entidades
 	private List<VoRol> roles = new ArrayList<>();
@@ -131,5 +137,32 @@ public class VoUser implements Cloneable{
 	public void setCambiarClave(boolean cambiarClave) {
 		this.cambiarClave = cambiarClave;
 	}
+
+	public VoPersona getPersonaAsociada() {
+		return personaAsociada;
+	}
+
+	public void setPersonaAsociada(VoPersona personaAsociada) {
+		this.personaAsociada = personaAsociada;
+	}
+
+	@Override
+	public String toString() {
+		return "VoUser [usuarioId=" + usuarioId + ", clave=" + clave
+				+ ", identificador=" + identificador + ", email=" + email
+				+ ", cambiarClave=" + cambiarClave + ", regFecInsert="
+				+ regFecInsert + ", regFecUpdate=" + regFecUpdate
+				+ ", personaAsociada=" + personaAsociada + ", roles=" + roles
+				+ "]";
+	}
+
+	public String getRutPersona() {
+		return rutPersona;
+	}
+
+	public void setRutPersona(String rutPersona) {
+		this.rutPersona = rutPersona;
+	}
+	
 	
 }

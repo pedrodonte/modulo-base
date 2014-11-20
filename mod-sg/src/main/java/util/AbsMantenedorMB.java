@@ -90,6 +90,8 @@ public abstract class AbsMantenedorMB<TIPO_DTO extends Cloneable> implements
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
+		} catch (NullPointerException e){
+			e.printStackTrace();
 		}
 		setMostrarFormulario(true);
 		setModoFormulario(ModosEdicion.NEW);
@@ -148,6 +150,10 @@ public abstract class AbsMantenedorMB<TIPO_DTO extends Cloneable> implements
 			throws ErrorDelSistemaException, RegistrosNoEncontradosException {
 		registros = crudService.obtenerRegistros();
 		registrosCantidad = registros.size();
+	}
+	
+	public void mostrarMensaje(String msg){
+		mensajesMB.msgInfo(msg);
 	}
 
 	public abstract CrudGenericServiceApi<TIPO_DTO> asignarCrudService();

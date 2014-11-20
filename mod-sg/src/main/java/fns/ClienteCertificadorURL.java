@@ -9,25 +9,25 @@ import java.net.URL;
 public class ClienteCertificadorURL {
 	private final String USER_AGENT = "Mozilla/5.0";
 	
-	private final boolean MOSTRAR_ORIGINAL = false;
+	private final boolean MOSTRAR_ORIGINAL = true;
 
 	public static void main(String[] args) throws Exception {
 		ClienteCertificadorURL http = new ClienteCertificadorURL();
-		http.consultar(61607400,16184826,"3");//ISAPRE
-		http.consultar(61607400,1689995,"2");//ACREDITADO
-		http.consultar(61607400,8388146,"1");//ACREDITADO CON CARGAS
-		http.consultar(61607400,10140245, "2");//FUNCIONARIO DE SALUD PRAIS
-		http.consultar(61607400,71838966, "4"); //RUT NO VALIDO
-		http.consultar(61607400,18685414, "4");//PRAIS
-		http.consultar(6160740,18685414, "4");//PRAIS
-		http.consultar(61607400,4182423, "9");//FALLECIDO
-		http.consultar(61607400,14840478, "K");//BLOQUEADOS S/COTIZ. AL DIA
+//		http.consultar(16184826,"3");//ISAPRE
+//		http.consultar(1689995,"2");//ACREDITADO
+//		http.consultar(8388146,"1");//ACREDITADO CON CARGAS
+//		http.consultar(10140245, "2");//FUNCIONARIO DE SALUD PRAIS
+//		http.consultar(71838966, "4"); //RUT NO VALIDO
+//		http.consultar(18685414, "4");//PRAIS
+		http.consultar(18685414, "4");//PRAIS
+		http.consultar(4182423, "9");//FALLECIDO
+//		http.consultar(14840478, "K");//BLOQUEADOS S/COTIZ. AL DIA
 	}
 
 	// HTTP GET request
-	public Certificado consultar(int entidad, int rut, String dgv) throws Exception {
+	public Certificado consultar(int rut, String dgv) throws Exception {
 
-		String url = "http://200.51.172.210/trade_service/web_services/Certificado.asp?ID="+entidad+"&RUT="+rut+"&DGV="+dgv;
+		String url = "http://200.51.172.210/trade_service/web_services/Certificado.asp?ID=61607400&RUT="+rut+"&DGV="+dgv;
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -57,6 +57,7 @@ public class ClienteCertificadorURL {
 			}
 			try {
 				Certificado certificado = (Certificado) XmlUtil.xmlToObject(response.toString().toLowerCase(), Certificado.class);
+				System.out.println(certificado);
 				return certificado;
 				
 			} catch (Exception e) {
@@ -66,6 +67,21 @@ public class ClienteCertificadorURL {
 		return null;
 		
 
+	}
+
+	public Certificado consultar(String rut) throws Exception {
+		
+		int numero = 0;
+		String dv = "";
+		
+		if (rut.split("-").length != 2) {
+			throw new Exception(rut + "no tiene un formato válido 12345678-9");
+		}
+		
+		numero = Integer.parseInt(rut.split("-")[0]);
+		dv = rut.split("-")[1];
+
+		return consultar(numero, dv);
 	}
 	
 }

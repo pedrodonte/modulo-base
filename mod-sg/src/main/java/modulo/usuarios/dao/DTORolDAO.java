@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.ejb.Stateless;
 
 import util.GenericDAO;
+import modulo.base.excepciones.PersistenciaDAOException;
 import modulo.usuarios.dto.DTORol;
 
 @Stateless
@@ -17,7 +18,7 @@ public class DTORolDAO extends GenericDAO<DTORol, Long>{
 		super(DTORol.class); 
 	}
 	
-	public List<DTORol> buscarNoRolesAsociados(List<DTORol> rolesAsociados) {
+	public List<DTORol> buscarNoRolesAsociados(List<DTORol> rolesAsociados) throws PersistenciaDAOException {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		String query = "Select m From DTORol m Where m not in :rolesAsociados";
 		parameters.put("rolesAsociados", rolesAsociados);

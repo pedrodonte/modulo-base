@@ -27,7 +27,7 @@ public class SenderServiceEJBImpl implements SenderServiceEJB {
 	private static final String PASSWORD = "clave.qawsed";
 	private static final String SENDER = "Envío Automático<develop.sender.mail@gmail.com>";
 
-	private static final boolean ENVIAR_EMAIL_HABILITADO = false;
+	private static final boolean ENVIAR_EMAIL_HABILITADO = true;
 	
 	Session session = null;
 
@@ -76,10 +76,11 @@ public class SenderServiceEJBImpl implements SenderServiceEJB {
 			
 			
 		} catch (AddressException e) {
-			throw new SendException("Una dirección de correo esta mal formada, revice porfavor");
+			logger.error("Error inesperado al enviar Email", e);
+			throw new SendException("Una dirección de correo esta mal formada, revice porfavor",e);
 		} catch (MessagingException e) {
-			e.printStackTrace();
-			//throw new SendException("Error al enviar el correo, revice la configuración.");
+			logger.error("Error inesperado al enviar Email", e);
+			throw new SendException("Error al enviar el correo, revice la configuración.",e);
 		} catch (Exception e) {
 			logger.error("Error inesperado al enviar Email", e);
 			throw new SendException("Ocurre un error inesperado, contacte al administrador de sistema");

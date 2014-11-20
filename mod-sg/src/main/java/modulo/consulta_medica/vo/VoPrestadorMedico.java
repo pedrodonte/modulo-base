@@ -21,6 +21,10 @@ public class VoPrestadorMedico implements Cloneable{
 	//datos temporales
 	private String rutPersona;
 	
+	public VoPrestadorMedico() {
+		super();
+	}
+
 	public long getPrestadorMedicoId() {
 		return prestadorMedicoId;
 	}

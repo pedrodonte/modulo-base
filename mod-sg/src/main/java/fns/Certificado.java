@@ -3,6 +3,8 @@ package fns;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import util.HelperString;
+
 @XmlRootElement
 @XmlType(propOrder = { "rutbenef", "dgvbenef", "apell1", "apell2", "nombres",
 		"sex", "fec_nac", "tramo", "tipo_carga", "fec_bloq", "cod_cybl", "cod_desc", "numero_cargas", "error" })
@@ -40,7 +42,7 @@ public class Certificado {
 	}
 
 	public String getApell1() {
-		return apell1.toUpperCase();
+		return HelperString.cambioCharsetToUTF8(apell1.toUpperCase());
 	}
 
 	public void setApell1(String apell1) {
@@ -48,7 +50,7 @@ public class Certificado {
 	}
 
 	public String getApell2() {
-		return apell2.toUpperCase();
+		return HelperString.cambioCharsetToUTF8(apell2.toUpperCase());
 	}
 
 	public void setApell2(String apell2) {
@@ -152,5 +154,18 @@ public class Certificado {
 	public void setError(String error) {
 		this.error = error;
 	}
+
+	@Override
+	public String toString() {
+		return "Certificado [rutbenef=" + rutbenef + ", dgvbenef=" + dgvbenef
+				+ ", apell1=" + apell1 + ", apell2=" + apell2 + ", nombres="
+				+ nombres + ", sex=" + sex + ", fec_nac=" + fec_nac
+				+ ", tramo=" + tramo + ", tipo_carga=" + tipo_carga
+				+ ", fec_bloq=" + fec_bloq + ", cod_cybl=" + cod_cybl
+				+ ", cod_desc=" + cod_desc + ", numero_cargas=" + numero_cargas
+				+ ", error=" + error + "]";
+	}
+	
+	
 
 }

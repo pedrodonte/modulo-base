@@ -25,8 +25,9 @@
 		<div class="ContentSideSections">
 			<div class="Content100 overHidden TextShadow">
 				<span
-					class="fontSize30 TextShadow orange mediumFont marginBottom20 dispBlock">Mantenedor de Usuarios</span>
-					<span class="defaultText dispTable"> Creación y mantención de usuarios</span>
+					class="fontSize30 TextShadow orange mediumFont marginBottom20 dispBlock">Mantenedor
+					de Usuarios</span> <span class="defaultText dispTable"> Creación y
+					mantención de usuarios</span>
 			</div>
 		</div>
 
@@ -78,9 +79,16 @@
 						<h:outputText value="Email" />
 					</f:facet>
 					<h:outputText value="#{item.email}" />
-				</p:column>appendToBody="true"
-					
-					<p:column sortBy="#{item.regFecInsert}">
+				</p:column>
+				
+				<p:column sortBy="#{item.personaAsociada.nombreCompleto}">
+					<f:facet name="header">
+						<h:outputText value="Persona Asociada" />
+					</f:facet>
+					<h:outputText value="#{item.personaAsociada.nombreCompleto}" />
+				</p:column>
+
+				<p:column sortBy="#{item.regFecInsert}">
 					<f:facet name="header">
 						<h:outputText value="Creado" />
 					</f:facet>
@@ -100,17 +108,49 @@
 			widgetVar="dialogoEditor" resizable="false" modal="true"
 			appendToBody="true">
 
-			<p:growl autoUpdate="true" showDetail="true" showSummary="true" />
-
+			<p:messages autoUpdate="true" showDetail="true" showSummary="true" />
+			
 			<p:panelGrid columns="1" id="formularioEdicionRegistro"
 				styleClass="registro-formulario">
 				<h:outputText value="(*) Campos Obligatorios"
 					rendered="#{userMBean.modoFormulario ne 'OFF'}" />
 				<h:outputText value="modo:#{userMBean.modoFormulario}" />
+				
+				<p:panelGrid columns="3" style="width:100%;">
+						<f:facet name="header">Datos Persona Asociada</f:facet>
+	
+						<h:outputText value="RUT Persona" />
+						<p:inputText required="true" styleClass="cpos-mantcli"
+							requiredMessage="Debe ingresar un Texto" id="cpoRUN"
+							rendered="#{userMBean.modoFormulario ne 'OFF'}"
+							value="#{userMBean.registroEnEdicion.rutPersona}" />
+						<h:outputText rendered="#{userMBean.modoFormulario eq 'OFF'}"
+							value="#{userMBean.registroEnEdicion.rutPersona}" />
+						<p:commandButton icon="ui-icon-search" title="Buscar Persona"
+							process="@this, cpoRUN"
+							update=":MatenedorForm:formularioEdicionRegistro"
+							actionListener="#{userMBean.doBuscarPersona}"
+							rendered="#{userMBean.modoFormulario ne 'OFF'}" />
+						<h:outputText rendered="#{userMBean.modoFormulario eq 'OFF'}" value=" " />
+	
+						<h:outputText value="Persona" />
+						<h:outputText
+							value="#{userMBean.registroEnEdicion.personaAsociada.nombreCompleto}" />
+						<h:outputText value=" " />
+						
+						<h:outputText value="Tiene Usuario" />
+						<h:outputText rendered="#{userMBean.registroEnEdicion.personaAsociada.idPersona eq '0'}"
+							value="No" />
+						<h:outputText rendered="#{userMBean.registroEnEdicion.personaAsociada.idPersona ne '0'}"
+							value="Sí" />
+						<h:outputText value=" " />
+	
+					</p:panelGrid>
+				
 				<p:panelGrid columns="2" style="width:100%;">
 
 					<f:facet name="header">Datos del Usuario</f:facet>
-
+					
 					<h:outputText value="Identificador" />
 					<p:inputText required="true" styleClass="cpos-mantcli"
 						requiredMessage="Debe ingresar un Texto"
@@ -135,7 +175,7 @@
 						offLabel="No" style="width:60px" />
 
 				</p:panelGrid>
-
+				
 				<p:pickList value="#{userMBean.roles}" var="item" effect="bounce"
 					itemValue="#{item}" itemLabel="#{item.identificador}"
 					converter="#{rolConverter}" filterMatchMode="contains"

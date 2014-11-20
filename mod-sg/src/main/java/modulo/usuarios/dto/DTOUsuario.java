@@ -8,10 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import modulo.base.dto.DTOPersona;
 import util.Auditable;
 
 
@@ -20,9 +23,9 @@ import util.Auditable;
  * 
  */
 @Entity
-@Table(name="sg_tb_user")
+@Table(name="sg_tb_usuario")
 public class DTOUsuario implements Serializable, Auditable {
-	private static final long serialVersionUID = 3L;
+	private static final long serialVersionUID = 4L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -43,6 +46,18 @@ public class DTOUsuario implements Serializable, Auditable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="reg_fec_update")
 	private Date regFecUpdate;
+	
+	@ManyToOne
+	@JoinColumn(name="persona_asociada_id")
+	private DTOPersona dtoPersonaAsociada;
+
+	public DTOPersona getDtoPersonaAsociada() {
+		return dtoPersonaAsociada;
+	}
+
+	public void setDtoPersonaAsociada(DTOPersona dtoPersonaAsociada) {
+		this.dtoPersonaAsociada = dtoPersonaAsociada;
+	}
 
 	public DTOUsuario() {
 	}
@@ -105,11 +120,13 @@ public class DTOUsuario implements Serializable, Auditable {
 
 	@Override
 	public String toString() {
-		return "SgTbUser [usuarioId=" + usuarioId + ", clave=" + clave
+		return "DTOUsuario [usuarioId=" + usuarioId + ", clave=" + clave
 				+ ", identificador=" + identificador + ", email=" + email
 				+ ", flagCambiarClave=" + flagCambiarClave + ", regFecInsert="
-				+ regFecInsert + ", regFecUpdate=" + regFecUpdate + "]";
+				+ regFecInsert + ", regFecUpdate=" + regFecUpdate
+				+ ", dtoPersonaAsociada=" + dtoPersonaAsociada + "]";
 	}
+
 	
 	
 

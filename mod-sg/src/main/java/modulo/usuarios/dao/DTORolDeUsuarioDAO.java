@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.ejb.Stateless;
 
 import util.GenericDAO;
+import modulo.base.excepciones.PersistenciaDAOException;
 import modulo.usuarios.dto.DTORolDeUsuario;
 
 @Stateless
@@ -16,7 +17,7 @@ public class DTORolDeUsuarioDAO extends GenericDAO<DTORolDeUsuario, Long> {
 		super(DTORolDeUsuario.class);
 	}
 
-	public DTORolDeUsuario buscarRol(long usuarioId, long rolId) {
+	public DTORolDeUsuario buscarRol(long usuarioId, long rolId) throws PersistenciaDAOException {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		String query = "Select m From DTORolDeUsuario m Where m.dtoRol.rolId = :rolId and m.dtoUsuario.usuarioId = :usuarioId "
 				+ "and CURRENT_TIMESTAMP BETWEEN m.validoDesde And m.validoHasta";
@@ -25,7 +26,7 @@ public class DTORolDeUsuarioDAO extends GenericDAO<DTORolDeUsuario, Long> {
 		return super.findOneResult(query, parameters);
 	}
 
-	public List<DTORolDeUsuario> buscarRolesAsociados(long usuarioId) {
+	public List<DTORolDeUsuario> buscarRolesAsociados(long usuarioId) throws PersistenciaDAOException {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		String query = "Select m From DTORolDeUsuario m Where m.dtoUsuario.usuarioId = :usuarioId "
 				+ "and CURRENT_TIMESTAMP BETWEEN m.validoDesde And m.validoHasta";

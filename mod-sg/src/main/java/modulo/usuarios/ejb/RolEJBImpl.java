@@ -7,6 +7,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import modulo.base.excepciones.ErrorDelSistemaException;
+import modulo.base.excepciones.HelperMapeoException;
+import modulo.base.excepciones.PersistenciaDAOException;
 import modulo.base.excepciones.RegistrosNoEncontradosException;
 import modulo.usuarios.dao.DTORolDAO;
 import modulo.usuarios.dao.DTORolDeUsuarioDAO;
@@ -34,20 +36,38 @@ public class RolEJBImpl implements RolEJB { // EJB EJBImpl
 	@Override
 	public VoRol nuevoRegistro(VoRol registro) throws ErrorDelSistemaException {
 
-		DTORol dto = helperMapper.toDTO(registro);
-		sgTbRolDAO.save(dto);
+		try {
+			DTORol dto = helperMapper.toDTO(registro);
+			sgTbRolDAO.save(dto);
 
-		return registro;
+			return registro;
+		} catch (HelperMapeoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PersistenciaDAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
 	public VoRol actualizarRegistro(VoRol registro)
 			throws ErrorDelSistemaException {
 
-		DTORol dto = helperMapper.toDTO(registro);
-		sgTbRolDAO.update(dto);
+		try {
+			DTORol dto = helperMapper.toDTO(registro);
+			sgTbRolDAO.update(dto);
 
-		return registro;
+			return registro;
+		} catch (HelperMapeoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PersistenciaDAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
@@ -62,35 +82,65 @@ public class RolEJBImpl implements RolEJB { // EJB EJBImpl
 	public List<VoRol> obtenerRegistros() throws ErrorDelSistemaException,
 			RegistrosNoEncontradosException {
 
-		List<VoRol> registros = new ArrayList<>();
+		try {
+			List<VoRol> registros = new ArrayList<>();
 
-		for (DTORol dto : sgTbRolDAO.findAll()) {
-			VoRol vo = helperMapper.toVO(dto);
-			registros.add(vo);
+			for (DTORol dto : sgTbRolDAO.findAll()) {
+				VoRol vo = helperMapper.toVO(dto);
+				registros.add(vo);
+			}
+
+			return registros;
+		} catch (HelperMapeoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PersistenciaDAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		return registros;
+		return null;
 	}
 
 	@Override
 	public VoRol obtenerRegistroPorID(long id) throws ErrorDelSistemaException,
 			RegistrosNoEncontradosException {
-		DTORol dto = sgTbRolDAO.find(id);
-		return helperMapper.toVO(dto);
+		try {
+			DTORol dto = sgTbRolDAO.find(id);
+			if (dto == null) {
+				throw new RegistrosNoEncontradosException("No se encuentran registros para el parametro de entrada:"+id);
+			}
+			return helperMapper.toVO(dto);
+		} catch (HelperMapeoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PersistenciaDAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
 	public List<VoRol> obtenerAsociadosUsuario(VoUser user)
 			throws ErrorDelSistemaException {
 
-		List<VoRol> registros = new ArrayList<>();
+		try {
+			List<VoRol> registros = new ArrayList<>();
 
-		for (DTORolDeUsuario dto : userRolDAO.buscarRolesAsociados(user.getUsuarioId())) {
-			VoRol vo = helperMapper.toVO(dto.getDtoRol());
-			registros.add(vo);
+			for (DTORolDeUsuario dto : userRolDAO.buscarRolesAsociados(user.getUsuarioId())) {
+				VoRol vo = helperMapper.toVO(dto.getDtoRol());
+				registros.add(vo);
+			}
+			logger.info("Encontrado:"+registros.size());
+			return registros;
+		} catch (HelperMapeoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PersistenciaDAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		logger.info("Encontrado:"+registros.size());
-		return registros;
+		return null;
 	}
 
 	@Override

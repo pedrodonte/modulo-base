@@ -1,11 +1,7 @@
 package modulo.consulta_medica.jsf.controllers;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import fns.Certificado;
-import fns.ClienteCertificadorURL;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -25,7 +21,6 @@ import org.primefaces.event.FlowEvent;
 
 import util.AbsMantenedorMB;
 import util.CrudGenericServiceApi;
-import util.HelperString;
 
 @Named
 @SessionScoped
@@ -59,56 +54,17 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> {
 			logger.info("doBuscarPersona:" + cpoIdentificador);
 			personaEnConsulta = personaEJB
 					.obtenerPorIdentificador(cpoIdentificador);
-			System.out.println(personaEnConsulta);
-			if (personaEnConsulta == null) {
-				personaEnConsulta = new VoPersona();
-				personaEnConsulta.setIdentificador(cpoIdentificador);
-
-				personaEnConsulta = buscarEnWSFns(cpoIdentificador);
-
-				mensajesMB
-						.msgWarn("La persona NO esta registrada, para continuar debe llenar el formulario de Persona");
-				// mensajesMB.devolverParametro(nombreParametro, valorParamtro);
-				RequestContext.getCurrentInstance().update(
-						"@(.registro-formulario)");
-			}
-		} catch (RegistrosNoEncontradosException | ErrorDelSistemaException e) {
-			e.printStackTrace();
+			
+			RequestContext.getCurrentInstance().update("@(.registro-formulario)");
+			
+		} catch (ErrorDelSistemaException e) {
+			super.mostrarMensaje(e.getMessage());
+		} catch (RegistrosNoEncontradosException e) {
+			super.mostrarMensaje(e.getMessage());
 		}
 	}
 
-	private VoPersona buscarEnWSFns(String identi) {
-		ClienteCertificadorURL basePersonas = new ClienteCertificadorURL();
-
-		VoPersona persona = new VoPersona();
-		try {
-			String dgv = identi.split("-")[1];
-			int rut = Integer.parseInt(identi.split("-")[0]);
-
-			Certificado data = basePersonas.consultar(61607400, rut, dgv);
-
-			persona = new VoPersona();
-			persona.setApellidos(HelperString.cambioCharsetToUTF8(data
-					.getApell1() + " " + data.getApell2()));
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			persona.setFechaNacimiento(formatter.parse(data.getFec_nac()));
-			persona.setNombres(HelperString.cambioCharsetToUTF8(data
-					.getNombres()));
-
-			if (data.getSex().equals("M")) {
-				persona.setSexo(2);
-			} else {
-				persona.setSexo(1);
-			}
-
-		} catch (Exception e) {
-			mensajesMB
-					.msgWarn("Falla consulta a WS, se debe llenar manualmente.");
-		}
-
-		persona.setIdentificador(identi.toUpperCase());
-		return persona;
-	}
+	
 
 	public void doGuardarPersona(ActionEvent event) {
 		try {
@@ -118,7 +74,7 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> {
 			System.out.println(personaEnConsulta);
 			mensajesMB.msgInfo("Registro de Persona guardado");
 		} catch (ErrorDelSistemaException e) {
-			e.printStackTrace();
+			super.mostrarMensaje(e.getMessage());
 		}
 	}
 
@@ -204,9 +160,10 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> {
 			
 			personaEnConsulta = new VoPersona();
 			
-		} catch (RegistrosNoEncontradosException | ErrorDelSistemaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (RegistrosNoEncontradosException e) {
+			super.mostrarMensaje(e.getMessage());
+		} catch (ErrorDelSistemaException e) {
+			super.mostrarMensaje(e.getMessage());
 		}
 	}
 

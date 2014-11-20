@@ -7,6 +7,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import modulo.base.excepciones.ErrorDelSistemaException;
+import modulo.base.excepciones.HelperMapeoException;
+import modulo.base.excepciones.PersistenciaDAOException;
 import modulo.base.excepciones.RegistrosNoEncontradosException;
 import modulo.consulta_medica.dao.DTOPrestadorMedicoDAO;
 import modulo.consulta_medica.dto.DTOPrestadorMedico;
@@ -28,22 +30,33 @@ public class PrestadorMedicoEJBImpl implements PrestadorMedicoEJB {
 	public VoPrestadorMedico nuevoRegistro(VoPrestadorMedico registro)
 			throws ErrorDelSistemaException {
 
-		DTOPrestadorMedico dto = helperMapper.toDTO(registro);
-		prestadorDAO.save(dto);
-		registro = helperMapper.toVO(dto);
+		try {
+			DTOPrestadorMedico dto = helperMapper.toDTO(registro);
+			prestadorDAO.save(dto);
+			registro = helperMapper.toVO(dto);
 
-		return registro;
-
+			return registro;
+		} catch (HelperMapeoException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		} catch (PersistenciaDAOException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		}
 	}
 
 	@Override
 	public VoPrestadorMedico actualizarRegistro(VoPrestadorMedico registro)
 			throws ErrorDelSistemaException {
-		DTOPrestadorMedico dto = helperMapper.toDTO(registro);
-		prestadorDAO.update(dto);
-		registro = helperMapper.toVO(dto);
+		try {
+			DTOPrestadorMedico dto = helperMapper.toDTO(registro);
+			prestadorDAO.update(dto);
+			registro = helperMapper.toVO(dto);
 
-		return registro;
+			return registro;
+		} catch (HelperMapeoException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		} catch (PersistenciaDAOException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		}
 	}
 
 	@Override
@@ -56,21 +69,38 @@ public class PrestadorMedicoEJBImpl implements PrestadorMedicoEJB {
 	@Override
 	public List<VoPrestadorMedico> obtenerRegistros()
 			throws ErrorDelSistemaException, RegistrosNoEncontradosException {
-		List<VoPrestadorMedico> registros = new ArrayList<VoPrestadorMedico>();
+		try {
+			List<VoPrestadorMedico> registros = new ArrayList<VoPrestadorMedico>();
 
-		for (DTOPrestadorMedico dto : prestadorDAO.findAll()) {
-			VoPrestadorMedico vo = helperMapper.toVO(dto);
-			registros.add(vo);
+			for (DTOPrestadorMedico dto : prestadorDAO.findAll()) {
+				VoPrestadorMedico vo = helperMapper.toVO(dto);
+				registros.add(vo);
+			}
+			
+			return registros;
+		} catch (HelperMapeoException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		} catch (PersistenciaDAOException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
 		}
-
-		return registros;
 	}
 
 	@Override
 	public VoPrestadorMedico obtenerRegistroPorID(long id)
 			throws ErrorDelSistemaException, RegistrosNoEncontradosException {
-		DTOPrestadorMedico dto = prestadorDAO.find(id);
-		return helperMapper.toVO(dto);
+		try {
+			DTOPrestadorMedico dto = prestadorDAO.find(id);
+			
+			if (dto == null) {
+				throw new RegistrosNoEncontradosException("No se encuentran registros para el parametro de entrada:"+id);
+			}
+			
+			return helperMapper.toVO(dto);
+		} catch (HelperMapeoException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		} catch (PersistenciaDAOException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		}
 	}
 
 }

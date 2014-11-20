@@ -23,10 +23,10 @@ public class VoPersona implements Cloneable{
 		this.idPersona = idPersona;
 	}
 	public String getIdentificador() {
-		return identificador;
+		return identificador.toUpperCase();
 	}
 	public void setIdentificador(String identificador) {
-		this.identificador = identificador;
+		this.identificador = identificador.toUpperCase();
 	}
 	public Date getFechaNacimiento() {
 		return fechaNacimiento;
@@ -72,6 +72,9 @@ public class VoPersona implements Cloneable{
 		this.regFecUpdate = regFecUpdate;
 	}
 	
+	public String getNombreCompleto(){
+		return nombres+" "+apellidos;
+	}
 	
 
 	@Override

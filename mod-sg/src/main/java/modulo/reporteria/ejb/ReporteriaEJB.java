@@ -5,7 +5,6 @@ import java.util.List;
 
 import modulo.base.excepciones.ErrorDelSistemaException;
 import modulo.base.excepciones.RegistrosNoEncontradosException;
-import modulo.consulta_medica.vo.VoConsulta;
 import modulo.reporteria.vo.VwResumenConsultas;
 
 public interface ReporteriaEJB {

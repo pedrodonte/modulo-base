@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.ejb.Stateless;
 
+import modulo.base.excepciones.PersistenciaDAOException;
 import modulo.consulta_medica.dto.DTOPrestadorMedico;
 import util.GenericDAO;
 
@@ -16,7 +17,7 @@ public class DTOPrestadorMedicoDAO extends GenericDAO<DTOPrestadorMedico, Long>{
 		super(DTOPrestadorMedico.class); 
 	}
 	
-	public DTOPrestadorMedico obtenerPrestador(String rut){
+	public DTOPrestadorMedico obtenerPrestador(String rut) throws PersistenciaDAOException{
 		String namedQuery = "select m from DTOPrestadorMedico where m.dtoPersona.identificador = :rut";
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("rut", rut);

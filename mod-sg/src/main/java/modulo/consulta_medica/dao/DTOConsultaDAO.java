@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.ejb.Stateless;
 
 import util.GenericDAO;
+import modulo.base.excepciones.PersistenciaDAOException;
 import modulo.consulta_medica.dto.DTOConsulta;
 
 @Stateless
@@ -17,7 +18,7 @@ public class DTOConsultaDAO extends GenericDAO<DTOConsulta, Long>{
 		super(DTOConsulta.class); 
 	}
 
-	public List<DTOConsulta> findByIdPersona(long idPersona) {
+	public List<DTOConsulta> findByIdPersona(long idPersona) throws PersistenciaDAOException {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		String query = "Select m From CsTbConsulta m Where m.paciente.idPersona = :idPersona";
 		parameters.put("idPersona", idPersona);

@@ -1,6 +1,5 @@
 package modulo.consulta_medica.ejb;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +7,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import modulo.base.excepciones.ErrorDelSistemaException;
+import modulo.base.excepciones.HelperMapeoException;
+import modulo.base.excepciones.PersistenciaDAOException;
 import modulo.base.excepciones.RegistrosNoEncontradosException;
 import modulo.consulta_medica.dao.DTOConsultaDAO;
 import modulo.consulta_medica.dto.DTOConsulta;
@@ -29,21 +30,33 @@ public class ConsultaEJBImpl implements ConsultaEJB { // EJB EJBImpl
 	public VoConsulta nuevoRegistro(VoConsulta registro)
 			throws ErrorDelSistemaException {
 
-		DTOConsulta dto = helperMapper.toDTO(registro);
-		consultaDAO.save(dto);
-		registro = helperMapper.toVO(dto);
-		
-		return registro;
+		try {
+			DTOConsulta dto = helperMapper.toDTO(registro);
+			consultaDAO.save(dto);
+			registro = helperMapper.toVO(dto);
+
+			return registro;
+		} catch (HelperMapeoException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		} catch (PersistenciaDAOException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		}
 	}
 
 	@Override
 	public VoConsulta actualizarRegistro(VoConsulta registro)
 			throws ErrorDelSistemaException {
 
-		DTOConsulta dto = helperMapper.toDTO(registro);
-		consultaDAO.update(dto);
+		try {
+			DTOConsulta dto = helperMapper.toDTO(registro);
+			consultaDAO.update(dto);
 
-		return registro;
+			return registro;
+		} catch (HelperMapeoException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		} catch (PersistenciaDAOException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		}
 	}
 
 	@Override
@@ -58,35 +71,55 @@ public class ConsultaEJBImpl implements ConsultaEJB { // EJB EJBImpl
 	public List<VoConsulta> obtenerRegistros() throws ErrorDelSistemaException,
 			RegistrosNoEncontradosException {
 
-		List<VoConsulta> registros = new ArrayList<>();
+		try {
+			List<VoConsulta> registros = new ArrayList<>();
 
-		for (DTOConsulta dto : consultaDAO.findAll()) {
-			VoConsulta vo = helperMapper.toVO(dto);
-			registros.add(vo);
+			for (DTOConsulta dto : consultaDAO.findAll()) {
+				VoConsulta vo = helperMapper.toVO(dto);
+				registros.add(vo);
+			}
+
+			return registros;
+		} catch (HelperMapeoException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		} catch (PersistenciaDAOException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
 		}
-
-		return registros;
 	}
 
 	@Override
 	public VoConsulta obtenerRegistroPorID(long id)
 			throws ErrorDelSistemaException, RegistrosNoEncontradosException {
-		DTOConsulta dto = consultaDAO.find(id);
-		return helperMapper.toVO(dto);
+		try {
+			DTOConsulta dto = consultaDAO.find(id);
+			if (dto == null) {
+				throw new RegistrosNoEncontradosException("No se encuentran registros para el parametro de entrada:"+id);
+			}
+			return helperMapper.toVO(dto);
+		} catch (HelperMapeoException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		} catch (PersistenciaDAOException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		}
 	}
 
 	@Override
 	public List<VoConsulta> obtenerRegistrosPorPersona(long idPersona)
 			throws ErrorDelSistemaException, RegistrosNoEncontradosException {
-		List<VoConsulta> registros = new ArrayList<>();
+		try {
+			List<VoConsulta> registros = new ArrayList<>();
 
-		for (DTOConsulta dto : consultaDAO.findByIdPersona(idPersona)) {
-			VoConsulta vo = helperMapper.toVO(dto);
-			registros.add(vo);
+			for (DTOConsulta dto : consultaDAO.findByIdPersona(idPersona)) {
+				VoConsulta vo = helperMapper.toVO(dto);
+				registros.add(vo);
+			}
+
+			return registros;
+		} catch (HelperMapeoException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
+		} catch (PersistenciaDAOException e) {
+			throw new ErrorDelSistemaException(e.getMessage(), e);
 		}
-
-		return registros;
 	}
-
 
 }

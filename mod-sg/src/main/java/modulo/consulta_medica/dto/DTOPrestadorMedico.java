@@ -44,8 +44,10 @@ public class DTOPrestadorMedico implements Serializable, Auditable {
 	@JoinColumn(name="usuario_id")
 	private DTOUsuario dtoUsuario;
 	
+	@Column(name="profesion")
 	private String profesion;
 	
+	@Column(name="especialidad")
 	private String especialidad;
 
 	public DTOPrestadorMedico() {

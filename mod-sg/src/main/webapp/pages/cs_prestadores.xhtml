@@ -19,21 +19,23 @@
 
 		<p:growl id="msg" autoUpdate="true" showDetail="true"
 			showSummary="true" />
-			
+
 		<div class="ContentSideSections">
 			<div class="Content100 overHidden TextShadow">
 				<span
-					class="fontSize30 TextShadow orange mediumFont marginBottom20 dispBlock">Administrador de Prestadores</span> 
-					<span class="defaultText dispTable">subtitulo...</span>
+					class="fontSize30 TextShadow orange mediumFont marginBottom20 dispBlock">Administrador
+					de Prestadores</span> <span class="defaultText dispTable">subtitulo...</span>
 			</div>
 		</div>
 
 		<p:panelGrid columns="1" style="width:100%;" id="datos">
 
-			<p:dataTable id="tablaRegistros" value="#{prestadorMedicoMBean.registros}"
-				var="item" styleClass="tablaRegistros" rowKey="#{item.prestadorMedicoId}"
-				selectionMode="single" selection="#{prestadorMedicoMBean.registroSeleccionado}"
-				rows="20" paginator="true">
+			<p:dataTable id="tablaRegistros"
+				value="#{prestadorMedicoMBean.registros}" var="item"
+				styleClass="tablaRegistros" rowKey="#{item.prestadorMedicoId}"
+				selectionMode="single"
+				selection="#{prestadorMedicoMBean.registroSeleccionado}" rows="20"
+				paginator="true">
 
 				<p:ajax event="rowSelect" update="@this" />
 
@@ -57,6 +59,13 @@
 						actionListener="#{prestadorMedicoMBean.doNuevoRegistroFormulario}" />
 
 				</f:facet>
+				
+				<p:column sortBy="#{item.voPersona.nombreCompleto}">
+					<f:facet name="header">
+						<h:outputText value="Persona" />
+					</f:facet>
+					<h:outputText value="#{item.voPersona.nombreCompleto}" />
+				</p:column>
 
 				<p:column sortBy="#{item.profesion}">
 					<f:facet name="header">
@@ -64,13 +73,14 @@
 					</f:facet>
 					<h:outputText value="#{item.profesion}" />
 				</p:column>
-				
+
 				<p:column sortBy="#{item.especialidad}">
 					<f:facet name="header">
 						<h:outputText value="Especialidad" />
 					</f:facet>
 					<h:outputText value="#{item.especialidad}" />
 				</p:column>
+				
 
 			</p:dataTable>
 		</p:panelGrid>
@@ -88,36 +98,59 @@
 				<h:outputText value="(*) Campos Obligatorios"
 					rendered="#{prestadorMedicoMBean.modoFormulario ne 'OFF'}" />
 				<h:outputText value="modo:#{prestadorMedicoMBean.modoFormulario}" />
-				<p:panelGrid columns="3">
 
-					<f:facet name="header">Datos del Prestador</f:facet>
-					
+				<p:panelGrid columns="3" style="width:100%;">
+					<f:facet name="header">Datos Persona Asociada</f:facet>
+
 					<h:outputText value="RUT Persona" />
 					<p:inputText required="true" styleClass="cpos-mantcli"
-						requiredMessage="Debe ingresar un Texto"
+						requiredMessage="Debe ingresar un Texto" id="cpoRUN"
 						rendered="#{prestadorMedicoMBean.modoFormulario ne 'OFF'}"
 						value="#{prestadorMedicoMBean.registroEnEdicion.rutPersona}" />
 					<h:outputText rendered="#{prestadorMedicoMBean.modoFormulario eq 'OFF'}"
 						value="#{prestadorMedicoMBean.registroEnEdicion.rutPersona}" />
-					<p:commandButton  icon="ui-icon-star" title="Buscar Persona">
+					<p:commandButton icon="ui-icon-search" title="Buscar Persona"
+						process="@this, cpoRUN"
+						update=":MatenedorForm:formularioEdicionRegistro"
+						actionListener="#{prestadorMedicoMBean.doBuscarPersona}"
+						rendered="#{prestadorMedicoMBean.modoFormulario ne 'OFF'}" />
+					<h:outputText rendered="#{prestadorMedicoMBean.modoFormulario eq 'OFF'}" value=" " />
+
+					<h:outputText value="Persona" />
+					<h:outputText
+						value="#{prestadorMedicoMBean.registroEnEdicion.voPersona.nombreCompleto}" />
+					<h:outputText value=" " />
+					
+					<h:outputText value="Tiene Usuario" />
+					<h:outputText rendered="#{prestadorMedicoMBean.registroEnEdicion.voUsuario.usuarioId eq '0'}"
+						value="No" />
+					<h:outputText rendered="#{prestadorMedicoMBean.registroEnEdicion.voUsuario.usuarioId ne '0'}"
+						value="Sí" />
+					<h:outputText value=" " />
+
+				</p:panelGrid>
+
+				<p:panelGrid columns="2">
+
+					<f:facet name="header">Datos del Prestador</f:facet>
 
 					<h:outputText value="Profesión" />
 					<p:inputText required="true" styleClass="cpos-mantcli"
 						requiredMessage="Debe ingresar un Texto"
 						rendered="#{prestadorMedicoMBean.modoFormulario ne 'OFF'}"
 						value="#{prestadorMedicoMBean.registroEnEdicion.profesion}" />
-					<h:outputText rendered="#{prestadorMedicoMBean.modoFormulario eq 'OFF'}"
+					<h:outputText
+						rendered="#{prestadorMedicoMBean.modoFormulario eq 'OFF'}"
 						value="#{prestadorMedicoMBean.registroEnEdicion.profesion}" />
-					<h:outputText value=" " />
-						
+
 					<h:outputText value="Especialidad" />
 					<p:inputText required="true" styleClass="cpos-mantcli"
 						requiredMessage="Debe ingresar un Texto"
 						rendered="#{prestadorMedicoMBean.modoFormulario ne 'OFF'}"
 						value="#{prestadorMedicoMBean.registroEnEdicion.especialidad}" />
-					<h:outputText rendered="#{prestadorMedicoMBean.modoFormulario eq 'OFF'}"
+					<h:outputText
+						rendered="#{prestadorMedicoMBean.modoFormulario eq 'OFF'}"
 						value="#{prestadorMedicoMBean.registroEnEdicion.especialidad}" />
-					<h:outputText value=" " />
 
 				</p:panelGrid>
 
@@ -127,7 +160,8 @@
 						update="@(.tablaRegistros)"
 						oncomplete="PF('dialogoEditor').hide();"
 						actionListener="#{prestadorMedicoMBean.doCancelarRegistroFormulario}"
-						process="@none" rendered="#{prestadorMedicoMBean.modoFormulario ne 'OFF'}" />
+						process="@none"
+						rendered="#{prestadorMedicoMBean.modoFormulario ne 'OFF'}" />
 
 					<p:commandButton id="btnsave" value="Guardar"
 						update="@(.tablaRegistros, .registro-formulario)"
