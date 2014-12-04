@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>Modulo Base - Sistema</title>
+
+	<link rel="stylesheet" href="#{request.contextPath}/recursos/css/modulo_base.css" media="screen" type="text/css" />
+
+</h:head>
+<h:body>
+
+	<h:form id="MatenedorForm">
+
+		<p:layout fullPage="true">
+
+			<p:layoutUnit position="north" size="100">
+
+				<div class="ui-grid">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-8">
+
+							<a id="LOGOTEXTSIDE" href="#{request.contextPath}/"> <span
+								class="dispBlock logoDarkText fontSize30">SISTEMAS</span> <span
+								class="dispBlock logoBlueText fontSize30 mediumFont">INTEGRADOS</span>
+							</a>
+
+
+						</div>
+						<div class="ui-grid-col-4">
+
+
+						</div>
+					</div>
+				</div>
+
+			</p:layoutUnit>
+
+
+			<p:layoutUnit position="center">
+				<ui:insert name="content">CONTENT</ui:insert>
+			</p:layoutUnit>
+
+		</p:layout>
+
+		<ui:insert name="dialogo">CONTENT</ui:insert>
+
+	</h:form>
+
+
+</h:body>
+</html>

@@ -23,8 +23,9 @@
 		<div class="ContentSideSections">
 			<div class="Content100 overHidden TextShadow">
 				<span
-					class="fontSize30 TextShadow orange mediumFont marginBottom20 dispBlock">Nueva Consulta</span> 
-					<span class="defaultText dispTable"> Creación de una nueva consulta en 3 pasos. </span>
+					class="fontSize30 TextShadow orange mediumFont marginBottom20 dispBlock">Nueva
+					Consulta</span> <span class="defaultText dispTable"> Creación de
+					una nueva consulta en 3 pasos. </span>
 			</div>
 		</div>
 
@@ -94,12 +95,15 @@
 							mask="true"
 							rendered="#{consultaMBean.personaEnConsulta.idPersona == 0}"
 							value="#{consultaMBean.personaEnConsulta.fechaNacimiento}" />
-
 						<h:outputText
 							rendered="#{consultaMBean.personaEnConsulta.idPersona > 0}"
-							value="#{consultaMBean.personaEnConsulta.fechaNacimiento}" />
+							value="#{consultaMBean.personaEnConsulta.fechaNacimiento}">
+							<f:convertDateTime pattern="dd-MM-yyyy" />
+						</h:outputText>
 
-						<h:outputText value=" " />
+						<h:outputText
+							rendered="#{consultaMBean.personaEnConsulta.idPersona == 0}"
+							value=" " />
 
 						<p:commandButton value="Guardar datos de Persona"
 							id="btnGuardarDatosPersona"
@@ -122,13 +126,23 @@
 						value="Paciente: #{consultaMBean.personaEnConsulta.nombres} #{consultaMBean.personaEnConsulta.apellidos}, #{consultaMBean.personaEnConsulta.edad} años." />
 
 					<p:panelGrid columns="1" style="width:100%; margin-top:10px;">
-					
-						
-						<h:outputText value="Fecha de Consulta" />
-						<p:calendar required="true" styleClass="cpos-mantcli"
-							requiredMessage="Debe ingresar un Texto" pattern="dd-MM-yyyy"
-							mask="true"
-							value="#{consultaMBean.registroEnEdicion.fechaConsulta}" />
+
+
+
+						<p:panelGrid columns="2" style="width:100%; margin-top:10px;">
+							<h:outputText value="Fecha Inicio de la Consulta" />
+							<p:calendar required="true" styleClass="cpos-mantcli"
+								requiredMessage="Debe ingresar un Texto" pattern="dd-MM-yyyy"
+								mask="true"
+								value="#{consultaMBean.registroEnEdicion.fechaInicioConsulta}" />
+
+							<h:outputText value="Hora Inicio de la Consulta" />
+							<p:inputMask
+								value="#{consultaMBean.registroEnEdicion.horaInicio}"
+								mask="99:99" required="true" styleClass="cpos-mantcli"
+								requiredMessage="Debe ingresar un Texto" />
+
+						</p:panelGrid>
 
 						<p:editor widgetVar="cpoDesarrollo" required="true"
 							styleClass="cpos-mantcli"
@@ -150,7 +164,7 @@
 			</p:tab>
 
 			<p:tab id="observaciones" title="Resumen">
-				<p:panel header="Confirmation">
+				<p:panel header="Confirmation #{consultaMBean.registroEnEdicion.consultaId}">
 
 					<h:outputText
 						value="Paciente: #{consultaMBean.personaEnConsulta.nombres} #{consultaMBean.personaEnConsulta.apellidos}, #{consultaMBean.personaEnConsulta.edad} años." />
@@ -158,6 +172,38 @@
 
 
 					<p:panelGrid columns="2" style="width:100%; margin-top:10px;">
+						
+						<h:outputText value="Fecha Inicio de la Consulta" />
+						<p:inplace id="edtFechaInicio">
+							<p:calendar required="true" styleClass="cpos-mantcli"
+								requiredMessage="Debe ingresar un Texto" pattern="dd-MM-yyyy"
+								mask="true"
+								value="#{consultaMBean.registroEnEdicion.fechaInicioConsulta}" />
+						</p:inplace>
+
+						<h:outputText value="Hora Inicio de la Consulta" />
+						<p:inplace id="edtHoraInicio">
+							<p:inputMask
+								value="#{consultaMBean.registroEnEdicion.horaInicio}"
+								mask="99:99" required="true" styleClass="cpos-mantcli"
+								requiredMessage="Debe ingresar un Texto" />
+						</p:inplace>
+							
+						<h:outputText value="Fecha Termino de la Consulta" />
+						<p:inplace id="edtFechaTermino">
+							<p:calendar required="true" styleClass="cpos-mantcli"
+								requiredMessage="Debe ingresar un Texto" pattern="dd-MM-yyyy"
+								mask="true"
+								value="#{consultaMBean.registroEnEdicion.fechaFinConsulta}" />
+						</p:inplace>
+
+						<h:outputText value="Hora Termino de la Consulta" />
+						<p:inplace id="edtHoraTermino">
+							<p:inputMask
+								value="#{consultaMBean.registroEnEdicion.horaTermino}"
+								mask="99:99" required="true" styleClass="cpos-mantcli"
+								requiredMessage="Debe ingresar un Texto" />
+						</p:inplace>
 
 						<h:outputText value="Desarrollo" />
 						<h:outputText escape="false"
@@ -169,15 +215,17 @@
 
 						<h:outputText value="Fecha" />
 						<h:outputText
-							value="#{consultaMBean.registroEnEdicion.fechaConsulta}">
+							value="#{consultaMBean.registroEnEdicion.fechaInicioConsulta}">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
+						
+						<p:commandButton value="Confirmar"
+						actionListener="#{consultaMBean.doFinalizarConsulta}"
+						process="@this" action="/pages/ver_consultas?faces-redirect=true" />
 
 					</p:panelGrid>
 
-					<p:commandButton value="Finalizar"
-						actionListener="#{consultaMBean.doFinalizarConsulta}"
-						process="@this" action="/pages/ver_consultas?faces-redirect=true" />
+					
 
 				</p:panel>
 			</p:tab>

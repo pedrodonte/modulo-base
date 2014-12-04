@@ -53,11 +53,11 @@
 
 				<p:ajax event="rowSelect" update="@this" />
 
-				<p:column sortBy="#{item.fechaConsulta}">
+				<p:column sortBy="#{item.fechaInicioConsulta}">
 					<f:facet name="header">
-						<h:outputText value="fechaConsulta" />
+						<h:outputText value="fechaInicioConsulta" />
 					</f:facet>
-					<h:outputText value="#{item.fechaConsulta}">
+					<h:outputText value="#{item.fechaInicioConsulta}">
 						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 					</h:outputText>
 				</p:column>
@@ -101,9 +101,15 @@
 					<h:outputText
 						value="#{consultaMBean.registroEnEdicion.duracion} minutos" />
 
-					<h:outputText value="Fecha" />
+					<h:outputText value="Fecha Inicio Consulta" />
 					<h:outputText
-						value="#{consultaMBean.registroEnEdicion.fechaConsulta}">
+						value="#{consultaMBean.registroEnEdicion.fechaInicioConsulta}">
+						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+					</h:outputText>
+					
+					<h:outputText value="Fecha Termino Consulta" />
+					<h:outputText
+						value="#{consultaMBean.registroEnEdicion.fechaFinConsulta}">
 						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 					</h:outputText>
 

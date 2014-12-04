@@ -184,7 +184,8 @@ public class HelperMapper {
 			vo = new VoConsulta();
 			try {
 				vo.setConsultaId(dto.getConsultaId());
-				vo.setFechaConsulta(dto.getFechaConsulta());
+				vo.setFechaInicioConsulta(dto.getFechaInicioConsulta());
+				vo.setFechaFinConsulta(dto.getFechaFinConsulta());
 				vo.setRegFecInsert(dto.getRegFecInsert());
 				vo.setRegFecUpdate(dto.getRegFecUpdate());
 				vo.setTxtDesarrollo(dto.getTxtDesarrollo());
@@ -203,7 +204,8 @@ public class HelperMapper {
 			dto = new DTOConsulta();
 			try {
 				dto.setConsultaId(vo.getConsultaId());
-				dto.setFechaConsulta(vo.getFechaConsulta());
+				dto.setFechaInicioConsulta(vo.getFechaInicioConsulta());
+				dto.setFechaFinConsulta(vo.getFechaFinConsulta());
 				dto.setRegFecInsert(vo.getRegFecInsert());
 				dto.setRegFecUpdate(vo.getRegFecUpdate());
 				dto.setTxtDesarrollo(vo.getTxtDesarrollo());

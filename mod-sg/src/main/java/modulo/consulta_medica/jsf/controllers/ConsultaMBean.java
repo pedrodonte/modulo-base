@@ -21,10 +21,11 @@ import org.primefaces.event.FlowEvent;
 
 import util.AbsMantenedorMB;
 import util.CrudGenericServiceApi;
+import util.HelperFecha;
 
 @Named
 @SessionScoped
-public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> { 
+public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> {
 
 	private static final long serialVersionUID = 123456789L;
 
@@ -54,17 +55,18 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> {
 			logger.info("doBuscarPersona:" + cpoIdentificador);
 			personaEnConsulta = personaEJB
 					.obtenerPorIdentificador(cpoIdentificador);
-			
-			RequestContext.getCurrentInstance().update("@(.registro-formulario)");
-			
+
+			logger.info("Persona Encontrada: " + personaEnConsulta);
+
+			RequestContext.getCurrentInstance().update(
+					"@(.registro-formulario)");
+
 		} catch (ErrorDelSistemaException e) {
 			super.mostrarMensaje(e.getMessage());
 		} catch (RegistrosNoEncontradosException e) {
 			super.mostrarMensaje(e.getMessage());
 		}
 	}
-
-	
 
 	public void doGuardarPersona(ActionEvent event) {
 		try {
@@ -82,48 +84,82 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> {
 		logger.info("Old Step: " + event.getOldStep());
 		logger.info("New Step: " + event.getNewStep());
 
-		// Evento que ocurre despues de llenar el formulario de persona
-		if (event.getOldStep().equals("persona")) {
-			if (personaEnConsulta.getIdPersona() == 0) {
-				mensajesMB
-						.msgWarn("La persona NO esta registrada, para continuar debe llenar el formulario de Persona");
-				return event.getOldStep();
-			} else {
-				doNuevoRegistroFormulario(null);
-				getRegistroEnEdicion().setFechaConsulta(new Date());
-				getRegistroEnEdicion().setTxtDesarrollo("");
-				getRegistroEnEdicion().setVoPersona(personaEnConsulta);
-				// MatenedorForm:wizardConsulta_back
-				RequestContext.getCurrentInstance().addCallbackParam(
-						"codExitoOperacion", true);
+		try {
+			// Evento que ocurre despues de llenar el formulario de persona
+			if (event.getOldStep().equals("persona")) {
+				if (personaEnConsulta.getIdPersona() == 0) {
+					mensajesMB
+							.msgWarn("La persona NO esta registrada, para continuar debe llenar el formulario de Persona");
+					return event.getOldStep();
+				} else {
+					doNuevoRegistroFormulario(null);
+					getRegistroEnEdicion().setFechaInicioConsulta(new Date());
+					getRegistroEnEdicion().setTxtDesarrollo("");
+					getRegistroEnEdicion().setVoPersona(personaEnConsulta);
+					// MatenedorForm:wizardConsulta_back
+					RequestContext.getCurrentInstance().addCallbackParam(
+							"codExitoOperacion", true);
+				}
 			}
-		}
 
-		// Evento que ocurre despues de llenar el desarrollo de la consulta ->
-		if (event.getOldStep().equals("consulta")
-				&& event.getNewStep().equals("observaciones")) {
-			if (getRegistroEnEdicion().getTxtDesarrollo().trim().isEmpty()) {
-				mensajesMB.msgError("El texto del desarrollo esta vacío");
-				return event.getOldStep();
-			} else {
-				doGuardarRegistroFormulario(null);
+			// Evento que ocurre despues de llenar el desarrollo de la consulta
+			// ->
+			if (event.getOldStep().equals("consulta")
+					&& event.getNewStep().equals("observaciones")) {
+				if (getRegistroEnEdicion().getTxtDesarrollo().trim().isEmpty()) {
+					mensajesMB.msgError("El texto del desarrollo esta vacío");
+					return event.getOldStep();
+				} else {
+
+					if (getRegistroEnEdicion().getFechaFinConsulta() == null) {
+						getRegistroEnEdicion().setFechaFinConsulta(new Date());
+					}
+
+					getRegistroEnEdicion().setFechaInicioConsulta(
+							HelperFecha.fechaHora(getRegistroEnEdicion()
+									.getFechaInicioConsulta(),
+									getRegistroEnEdicion().getHoraInicio()));
+
+					doGuardarRegistroFormulario(null);
+				}
 			}
-		}
 
-		// NO permitir cambiar la consulta realizada el objeto persona. <-
-		if (event.getOldStep().equals("consulta")
-				&& event.getNewStep().equals("persona")) {
-			logger.info(getRegistroEnEdicion());
-			return event.getOldStep();
+			// NO permitir cambiar la consulta realizada el objeto persona. <-
+			if (event.getOldStep().equals("consulta")
+					&& event.getNewStep().equals("persona")) {
+				logger.info(getRegistroEnEdicion());
+				return event.getOldStep();
+			}
+		} catch (ErrorDelSistemaException e) {
+			e.printStackTrace();
 		}
 
 		return event.getNewStep();
 	}
 
 	public void doFinalizarConsulta(ActionEvent event) {
+		try {
+			doHabilitarEdicion(event);
+
+			getRegistroEnEdicion().setFechaInicioConsulta(
+					HelperFecha.fechaHora(getRegistroEnEdicion()
+							.getFechaInicioConsulta(), getRegistroEnEdicion()
+							.getHoraInicio()));
+
+			getRegistroEnEdicion().setFechaFinConsulta(
+					HelperFecha.fechaHora(getRegistroEnEdicion()
+							.getFechaFinConsulta(), getRegistroEnEdicion()
+							.getHoraTermino()));
+
+			doGuardarRegistroFormulario(event);
+		} catch (ErrorDelSistemaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		personaEnConsulta = new VoPersona();
 		cpoIdentificador = "";
-		doNuevoRegistroFormulario(event);
+		//doNuevoRegistroFormulario(event);
 		mensajesMB.msgInfo("Consulta Finalizada");
 	}
 
@@ -142,24 +178,27 @@ public class ConsultaMBean extends AbsMantenedorMB<VoConsulta> {
 	public void setCpoIdentificador(String cpoIdentificador) {
 		this.cpoIdentificador = cpoIdentificador;
 	}
-	
-	
+
 	public void doBuscarConsultas(ActionEvent event) {
 		try {
-			personaEnConsulta = personaEJB.obtenerPorIdentificador(cpoIdentificador);
-			List<VoConsulta> consultas = serviceEJB.obtenerRegistrosPorPersona(personaEnConsulta.getIdPersona());
-			
-			
+			personaEnConsulta = personaEJB
+					.obtenerPorIdentificador(cpoIdentificador);
+			List<VoConsulta> consultas = serviceEJB
+					.obtenerRegistrosPorPersona(personaEnConsulta
+							.getIdPersona());
+
 			if (getRegistrosCantidad() > 0) {
-				mensajesMB.msgInfo("Cantidad de consultas : "+consultas.size());
+				mensajesMB.msgInfo("Cantidad de consultas : "
+						+ consultas.size());
 				setRegistros(consultas);
 				cpoIdentificador = "";
-			}else{
-				mensajesMB.msgInfo("Sin registros para el RUN: "+cpoIdentificador);
+			} else {
+				mensajesMB.msgInfo("Sin registros para el RUN: "
+						+ cpoIdentificador);
 			}
-			
-			personaEnConsulta = new VoPersona();
-			
+
+			// personaEnConsulta = new VoPersona();
+
 		} catch (RegistrosNoEncontradosException e) {
 			super.mostrarMensaje(e.getMessage());
 		} catch (ErrorDelSistemaException e) {

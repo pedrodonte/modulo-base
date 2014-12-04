@@ -94,7 +94,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Funcionalidad para Administrador</web-resource-name>
-<!-- 			<url-pattern>/pages/usuarios.xhtml</url-pattern> -->
+			<url-pattern>/pages/usuarios.xhtml</url-pattern>
 			<url-pattern>/pages/mant_rol.xhtml</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>

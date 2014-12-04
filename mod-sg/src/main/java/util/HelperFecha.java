@@ -56,15 +56,20 @@ public class HelperFecha {
 	}
 
 	public static Integer calcularDiferenciaMinutos(Date fechaAnterior,
-			Date fechaPosterior) {
-		Calendar fechaUno = Calendar.getInstance();
-		fechaUno.setTime(fechaAnterior);
+			Date fechaPosterior) throws ErrorDelSistemaException {
+		int minutos;
+		try {
+			Calendar fechaUno = Calendar.getInstance();
+			fechaUno.setTime(fechaAnterior);
 
-		Calendar fechaDos = Calendar.getInstance();
-		fechaDos.setTime(fechaPosterior);
+			Calendar fechaDos = Calendar.getInstance();
+			fechaDos.setTime(fechaPosterior);
 
-		int minutos = fechaDos.get(Calendar.MINUTE)
-				- fechaUno.get(Calendar.MINUTE);
+			minutos = fechaDos.get(Calendar.MINUTE)
+					- fechaUno.get(Calendar.MINUTE);
+		} catch (Exception e) {
+			throw new ErrorDelSistemaException("Error al calcular "+fechaAnterior+" y "+fechaPosterior);
+		}
 
 		return minutos;
 	}
@@ -108,6 +113,23 @@ public class HelperFecha {
 	        calendar.add(Calendar.DATE, 1);
 	    }
 	    return dates;
+	}
+
+	public static String getHoraDeFecha(Date fecha) {
+		Format formatter = new SimpleDateFormat("HH:mm");
+		String s = formatter.format(fecha);
+		return s;
+	}
+
+	public static Date fechaHora(Date fecha, String hora) throws ErrorDelSistemaException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		
+		try {
+			return formatter.parse(toString(fecha)+" "+hora);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			throw new ErrorDelSistemaException("Error al tranformar a fecha ["+fecha+" "+hora+"]");
+		}
 	}
 	
 }

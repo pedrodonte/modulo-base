@@ -27,7 +27,8 @@ public class ClienteCertificadorURL {
 	// HTTP GET request
 	public Certificado consultar(int rut, String dgv) throws Exception {
 
-		String url = "http://200.51.172.210/trade_service/web_services/Certificado.asp?ID=61607400&RUT="+rut+"&DGV="+dgv;
+		//String url = "http://200.51.172.210/trade_service/web_services/Certificado.asp?ID=61607400&RUT="+rut+"&DGV="+dgv;
+		String url = "http://90.0.0.150:8080/PrevisionFonasaRest/Certificador?ID=61607400&RUT="+rut+"&DGV="+dgv;
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();

@@ -22,6 +22,10 @@ public class IntegracionEJBImpl implements IntegracionEJB {
 		
 		try {
 			Certificado data = basePersonas.consultar(rut);
+			
+			if (!data.getError().toUpperCase().equals("OK")) {
+				throw new ErrorIntegracionException(data.getError());
+			}
 
 			persona = new VoPersona();
 			persona.setApellidos(HelperString.cambioCharsetToUTF8(data
@@ -30,6 +34,7 @@ public class IntegracionEJBImpl implements IntegracionEJB {
 			persona.setFechaNacimiento(formatter.parse(data.getFec_nac()));
 			persona.setNombres(HelperString.cambioCharsetToUTF8(data.getNombres()));
 			persona.setIdentificador(rut);
+			persona.setSexo(  data.getSex().equals("M")?2:1  );
 		} catch (Exception e) {
 			throw new ErrorIntegracionException(e.getMessage(), e);
 		}

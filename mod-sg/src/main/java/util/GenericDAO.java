@@ -41,7 +41,7 @@ public abstract class GenericDAO<T, ID extends Serializable> {
         	
 			em.persist(entity);
 		} catch (Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getLocalizedMessage());
 			throw new PersistenciaDAOException("Error Insert",e);
 		}
         System.out.println(entity);
@@ -56,6 +56,7 @@ public abstract class GenericDAO<T, ID extends Serializable> {
             em.remove(entityToBeRemoved);
             return true;
 		} catch (Exception e) {
+			logger.error(e.getLocalizedMessage());
 			throw new PersistenciaDAOException("Error Delete",e);
 		}
     }
@@ -71,6 +72,7 @@ public abstract class GenericDAO<T, ID extends Serializable> {
         	
 			return em.merge(entity);
 		} catch (Exception e) {
+			logger.error(e.getLocalizedMessage());
 			throw new PersistenciaDAOException("Error Actualizando Entidad",e);
 		}
     }
@@ -81,6 +83,7 @@ public abstract class GenericDAO<T, ID extends Serializable> {
 			logger.info("Buscando "+entityClass.getSimpleName()+" por ID:"+entityID);
 			return em.find(entityClass, entityID);
 		} catch (Exception e) {
+			logger.error(e.getLocalizedMessage());
 			throw new PersistenciaDAOException("Error Buscando Entidad",e);
 		}
     }
@@ -96,6 +99,7 @@ public abstract class GenericDAO<T, ID extends Serializable> {
 			cq.select(cq.from(entityClass));
 			return em.createQuery(cq).getResultList();
 		} catch (Exception e) {
+			logger.error(e.getLocalizedMessage());
 			throw new PersistenciaDAOException("Error Buscando Listado de Entidad",e);
 		}
     }
@@ -125,7 +129,8 @@ public abstract class GenericDAO<T, ID extends Serializable> {
             logger.info("No hay registros para la query "+namedQuery);
             return null;
         }catch (Exception e) {
-        	throw new PersistenciaDAOException("Error Buscando de Entidad",e);
+        	logger.error(e.getLocalizedMessage());
+        	throw new PersistenciaDAOException("Persistencia[findOneResult]:Error Buscando de Entidad",e);
         }
  
         
@@ -154,6 +159,7 @@ public abstract class GenericDAO<T, ID extends Serializable> {
             logger.info("No hay registros para la query "+namedQuery);
             return null;
         }catch (Exception e) {
+        	logger.error(e.getLocalizedMessage());
         	throw new PersistenciaDAOException("Error Buscando de Entidad",e);
         }
         

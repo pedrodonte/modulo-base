@@ -149,6 +149,7 @@ public class UserMBean extends AbsMantenedorMB<VoUser> { //controller , vo
 	
 	public void doBuscarPersona(ActionEvent event){
 		try {
+			
 			setPersonaEncontrada(personaEJB.obtenerPorIdentificador(getRegistroEnEdicion().getRutPersona()));
 			
 			if (personaEncontrada != null) {
@@ -157,6 +158,8 @@ public class UserMBean extends AbsMantenedorMB<VoUser> { //controller , vo
 			}
 			
 		} catch (RegistrosNoEncontradosException e) {
+			setRegistroEnEdicion(new VoUser());
+			personaEncontrada = new VoPersona();
 			super.mostrarMensaje(e.getMessage());
 		} catch (ErrorDelSistemaException e) {
 			super.mostrarMensaje(e.getMessage());

@@ -33,8 +33,12 @@ public class DTOConsulta implements Serializable, Auditable {
 	private String txtDesarrollo;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="fecha_consulta")
-	private Date fechaConsulta;
+	@Column(name="fecha_inicio_consulta")
+	private Date fechaInicioConsulta;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="fecha_fin_consulta")
+	private Date fechaFinConsulta;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="reg_fec_insert")
@@ -48,14 +52,6 @@ public class DTOConsulta implements Serializable, Auditable {
 	@JoinColumn(name = "persona_paciente_id")
 	private DTOPersona paciente;
 	
-	@Override
-	public String toString() {
-		return "CsTbConsulta [consultaId=" + consultaId + ", txtDesarrollo="
-				+ txtDesarrollo + ", fechaConsulta=" + fechaConsulta
-				+ ", regFecInsert=" + regFecInsert + ", regFecUpdate="
-				+ regFecUpdate + ", bsTbPersona=" + paciente + "]";
-	}
-
 	public long getConsultaId() {
 		return consultaId;
 	}
@@ -70,14 +66,6 @@ public class DTOConsulta implements Serializable, Auditable {
 
 	public void setTxtDesarrollo(String txtDesarrollo) {
 		this.txtDesarrollo = txtDesarrollo;
-	}
-
-	public Date getFechaConsulta() {
-		return fechaConsulta;
-	}
-
-	public void setFechaConsulta(Date fechaConsulta) {
-		this.fechaConsulta = fechaConsulta;
 	}
 
 	public Date getRegFecInsert() {
@@ -103,5 +91,32 @@ public class DTOConsulta implements Serializable, Auditable {
 	public void setPaciente(DTOPersona paciente) {
 		this.paciente = paciente;
 	}
+
+	public Date getFechaInicioConsulta() {
+		return fechaInicioConsulta;
+	}
+
+	public void setFechaInicioConsulta(Date fechaInicioConsulta) {
+		this.fechaInicioConsulta = fechaInicioConsulta;
+	}
+
+	public Date getFechaFinConsulta() {
+		return fechaFinConsulta;
+	}
+
+	public void setFechaFinConsulta(Date fechaFinConsulta) {
+		this.fechaFinConsulta = fechaFinConsulta;
+	}
+
+	@Override
+	public String toString() {
+		return "DTOConsulta [consultaId=" + consultaId + ", txtDesarrollo="
+				+ txtDesarrollo + ", fechaInicioConsulta="
+				+ fechaInicioConsulta + ", fechaFinConsulta="
+				+ fechaFinConsulta + ", regFecInsert=" + regFecInsert
+				+ ", regFecUpdate=" + regFecUpdate + ", paciente=" + paciente
+				+ "]";
+	}
+	
 
 }

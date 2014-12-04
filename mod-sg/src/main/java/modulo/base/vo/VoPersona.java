@@ -16,6 +16,8 @@ public class VoPersona implements Cloneable{
 	private Date regFecUpdate;
 	private int edad;
 	
+	private String descSexo;
+	
 	public long getIdPersona() {
 		return idPersona;
 	}
@@ -23,7 +25,7 @@ public class VoPersona implements Cloneable{
 		this.idPersona = idPersona;
 	}
 	public String getIdentificador() {
-		return identificador.toUpperCase();
+		return identificador;
 	}
 	public void setIdentificador(String identificador) {
 		this.identificador = identificador.toUpperCase();
@@ -151,6 +153,25 @@ public class VoPersona implements Cloneable{
 	}
 	public void setEdad(int edad) {
 		this.edad = edad;
+	}
+	public String getDescSexo() {
+		switch (this.sexo) {
+		case 1:
+			descSexo = "Mujer";
+			break;
+			
+		case 2:
+			descSexo = "Hombre";
+			break;
+
+		default:
+			descSexo = "Indeterminado";
+			break;
+		}
+		return descSexo;
+	}
+	public void setDescSexo(String descSexo) {
+		this.descSexo = descSexo;
 	}
 	
 	

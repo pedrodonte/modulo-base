@@ -13,83 +13,10 @@
 	<meta name="author" content="" />
 	<title>Modulo Base - Sistema</title>
 
+	<link rel="stylesheet" href="#{request.contextPath}/recursos/css/modulo_base.css" media="screen" type="text/css" />
 
 </h:head>
 <h:body>
-
-	<style>
-.fontSize30 {
-	font-size: 30px;
-}
-
-.dispBlock {
-	display: block !important;
-}
-
-.logoDarkText {
-	color: rgb(92, 102, 106);
-}
-
-#LOGOTEXTSIDE {
-	line-height: 30px;
-}
-
-.mediumFont {
-	font-family: 'exomedium', "Trebuchet MS", Arial, Helvetica, sans-serif;
-}
-
-.logoBlueText {
-	color: rgb(37, 170, 225);
-}
-
-#LOGOTEXTSIDE {
-	display: block;
-	width: 290px;
-	float: left;
-	height: 74px;
-	z-index: 999;
-	background-image: url("/mod-sg/recursos/img/logoCircuitLines.svg");
-	background-repeat: no-repeat;
-	background-position: right center;
-	margin: -20px 0px 0px;
-	padding-top: 25px;
-	line-height: 30px;
-}
-
-a {
-	text-decoration: none;
-	outline: medium none;
-	color: rgb(37, 170, 225);
-}
-
-.ContentSideSections {
-    display: block;
-    border-bottom: 1px solid rgb(188, 199, 207);
-    padding: 30px;
-}
-.Content100 {
-    width: 100%;
-}
-.overHidden {
-    overflow: hidden;
-}
-.TextShadow {
-    text-shadow: 0px 1px 0px rgb(255, 255, 255);
-} 
-.orange {
-    color: rgb(252, 167, 82);
-}
-.marginBottom20 {
-    margin-bottom: 20px;
-}
-.defaultText {
-    font-size: 18px;
-    color: rgb(132, 147, 159);
-}
-.dispTable {
-    display: table;
-}
-</style>
 
 	<h:form id="MatenedorForm">
 
@@ -101,9 +28,9 @@ a {
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-8">
 
-							<a id="LOGOTEXTSIDE" href="pages/crear_consulta.xhtml"> <span
-								class="dispBlock logoDarkText fontSize30">CONSULTA</span> <span
-								class="dispBlock logoBlueText fontSize30 mediumFont">PACIENTE</span>
+							<a id="LOGOTEXTSIDE" href="#{request.contextPath}/"> <span
+								class="dispBlock logoDarkText fontSize30">SISTEMAS</span> <span
+								class="dispBlock logoBlueText fontSize30 mediumFont">INTEGRADOS</span>
 							</a>
 
 
@@ -111,9 +38,10 @@ a {
 						<div class="ui-grid-col-4">
 
 							<p:splitButton value=" #{request.userPrincipal}"
-								icon="ui-icon-person" process="@this">
+								icon="ui-icon-person" process="@this" styleClass="btnAccionUsuario">
 
-								<p:menuitem value="Cambio de Contraseña"
+								<p:menuitem value="Cambiar Contraseña"
+									icon="ui-icon-key"
 									action="/pages/cambiar_contrasena?faces-redirect=true"
 									process="@this" />
 
